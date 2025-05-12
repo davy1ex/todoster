@@ -7,7 +7,7 @@ vi.mock('@/entities/task/model/store');
 
 describe('App', () => {
     it('renders without crashing', () => {
-        render(<App />);
+        render(<App platform="web" />);
         
         // Check for app title
         const titleElement = screen.getByText('Task App');
@@ -15,7 +15,7 @@ describe('App', () => {
     });
 
     it('renders task lists', () => {
-        render(<App />);
+        render(<App platform="web" />);
         
         // Check for both task lists
         const inboxList = screen.getByText('Inbox');

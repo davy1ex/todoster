@@ -35,3 +35,7 @@ node_modules/
 # Task files
 tasks.json
 tasks/ 
+
+android
+dist-electron/
+scripts

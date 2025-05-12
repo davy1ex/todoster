@@ -2,22 +2,30 @@
   "name": "gamified-todo",
   "private": true,
   "version": "0.0.1",
+  "description": "A gamified todo application with brain dump functionality",
+  "author": {
+    "name": "davy1ex",
+    "email": "davy1ex@example.com"
+  },
+  "main": "dist/electron/main.js",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "test": "vitest",
-    "electron:dev": "tsc && vite build && electron .",
-    "electron:build:win": "npm run build && electron-builder -w",
-    "electron:build:linux": "npm run build && electron-builder -l",
+    "electron:dev": "cross-env NODE_ENV=development npm run electron:build && electron .",
+    "electron:build": "tsc && vite build && ts-node electron/build.ts",
+    "electron:build:win": "cross-env NODE_ENV=production npm run electron:build && electron-builder -w",
+    "electron:build:linux": "cross-env NODE_ENV=production npm run electron:build && electron-builder -l --linux AppImage -c.extraMetadata.main=dist/electron/main.js",
     "cap:add:android": "npx cap add android",
     "cap:sync": "npx cap sync",
     "cap:open:android": "npx cap open android"
   },
   "dependencies": {
-    "@capacitor/android": "^5.7.0",
-    "@capacitor/core": "^5.7.0",
+    "@capacitor/android": "5.7.8",
+    "@capacitor/app": "5.0.6",
+    "@capacitor/core": "5.7.0",
     "@testing-library/jest-dom": "^6.1.4",
     "@testing-library/react": "^14.1.2",
     "react": "^18.2.0",
@@ -25,18 +33,22 @@
     "zustand": "^4.4.7"
   },
   "devDependencies": {
-    "@capacitor/cli": "^5.7.0",
+    "@capacitor/cli": "5.7.8",
+    "@types/node": "^20.11.19",
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
     "@typescript-eslint/eslint-plugin": "^6.10.0",
     "@typescript-eslint/parser": "^6.10.0",
     "@vitejs/plugin-react": "^4.2.0",
+    "cross-env": "^7.0.3",
     "electron": "^28.0.0",
     "electron-builder": "^24.9.1",
+    "esbuild": "^0.20.0",
     "eslint": "^8.53.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.4",
     "jsdom": "^22.1.0",
+    "ts-node": "^10.9.2",
     "typescript": "^5.2.2",
     "vite": "^5.0.0",
     "vitest": "^0.34.6"
@@ -45,17 +57,39 @@
     "appId": "com.gamifiedtodo.app",
     "productName": "Gamified Todo",
     "directories": {
-      "output": "dist-app"
+      "output": "dist-electron",
+      "buildResources": "build"
     },
     "files": [
       "dist/**/*",
-      "electron/**/*"
+      "dist/electron/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "dist",
+        "to": "app",
+        "filter": [
+          "**/*"
+        ]
+      }
     ],
     "win": {
       "target": "nsis"
     },
     "linux": {
-      "target": ["AppImage", "deb"]
+      "target": [
+        "AppImage"
+      ],
+      "category": "Utility",
+      "maintainer": "davy1ex <davy1ex@example.com>"
+    },
+    "mac": {
+      "target": "dmg"
+    },
+    "asar": true,
+    "extraMetadata": {
+      "main": "dist/electron/main.js"
     }
   }
 }

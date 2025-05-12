@@ -22,17 +22,55 @@
     background: #fff;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    /* padding: 1rem; */
     height: fit-content;
+}
+
+.brainDump__header {
+    display: flex;
+    align-items: center;
+    background-color: #dfdfdf;
+    padding: 0.3rem;
+    border-radius: 8px 9px 0 0;
+    height: 10px;
+    font-size: 0.8rem;
+
+   
+}
+
+.brainDump__header:hover, .brainDump__title:hover {
+    background-color: black;
+    color: white !important;
+}
+
+.brainDump__title {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #333;
+    width: 100%;
+}
+
+.brainDump__titleInput {
+    width: 100%;
+    padding: 0.25rem 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+}
+
+.brainDump__titleInput:focus {
+    outline: none;
+    border-color: black;
+    box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.1);
 }
 
 .brainDump__textarea {
     display: flex;
     max-width: 100%;
     height: 250px;
-    /* padding: 1rem; */
     border: 1px solid #e0e0e0;
-    border-radius: 4px;
+    padding: 0;
+    margin: 0;
     font-size: 1rem;
     line-height: 1.5;
     resize: both;
@@ -40,7 +78,6 @@
     transition: border-color 0.2s ease;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     box-sizing: border-box;
-    border-radius: 8px;
 }
 
 .brainDump__textarea:focus {
@@ -107,23 +144,20 @@
 @media (max-width: 768px) {
     .brainDump__addButton {
         right: 1rem;
-        top: -50px;
+        bottom: 1rem;
+    }
+    
+    .brainDump {
+        width: 100%;
     }
 } 
 
 @media (max-width: 600px) {
-    .brainDump__addButton {
-        right: 1rem;
-        top: 5px;
-    }
     .brainDump__container {
         padding: 1rem;
-        max-width: 100%;
     }
-    .brainDump {
-        max-width: 90%;
-    }
+    
     .brainDump__grid {
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1rem;
     }
 }

@@ -13,6 +13,7 @@ const useBrainDumpStore = create<BrainDumpStore>()(
       createDump: () => {
         const newDump: BrainDump = {
           id: generateId(),
+          title: `New Note ${get().dumps.length + 1}`,
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
         };
@@ -28,6 +29,15 @@ const useBrainDumpStore = create<BrainDumpStore>()(
             ...dump,
             updatedAt: new Date().toISOString(),
           })),
+        }));
+      },
+      updateTitle: (id: string, title: string) => {
+        set((state) => ({
+          dumps: state.dumps.map((dump) =>
+            dump.id === id
+              ? { ...dump, title, updatedAt: new Date().toISOString() }
+              : dump
+          ),
         }));
       },
       getActiveDump: () => {
