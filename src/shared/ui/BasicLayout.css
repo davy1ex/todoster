@@ -1,0 +1,5 @@
+.basicLayout__content__taskList {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}

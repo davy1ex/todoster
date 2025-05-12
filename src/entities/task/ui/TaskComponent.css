@@ -1,0 +1,14 @@
+.taskComponent {
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+    gap: 10px;
+}
+
+.taskComponent__completed {
+    display: flex;
+    width: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
