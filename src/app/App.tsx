@@ -1,10 +1,10 @@
-import { BasicLayout } from "@/shared/ui/BasicLayout"
-import { TaskManagementProvider } from "@/features/taskManagement/model/TaskManagementProvider"
+import { BrainDump } from "@/widgets/brainDump/ui/BrainDump"
+import "./App.css"
 
 export const App = () => {
     return (
-        <TaskManagementProvider>
-            <BasicLayout />
-        </TaskManagementProvider>
+        <div className="app">
+            <BrainDump />
+        </div>
     )
 }
