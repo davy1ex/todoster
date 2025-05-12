@@ -1,33 +1,73 @@
 import { create } from "zustand";
-import type { Task } from "./type";
+import { persist, createJSONStorage } from "zustand/middleware";
+import type { Task, TaskStore } from "./type";
 
-type TaskStore = {
-  tasks: Task[];
-  addTask: (task: Task) => void;
-  checkTask: (id: number) => void;
-  changeReward: (id: number, reward: number) => void;
-  updateTask: (id: number, updates: Partial<Task>) => void;
+// Helper to get initial tasks from localStorage or empty array
+const getInitialTasks = (): Task[] => {
+  const savedTasks = localStorage.getItem("tasks");
+  return savedTasks ? JSON.parse(savedTasks) : [];
 };
 
-export const taskStore = create<TaskStore>((set) => ({
-  tasks: [],
-  addTask: (task) => set((state) => ({ tasks: [...state.tasks, task] })),
-  checkTask: (id) =>
-    set((state) => ({
-      tasks: state.tasks.map((task) =>
-        task.id === id ? { ...task, completed: !task.completed } : task,
-      ),
-    })),
-  changeReward: (id, reward) =>
-    set((state) => ({
-      tasks: state.tasks.map((task) =>
-        task.id === id ? { ...task, reward } : task,
-      ),
-    })),
-  updateTask: (id, updates) =>
-    set((state) => ({
-      tasks: state.tasks.map((task) =>
-        task.id === id ? { ...task, ...updates, updatedAt: new Date() } : task,
-      ),
-    })),
-}));
+export const taskStore = create<TaskStore>()(
+  persist(
+    (set) => ({
+      tasks: getInitialTasks(),
+      addTask: (task: Task) =>
+        set((state: TaskStore) => ({
+          tasks: [
+            ...state.tasks,
+            {
+              ...task,
+              createdAt: new Date(),
+              updatedAt: new Date(),
+            },
+          ],
+        })),
+      updateTask: (id: number, updates: Partial<Task>) =>
+        set((state: TaskStore) => ({
+          tasks: state.tasks.map((task: Task) =>
+            task.id === id
+              ? {
+                  ...task,
+                  ...updates,
+                  updatedAt: new Date(),
+                }
+              : task,
+          ),
+        })),
+      deleteTask: (id: number) =>
+        set((state: TaskStore) => ({
+          tasks: state.tasks.filter((task: Task) => task.id !== id),
+        })),
+      changeReward: (id: number, amount: number) =>
+        set((state: TaskStore) => ({
+          tasks: state.tasks.map((task: Task) =>
+            task.id === id
+              ? {
+                  ...task,
+                  reward: amount,
+                  updatedAt: new Date(),
+                }
+              : task,
+          ),
+        })),
+      checkTask: (id: number) =>
+        set((state: TaskStore) => ({
+          tasks: state.tasks.map((task: Task) =>
+            task.id === id
+              ? {
+                  ...task,
+                  isDone: !task.isDone,
+                  updatedAt: new Date(),
+                }
+              : task,
+          ),
+        })),
+    }),
+    {
+      name: "task-storage", // unique name for localStorage key
+      storage: createJSONStorage(() => localStorage),
+      partialize: (state) => ({ tasks: state.tasks }), // only persist tasks array
+    },
+  ),
+);

@@ -1,5 +1,5 @@
 import { BasicLayout } from "@/shared/ui/BasicLayout"
-import { TaskManagementProvider } from "@/features/taskManagement"
+import { TaskManagementProvider } from "@/features/taskManagement/model/TaskManagementProvider"
 
 export const App = () => {
     return (

@@ -1,39 +1,26 @@
-import type { Task } from '../../model/type'
-import './TaskModal.css'
-import { useState, useEffect } from 'react'
+import type { Task } from '@/entities/task'
+import { useTaskEditModal } from '../model/useTaskEditModal'
+import './TaskEditModal.css'
 
-interface TaskModalProps {
+interface TaskEditModalProps {
     task: Task
-    onChangeReward: (amount: number) => void
     onClose: () => void
     onUpdateTask: (id: number, updates: Partial<Task>) => void
+    onChangeReward: (amount: number) => void
 }
 
-export const TaskModal = ({ task, onChangeReward, onClose, onUpdateTask }: TaskModalProps) => {
-    const [rewardAmount, setRewardAmount] = useState(0)
-    const [editedTask, setEditedTask] = useState<Task>(task)
-
-    useEffect(() => {
-        setEditedTask(task)
-    }, [task])
-
-    const handleRewardChange = () => {
-        if (rewardAmount) {
-            onChangeReward(rewardAmount)
-            setRewardAmount(0)
-        }
-    }
-
-    const handleInputChange = (field: keyof Task, value: any) => {
-        setEditedTask(prev => ({
-            ...prev,
-            [field]: value
-        }))
-        onUpdateTask(task.id, { [field]: value })
-    }
+export const TaskEditModal = (props: TaskEditModalProps) => {
+    const {
+        editedTask,
+        rewardAmount,
+        setRewardAmount,
+        handleInputChange,
+        handleRewardChange,
+        handleBackdropClick
+    } = useTaskEditModal(props)
 
     return (
-        <div className="taskModal">
+        <div className="taskModal" onClick={handleBackdropClick}>
             <div className="taskModal__content">
                 <div className="taskModal__header">
                     <input
@@ -43,7 +30,7 @@ export const TaskModal = ({ task, onChangeReward, onClose, onUpdateTask }: TaskM
                         className="taskModal__titleInput"
                     />
                     <button 
-                        onClick={onClose}
+                        onClick={props.onClose}
                         className="taskModal__closeButton"
                     >
                         ×
@@ -105,4 +92,4 @@ export const TaskModal = ({ task, onChangeReward, onClose, onUpdateTask }: TaskM
             </div>
         </div>
     )
-}
+} 

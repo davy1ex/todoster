@@ -1,0 +1,97 @@
+.brainDump {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.brainDump__textarea {
+    min-height: 150px;
+    padding: 1rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    font-size: 1rem;
+    line-height: 1.5;
+    resize: vertical;
+    transition: border-color 0.2s ease;
+}
+
+.brainDump__textarea:focus {
+    outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.1);
+}
+
+.brainDump__controls {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+.brainDump__button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.brainDump__button--save {
+    background-color: #4a90e2;
+    color: white;
+}
+
+.brainDump__button--save:hover {
+    background-color: #357abd;
+}
+
+.brainDump__button--clear {
+    background-color: #f5f5f5;
+    color: #666;
+}
+
+.brainDump__button--clear:hover {
+    background-color: #e0e0e0;
+}
+
+.brainDump__history {
+    margin-top: 2rem;
+}
+
+.brainDump__history-item {
+    padding: 1rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    background-color: #f9f9f9;
+}
+
+.brainDump__history-content {
+    margin-bottom: 0.5rem;
+    white-space: pre-wrap;
+}
+
+.brainDump__history-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.75rem;
+    color: #666;
+}
+
+.brainDump__history-delete {
+    background: none;
+    border: none;
+    color: #ff4444;
+    cursor: pointer;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+}
+
+.brainDump__history-delete:hover {
+    text-decoration: underline;
+} 

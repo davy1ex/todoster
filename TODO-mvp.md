@@ -48,7 +48,7 @@
   - Inbox view
   - Today view
   - Projects view
-- [ ] List switching
+  - [ ] List switching
 - [ ] Task filtering by list
 
 ### 3.3 Rewards Feature

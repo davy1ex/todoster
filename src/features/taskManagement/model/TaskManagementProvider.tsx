@@ -1,7 +1,7 @@
 import { createContext, useContext, ReactNode } from 'react'
 import { useTaskManagement } from '../model/useTaskManagement'
 import type { TaskManagementContextType } from '../model/types'
-import { TaskModal } from '@/entities/task'
+import { TaskEditModal } from '../ui/TaskEditModal'
 
 const TaskManagementContext = createContext<TaskManagementContextType | null>(null)
 
@@ -24,7 +24,7 @@ export const TaskManagementProvider = ({ children }: TaskManagementProviderProps
         <TaskManagementContext.Provider value={taskManagement}>
             {children}
             {taskManagement.isModalOpen && taskManagement.selectedTask && (
-                <TaskModal
+                <TaskEditModal
                     task={taskManagement.selectedTask}
                     onChangeReward={taskManagement.handleRewardChange}
                     onClose={taskManagement.closeTaskModal}
