@@ -1,5 +1,6 @@
 import { FC } from 'react';
-import { Project } from '../model/types';
+import type { Project } from '../../model/types';
+import { goalStore } from '../../../goal/model/store';
 import './ProjectCard.css';
 
 interface ProjectCardProps {
@@ -31,7 +32,7 @@ export const ProjectCard: FC<ProjectCardProps> = ({ project, onClick }) => {
             
             <div className="project-card__metadata">
                 <span>Tasks: {project.metadata.linkedTasksCount}</span>
-                <span>Goals: {project.goals.length}</span>
+                <span>Goals: {project.goalIds.length}</span>
                 <span>Created: {formatDate(project.createdAt)}</span>
             </div>
             

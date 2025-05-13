@@ -23,3 +23,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+
+android
+dist
+dist-electron
+scripts/

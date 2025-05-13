@@ -1,18 +1,14 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
-import { Project, Goal, ProjectStatus } from "./types";
+import { Project, ProjectStatus } from "./types";
+import { goalStore } from "../../goal/model/store";
 
 interface ProjectStore {
   projects: Project[];
   addProject: (title: string, description: string) => void;
   updateProject: (id: number, updates: Partial<Project>) => void;
-  addGoal: (projectId: number, title: string, description?: string) => void;
-  updateGoal: (
-    projectId: number,
-    goalId: number,
-    updates: Partial<Goal>
-  ) => void;
-  removeGoal: (projectId: number, goalId: number) => void;
+  linkGoal: (projectId: number, goalId: number) => void;
+  unlinkGoal: (projectId: number, goalId: number) => void;
   linkTask: (projectId: number, taskId: number) => void;
   unlinkTask: (projectId: number, taskId: number) => void;
   updateProjectStatus: (projectId: number, status: ProjectStatus) => void;
@@ -21,6 +17,8 @@ interface ProjectStore {
     status?: ProjectStatus,
     hasLinkedTasks?: boolean
   ) => Project[];
+  clearProjects: () => void;
+  importProjects: (projects: Project[]) => void;
 }
 
 // Helper to get initial projects from localStorage or empty array
@@ -33,11 +31,7 @@ const getInitialProjects = (): Project[] => {
     ...project,
     createdAt: new Date(project.createdAt),
     updatedAt: new Date(project.updatedAt),
-    goals: project.goals.map((goal) => ({
-      ...goal,
-      createdAt: new Date(goal.createdAt),
-      updatedAt: new Date(goal.updatedAt),
-    })),
+    goalIds: project.goalIds || [], // Ensure goalIds exists
   }));
 };
 
@@ -55,7 +49,7 @@ export const projectStore = create<ProjectStore>()(
               title,
               description,
               status: "not_started" as ProjectStatus,
-              goals: [],
+              goalIds: [],
               linkedTaskIds: [],
               createdAt: new Date(),
               updatedAt: new Date(),
@@ -68,6 +62,11 @@ export const projectStore = create<ProjectStore>()(
       },
 
       updateProject: (id: number, updates: Partial<Project>) => {
+        // If goalIds is being updated, ensure it's an array
+        if ("goalIds" in updates) {
+          updates.goalIds = updates.goalIds || [];
+        }
+
         set((state) => ({
           projects: state.projects.map((project) =>
             project.id === id
@@ -77,22 +76,16 @@ export const projectStore = create<ProjectStore>()(
         }));
       },
 
-      addGoal: (projectId: number, title: string, description?: string) => {
+      linkGoal: (projectId: number, goalId: number) => {
+        const project = get().projects.find((p) => p.id === projectId);
+        if (!project || project.goalIds.includes(goalId)) return;
+
         set((state) => ({
           projects: state.projects.map((project) =>
             project.id === projectId
               ? {
                   ...project,
-                  goals: [
-                    ...project.goals,
-                    {
-                      id: Date.now(),
-                      title,
-                      description,
-                      createdAt: new Date(),
-                      updatedAt: new Date(),
-                    },
-                  ],
+                  goalIds: [...project.goalIds, goalId],
                   updatedAt: new Date(),
                 }
               : project
@@ -100,35 +93,13 @@ export const projectStore = create<ProjectStore>()(
         }));
       },
 
-      updateGoal: (
-        projectId: number,
-        goalId: number,
-        updates: Partial<Goal>
-      ) => {
+      unlinkGoal: (projectId: number, goalId: number) => {
         set((state) => ({
           projects: state.projects.map((project) =>
             project.id === projectId
               ? {
                   ...project,
-                  goals: project.goals.map((goal) =>
-                    goal.id === goalId
-                      ? { ...goal, ...updates, updatedAt: new Date() }
-                      : goal
-                  ),
-                  updatedAt: new Date(),
-                }
-              : project
-          ),
-        }));
-      },
-
-      removeGoal: (projectId: number, goalId: number) => {
-        set((state) => ({
-          projects: state.projects.map((project) =>
-            project.id === projectId
-              ? {
-                  ...project,
-                  goals: project.goals.filter((goal) => goal.id !== goalId),
+                  goalIds: project.goalIds.filter((id) => id !== goalId),
                   updatedAt: new Date(),
                 }
               : project
@@ -139,8 +110,7 @@ export const projectStore = create<ProjectStore>()(
       linkTask: (projectId: number, taskId: number) => {
         set((state) => ({
           projects: state.projects.map((project) =>
-            project.id === projectId &&
-            !project.linkedTaskIds.map((id) => Number(id)).includes(taskId)
+            project.id === projectId && !project.linkedTaskIds.includes(taskId)
               ? {
                   ...project,
                   linkedTaskIds: [...project.linkedTaskIds, taskId],
@@ -162,12 +132,12 @@ export const projectStore = create<ProjectStore>()(
               ? {
                   ...project,
                   linkedTaskIds: project.linkedTaskIds.filter(
-                    (id) => Number(id) !== taskId
+                    (id) => id !== taskId
                   ),
                   metadata: {
                     ...project.metadata,
                     linkedTasksCount: project.linkedTaskIds.filter(
-                      (id) => Number(id) !== taskId
+                      (id) => id !== taskId
                     ).length,
                   },
                   updatedAt: new Date(),
@@ -202,20 +172,26 @@ export const projectStore = create<ProjectStore>()(
         }
 
         if (hasLinkedTasks !== undefined) {
-          filtered = filtered.filter((project) =>
-            hasLinkedTasks
-              ? project.linkedTaskIds.length > 0
-              : project.linkedTaskIds.length === 0
+          filtered = filtered.filter(
+            (project) => project.linkedTaskIds.length > 0 === hasLinkedTasks
           );
         }
 
         return filtered;
       },
+
+      clearProjects: () => set({ projects: [] }),
+      importProjects: (projects) => {
+        // Ensure all projects have goalIds array
+        const projectsWithGoalIds = projects.map((project) => ({
+          ...project,
+          goalIds: project.goalIds || [],
+        }));
+        set({ projects: projectsWithGoalIds });
+      },
     }),
     {
-      name: "project-storage", // unique name for localStorage key
-      storage: createJSONStorage(() => localStorage),
-      partialize: (state) => ({ projects: state.projects }), // only persist projects array
+      name: "projects-storage",
     }
   )
 );

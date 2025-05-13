@@ -6,7 +6,7 @@ import type { Task, TaskStore } from "./type";
 const getInitialTasks = (): Task[] => {
   const savedTasks = localStorage.getItem("tasks");
   if (!savedTasks) return [];
-  
+
   const tasks = JSON.parse(savedTasks);
   return tasks.map((task: Task) => ({
     ...task,
@@ -39,7 +39,7 @@ export const taskStore = create<TaskStore>()(
                   ...updates,
                   updatedAt: new Date(),
                 }
-              : task,
+              : task
           ),
         })),
       deleteTask: (id: number) =>
@@ -55,7 +55,7 @@ export const taskStore = create<TaskStore>()(
                   reward: amount,
                   updatedAt: new Date(),
                 }
-              : task,
+              : task
           ),
         })),
       checkTask: (id: number) =>
@@ -67,14 +67,16 @@ export const taskStore = create<TaskStore>()(
                   isDone: !task.isDone,
                   updatedAt: new Date(),
                 }
-              : task,
+              : task
           ),
         })),
+      clearTasks: () => set({ tasks: [] }),
+      importTasks: (tasks: Task[]) => set({ tasks }),
     }),
     {
       name: "task-storage", // unique name for localStorage key
       storage: createJSONStorage(() => localStorage),
       partialize: (state) => ({ tasks: state.tasks }), // only persist tasks array
-    },
-  ),
+    }
+  )
 );

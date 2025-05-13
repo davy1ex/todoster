@@ -1,8 +1,12 @@
 .taskComponent {
     display: flex;
     flex-direction: row;
-    width: fit-content;
+    width: 90%; 
+    border-radius: 5px;
+    margin: 5px auto;
+    padding: 10px;
     gap: 10px;
+    background-color: #ffffff;
 }
 
 .taskComponent__completed {

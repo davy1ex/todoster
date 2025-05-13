@@ -13,7 +13,7 @@ export interface Project {
   title: string;
   description: string;
   status: ProjectStatus;
-  goals: Goal[];
+  goalIds: number[];
   linkedTaskIds: number[];
   createdAt: Date;
   updatedAt: Date;

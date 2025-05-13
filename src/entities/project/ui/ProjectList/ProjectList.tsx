@@ -1,8 +1,8 @@
 import { FC, useState, useCallback } from 'react';
-import { Project, ProjectStatus } from '../model/types';
-import { ProjectCard } from './ProjectCard';
-import { ProjectModal } from './ProjectModal';
-import { projectStore } from '../model/store';
+import { ProjectCard } from '../ProjectCard';
+import { ProjectModal } from '../ProjectModal';
+import { projectStore } from '../../model/store';
+import type { Project, ProjectStatus } from '../../model/types';
 import './ProjectList.css';
 
 interface ProjectListProps {
@@ -21,9 +21,6 @@ export const ProjectList: FC<ProjectListProps> = ({
         projects,
         addProject,
         updateProject,
-        addGoal,
-        updateGoal,
-        removeGoal,
         updateProjectStatus,
         getFilteredProjects,
         linkTask,
@@ -69,9 +66,6 @@ export const ProjectList: FC<ProjectListProps> = ({
                     project={selectedProject}
                     onClose={handleCloseModal}
                     onUpdateProject={updateProject}
-                    onAddGoal={addGoal}
-                    onUpdateGoal={updateGoal}
-                    onRemoveGoal={removeGoal}
                     onUpdateStatus={updateProjectStatus}
                     onLinkTask={linkTask}
                     onUnlinkTask={unlinkTask}
