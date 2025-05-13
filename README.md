@@ -1,6 +1,8 @@
 # Gamified Todo App
 
 A modern application with gamification elements and brain dumping capabilities, built with React and TypeScript, exist for simplify your life.
+![screenshot](https://github.com/user-attachments/assets/cbed0ca3-b030-421b-ac37-2c20cc1f8ba9)
+
 
 ## Table of Contents
 - [Gamified Todo App](#gamified-todo-app)
