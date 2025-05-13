@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./InputTask.css";
 
 type InputTaskProps = {
     onAdd: (task: string) => void;
@@ -14,10 +15,14 @@ export const InputTask = (props: InputTaskProps) => {
             setTask("");
         }
     }
+    const handleAddTask = () => {
+        props.onAdd(task);
+        setTask("");
+    }
     return (
         <div className="inputTask">
             <input type="text" placeholder={`Add a task to ${props.listName}`} onKeyDown={handleKeyDown} value={task} onChange={(e) => setTask(e.target.value)}/>
-            <button onClick={() => props.onAdd(task)}>Add</button>
+            <button onClick={() => handleAddTask()}>+</button>
         </div>
     )
 }

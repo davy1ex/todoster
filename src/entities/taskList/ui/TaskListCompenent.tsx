@@ -26,7 +26,7 @@ export const TaskListComponent = (props: TaskListComponentProps) => {
     return (
         <div className="taskListComponent">
             <div className="taskListComponent__title">
-                {props.title}
+                <h2>{props.title}</h2>
             </div>
             <div className="taskListComponent__header">
                 <InputTask listName={props.title} onAdd={handleAddTask} />

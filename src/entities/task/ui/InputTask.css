@@ -1,0 +1,30 @@
+.inputTask {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.inputTask input {
+    width: 90%;
+    margin: auto;
+    padding: 10px;
+    border: none;
+    border-radius: 5px 0 0 5px;
+    margin-bottom: 10px;
+}
+
+.inputTask input:focus {
+    outline: none;
+}
+
+.inputTask button {
+    width: 10%;
+
+    margin: auto;
+    padding: 10px;
+    background-color: #ffffff;
+    box-shadow: none;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    margin-bottom: 10px;
+}
