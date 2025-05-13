@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import {App} from './App'
 import { getPlatform } from './lib/platform';
 import type { Platform } from './lib/platform';
+import '@/shared/styles/index.css';
 
 const platform: Platform = getPlatform();
 

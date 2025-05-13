@@ -69,11 +69,25 @@ export const taskStore = create<TaskStore>()(
           ),
         })),
       checkTask: (id: number) =>
-        set((state) => ({
-          tasks: state.tasks.map((task) =>
-            task.id === id ? { ...task, isDone: !task.isDone } : task
-          ),
-        })),
+        set((state) => {
+          const task = state.tasks.find((t) => t.id === id);
+          if (!task) return state;
+
+          const newIsDone = !task.isDone;
+
+          // Add coins when completing task, remove when uncompleting
+          if (newIsDone) {
+            rewardStore.getState().addCoins(task.reward);
+          } else {
+            rewardStore.getState().removeCoins(task.reward);
+          }
+
+          return {
+            tasks: state.tasks.map((task) =>
+              task.id === id ? { ...task, isDone: newIsDone } : task
+            ),
+          };
+        }),
       changeReward: (id: number, amount: number) =>
         set((state) => ({
           tasks: state.tasks.map((task) =>
