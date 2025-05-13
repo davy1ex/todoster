@@ -1,10 +1,15 @@
-import { useEffect } from 'react';
+import { useEffect, FC } from 'react';
 import { migrateGoalProjectLinks } from '../entities/goal/model/migrateGoals';
 import { BasicLayout } from "@/shared/ui/BasicLayout"
 import { TaskManagementProvider } from "@/features/taskManagement/model/TaskManagementProvider"
 import { SettingsProvider } from "@/features/settings"
+import type { Platform } from './lib/platform';
 
-export const App = () => {
+interface AppProps {
+  platform: Platform;
+}
+
+export const App: FC<AppProps> = ({ platform }) => {
     useEffect(() => {
         // Run migration when app starts
         migrateGoalProjectLinks();

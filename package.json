@@ -1,5 +1,5 @@
 {
-  "name": "react-fsd2-multiplatform",
+  "name": "todoster",
   "private": true,
   "version": "0.0.1",
   "description": "React FSD2 Multiplatform App",
@@ -17,7 +17,7 @@
     "electron:tsc:linux": "rm -rf dist-electron && mkdir -p dist-electron && tsc --project electron/tsconfig.json",
     "electron:dev": "concurrently \"vite\" \"wait-on tcp:5173 && NODE_ENV=development electron .\"",
     "electron:build:win": "npm run electron:tsc:win && vite build && electron-builder --win portable --x64",
-    "electron:build:linux": "npm run electron:tsc:linux && vite build && electron-builder --linux AppImage deb",
+    "electron:build:linux": "npm run electron:tsc:linux && vite build && electron-builder --linux AppImage",
     "electron:build:all": "npm run electron:tsc && vite build && electron-builder --win portable --x64 --linux AppImage deb",
     "cap:add:android": "cap add android",
     "cap:sync": "cap sync",
@@ -49,10 +49,9 @@
     },
     "linux": {
       "target": [
-        "AppImage",
-        "deb"
+        "AppImage"
       ],
-      "category": "Development",
+      "category": "Utility",
       "maintainer": "Your Name <your.email@example.com>"
     },
     "mac": {
@@ -66,15 +65,16 @@
     }
   },
   "dependencies": {
+    "@capacitor/android": "^7.0.0",
+    "@capacitor/core": "^7.0.0",
     "@excalidraw/excalidraw": "^0.18.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "zustand": "^5.0.4"
   },
   "devDependencies": {
-    "@capacitor/android": "^5.7.0",
-    "@capacitor/cli": "^5.7.0",
-    "@capacitor/core": "^5.7.0",
+    "@capacitor/app": "^7.0.1",
+    "@capacitor/cli": "^7.0.0",
     "@electron-forge/cli": "^7.8.0",
     "@electron-forge/maker-zip": "^7.8.0",
     "@electron-forge/plugin-vite": "^7.8.0",

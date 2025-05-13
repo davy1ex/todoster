@@ -1,4 +1,33 @@
-docs/*
+# Dependencies
+node_modules/
+.pnp/
+.pnp.js
+
+# Testing
+coverage/
+
+# Production build directories
+dist/
+dist-electron/
+dist-app/
+!builds/
+
+# Android build files
+android/app/build/
+android/app/release/
+android/build/
+android/.gradle/
+android/local.properties
+!builds/android/
+
+# Development
+docs
+scripts
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
 # Logs
 logs
 *.log
@@ -8,15 +37,11 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
-
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
-.idea
+!.vscode/settings.json
+.idea/
 .DS_Store
 *.suo
 *.ntvs*
@@ -24,8 +49,21 @@ dist-ssr
 *.sln
 *.sw?
 
+# Capacitor
+android/
+ios/
+.sourcemaps/
+.gradle/
+*.keystore
+!builds/**/*.keystore
 
-android
-dist
-dist-electron
-scripts/
+# Electron
+.electron-vendors.cache.json
+
+# TypeScript
+*.tsbuildinfo
+
+# Cache
+.cache/
+.temp/
+.eslintcache

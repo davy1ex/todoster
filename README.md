@@ -153,3 +153,110 @@ src/
 ## License
 
 MIT License - feel free to use this project for your own purposes.
+
+## Building the Application
+
+### Prerequisites
+
+#### For All Platforms
+- Node.js 16+ (LTS recommended)
+- npm 7+
+- Git
+
+#### For Windows Build
+- Windows 10/11 or WSL2
+- Visual Studio Build Tools 2019+
+
+#### For Linux Build
+- Any modern Linux distribution
+- Required packages:
+  ```bash
+  sudo apt update
+  sudo apt install -y build-essential
+  ```
+
+#### For Android Build
+- JDK 17+
+- Android SDK
+- Android Studio
+- Required environment variables:
+  ```bash
+  export ANDROID_HOME=$HOME/Android/Sdk
+  export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools
+  ```
+
+### Build Instructions
+
+#### Desktop Builds (Electron)
+
+1. **Windows Build**
+   ```bash
+   # Creates a portable .exe in dist-app/
+   npm run electron:build:win
+   ```
+
+2. **Linux Build**
+   ```bash
+   # Creates an AppImage in dist-app/
+   npm run electron:build:linux
+   ```
+
+   The output will be:
+   - `dist-app/Gamified Todo-0.0.1.AppImage`
+
+#### Android Build (Capacitor)
+
+1. **First-time setup**
+   ```bash
+   # Add Android platform
+   npm run cap:add:android
+   ```
+
+2. **Build process**
+   ```bash
+   # Build the web app
+   npm run build
+
+   # Sync with Android
+   npm run cap:sync
+
+   # Open in Android Studio
+   npm run cap:open:android
+   ```
+
+3. **In Android Studio**
+   - Wait for Gradle sync to complete
+   - Click "Build" -> "Build Bundle(s) / APK(s)" -> "Build APK(s)"
+   - Find the APK in `android/app/build/outputs/apk/debug/app-debug.apk`
+
+### Development
+
+1. **Web Development**
+   ```bash
+   npm run dev
+   ```
+
+2. **Electron Development**
+   ```bash
+   npm run electron:dev
+   ```
+
+### Troubleshooting
+
+#### Linux Build Issues
+- If you encounter permission issues, ensure proper ownership:
+  ```bash
+  sudo chown -R $USER:$USER ~/.config/electron-builder
+  ```
+
+#### Android Build Issues
+- Ensure ANDROID_HOME is properly set
+- Check that Android SDK Platform 34 and Build Tools are installed
+- For WSL2 users, ensure Android Studio is installed in Windows and properly configured
+
+### Notes
+
+- The Windows build creates a portable executable
+- The Linux build creates an AppImage for maximum compatibility
+- Android builds require additional setup in Android Studio
+- All builds preserve local storage data and settings
