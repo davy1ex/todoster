@@ -19,6 +19,9 @@ android/build/
 android/.gradle/
 android/local.properties
 !builds/android/
+android/app/debug/
+*.apk
+*.aab
 
 # Development
 docs
@@ -59,6 +62,11 @@ ios/
 
 # Electron
 .electron-vendors.cache.json
+*.AppImage
+*.snap
+*.deb
+*.exe
+*.dmg
 
 # TypeScript
 *.tsbuildinfo
@@ -67,3 +75,9 @@ ios/
 .cache/
 .temp/
 .eslintcache
+
+# System Files
+Thumbs.db
+
+
+build

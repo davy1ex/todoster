@@ -1,7 +1,12 @@
 import { create } from "zustand";
-import { persist, createJSONStorage } from "zustand/middleware";
+import { persist } from "zustand/middleware";
+import { createStorage } from "@/shared/lib/storage";
+import { getPlatform } from "@/app/lib/platform";
 import type { Task, TaskStore } from "./type";
 import { rewardStore } from "../../reward/model/store";
+
+// Helper to get initial tasks from storage or empty array
+const storage = createStorage(getPlatform());
 
 // Helper to get initial tasks from localStorage or empty array
 const getInitialTasks = (): Task[] => {
@@ -20,75 +25,57 @@ export const taskStore = create<TaskStore>()(
   persist(
     (set, get) => ({
       tasks: getInitialTasks(),
-      addTask: (task: Task) =>
-        set((state: TaskStore) => ({
+      addTask: (task) =>
+        set((state) => ({
           tasks: [
             ...state.tasks,
             {
               ...task,
-              createdAt: new Date(),
-              updatedAt: new Date(),
+              id: state.tasks.length
+                ? Math.max(...state.tasks.map((t) => t.id)) + 1
+                : 1,
             },
           ],
         })),
-      updateTask: (id: number, updates: Partial<Task>) =>
-        set((state: TaskStore) => ({
-          tasks: state.tasks.map((task: Task) =>
-            task.id === id
-              ? {
-                  ...task,
-                  ...updates,
-                  updatedAt: new Date(),
-                }
-              : task
+      removeTask: (id) =>
+        set((state) => ({
+          tasks: state.tasks.filter((task) => task.id !== id),
+        })),
+      updateTask: (id, updates) =>
+        set((state) => ({
+          tasks: state.tasks.map((task) =>
+            task.id === id ? { ...task, ...updates } : task
           ),
         })),
-      deleteTask: (id: number) =>
-        set((state: TaskStore) => ({
-          tasks: state.tasks.filter((task: Task) => task.id !== id),
-        })),
-      changeReward: (id: number, amount: number) =>
-        set((state: TaskStore) => ({
-          tasks: state.tasks.map((task: Task) =>
-            task.id === id
-              ? {
-                  ...task,
-                  reward: amount,
-                  updatedAt: new Date(),
-                }
-              : task
+      checkTask: (id) =>
+        set((state) => ({
+          tasks: state.tasks.map((task) =>
+            task.id === id ? { ...task, checked: !task.checked } : task
           ),
         })),
-      checkTask: (id: number) => {
-        const task = get().tasks.find((t) => t.id === id);
-        if (!task) return;
-
-        // If task is being completed, add coins. If being unchecked, remove coins
-        if (!task.isDone) {
-          rewardStore.getState().addCoins(task.reward);
-        } else {
-          rewardStore.getState().removeCoins(task.reward);
-        }
-
-        set((state: TaskStore) => ({
-          tasks: state.tasks.map((task: Task) =>
-            task.id === id
-              ? {
-                  ...task,
-                  isDone: !task.isDone,
-                  updatedAt: new Date(),
-                }
-              : task
+      changeReward: (id, reward) =>
+        set((state) => ({
+          tasks: state.tasks.map((task) =>
+            task.id === id ? { ...task, reward } : task
           ),
-        }));
-      },
+        })),
       clearTasks: () => set({ tasks: [] }),
       importTasks: (tasks: Task[]) => set({ tasks }),
     }),
     {
-      name: "task-storage",
-      storage: createJSONStorage(() => localStorage),
-      partialize: (state) => ({ tasks: state.tasks }),
+      name: "tasks",
+      storage: {
+        getItem: async (name) => {
+          const value = await storage.getItem(name);
+          return value ?? null;
+        },
+        setItem: async (name, value) => {
+          await storage.setItem(name, value);
+        },
+        removeItem: async (name) => {
+          await storage.removeItem(name);
+        },
+      },
     }
   )
 );
