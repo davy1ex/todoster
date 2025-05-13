@@ -7,7 +7,7 @@ import './GoalList.css';
 export const GoalList = () => {
     const [selectedGoal, setSelectedGoal] = useState<Goal | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const { goals, addGoal, updateGoal, deleteGoal, toggleGoalCompletion } = goalStore();
+    const { goals, addGoal, updateGoal, deleteGoal, toggleGoalCompletion, archiveGoal } = goalStore();
 
     const handleOpenModal = (goal?: Goal) => {
         setSelectedGoal(goal || null);
@@ -82,6 +82,9 @@ export const GoalList = () => {
                             )}
                             <div className="goal-list__item-actions">
                                 <button onClick={() => handleOpenModal(goal)}>Edit</button>
+                                <button onClick={() => archiveGoal(goal.id)} title="Archive goal">
+                                    📦
+                                </button>
                                 <button onClick={() => deleteGoal(goal.id)}>Delete</button>
                             </div>
                         </div>

@@ -2,7 +2,12 @@ import { FC, useRef, useEffect } from 'react';
 import './SettingsModal.css';
 import './ThemeSwitcher.css';
 import { ThemeSwitcher } from './ThemeSwitcher';
-
+import { ArchivedTasks } from '@/entities/task/ui/ArchivedTasks';
+import { ArchivedGoals } from '@/entities/goal/ui/ArchivedGoals';
+import { ArchivedRewards } from '@/entities/reward/ui/ArchivedRewards/ArchivedRewards';
+import { taskStore } from '@/entities/task/model/store';
+import { goalStore } from '@/entities/goal/model/store';
+import { rewardStore } from '@/entities/reward/model/store';
 
 interface SettingsModalProps {
     onClose: () => void;
@@ -19,6 +24,9 @@ export const SettingsModal: FC<SettingsModalProps> = ({
 }) => {
     const modalRef = useRef<HTMLDivElement>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const { clearArchive: clearTaskArchive } = taskStore();
+    const { clearArchive: clearGoalArchive } = goalStore();
+    const { clearArchive: clearRewardArchive } = rewardStore();
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -42,10 +50,11 @@ export const SettingsModal: FC<SettingsModalProps> = ({
         };
     }, [onClose]);
 
-    const handleClearData = () => {
-        if (window.confirm('Are you sure you want to clear all account data? This action cannot be undone.')) {
-            onClearData();
-            onClose();
+    const handleClearArchives = () => {
+        if (window.confirm('Are you sure you want to clear all archives? This cannot be undone.')) {
+            clearTaskArchive();
+            clearGoalArchive();
+            clearRewardArchive();
         }
     };
 
@@ -55,19 +64,16 @@ export const SettingsModal: FC<SettingsModalProps> = ({
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                const content = e.target?.result as string;
-                try {
-                    onImportData(content);
-                    onClose();
-                } catch (error) {
-                    alert('Failed to import data. Please check the file format.');
-                }
-            };
-            reader.readAsText(file);
-        }
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const content = e.target?.result;
+            if (typeof content === 'string') {
+                onImportData(content);
+            }
+        };
+        reader.readAsText(file);
     };
 
     return (
@@ -79,9 +85,12 @@ export const SettingsModal: FC<SettingsModalProps> = ({
                 </div>
 
                 <div className="settings-modal__section">
-                    Theme: <ThemeSwitcher />
+                    <h3>Theme</h3>
+                    <div className="settings-modal__theme">
+                        <ThemeSwitcher />
+                    </div>
                     
-                    <h3>Account Data</h3>
+                    <h3>Data Management</h3>
                     <div className="settings-modal__actions">
                         <button 
                             onClick={onExportData}
@@ -105,11 +114,25 @@ export const SettingsModal: FC<SettingsModalProps> = ({
                         />
                         
                         <button 
-                            onClick={handleClearData}
+                            onClick={onClearData}
                             className="settings-modal__button settings-modal__button--danger"
                         >
                             Clear Account Data
                         </button>
+                    </div>
+                </div>
+
+                <div className="settings-modal__section">
+                    <div className="settings-modal__archive-header">
+                        <h3>Archives</h3>
+                        <button onClick={handleClearArchives} className="settings-modal__clear-archive-btn">
+                            Clear All Archives
+                        </button>
+                    </div>
+                    <div className="settings-modal__archives">
+                        <ArchivedTasks />
+                        <ArchivedGoals />
+                        <ArchivedRewards />
                     </div>
                 </div>
             </div>

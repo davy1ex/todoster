@@ -1,27 +1,22 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { Goal } from "./types";
+import type { Goal, GoalStore } from "./types";
 import { projectStore } from "../../project/model/store";
 
-interface GoalStore {
-  goals: Goal[];
-  addGoal: (goal: Omit<Goal, "id" | "createdAt" | "updatedAt">) => number;
-  addGoalToProject: (
-    projectId: number,
-    goal: Omit<Goal, "id" | "createdAt" | "updatedAt" | "projectId">
-  ) => void;
-  updateGoal: (id: number, updates: Partial<Goal>) => void;
-  deleteGoal: (id: number) => void;
-  toggleGoalCompletion: (id: number) => void;
-  getGoalsByProjectId: (projectId: number) => Goal[];
-  clearGoals: () => void;
-  importGoals: (goals: Goal[]) => void;
-}
+// Helper function to ensure dates are properly parsed
+const parseDates = (goal: Goal): Goal => ({
+  ...goal,
+  createdAt: new Date(goal.createdAt),
+  updatedAt: new Date(goal.updatedAt),
+  deadline: goal.deadline ? new Date(goal.deadline) : undefined,
+  archivedAt: goal.archivedAt ? new Date(goal.archivedAt) : undefined,
+});
 
 export const goalStore = create<GoalStore>()(
   persist(
     (set, get) => ({
       goals: [],
+      archivedGoals: [],
 
       addGoal: (goal) => {
         const newGoalId = Date.now();
@@ -33,6 +28,7 @@ export const goalStore = create<GoalStore>()(
               id: newGoalId,
               createdAt: new Date(),
               updatedAt: new Date(),
+              isArchived: false,
             },
           ],
         }));
@@ -45,7 +41,9 @@ export const goalStore = create<GoalStore>()(
       },
 
       updateGoal: (id, updates) => {
-        const currentGoal = get().goals.find((g) => g.id === id);
+        const currentGoal =
+          get().goals.find((g) => g.id === id) ||
+          get().archivedGoals.find((g) => g.id === id);
         if (!currentGoal) return;
 
         if (
@@ -66,16 +64,24 @@ export const goalStore = create<GoalStore>()(
               ? { ...goal, ...updates, updatedAt: new Date() }
               : goal
           ),
+          archivedGoals: state.archivedGoals.map((goal) =>
+            goal.id === id
+              ? { ...goal, ...updates, updatedAt: new Date() }
+              : goal
+          ),
         }));
       },
 
       deleteGoal: (id) => {
-        const goal = get().goals.find((g) => g.id === id);
+        const goal =
+          get().goals.find((g) => g.id === id) ||
+          get().archivedGoals.find((g) => g.id === id);
         if (goal?.projectId) {
           projectStore.getState().unlinkGoal(goal.projectId, id);
         }
         set((state) => ({
           goals: state.goals.filter((goal) => goal.id !== id),
+          archivedGoals: state.archivedGoals.filter((goal) => goal.id !== id),
         }));
       },
 
@@ -90,33 +96,100 @@ export const goalStore = create<GoalStore>()(
                 }
               : goal
           ),
+          archivedGoals: state.archivedGoals.map((goal) =>
+            goal.id === id
+              ? {
+                  ...goal,
+                  isCompleted: !goal.isCompleted,
+                  updatedAt: new Date(),
+                }
+              : goal
+          ),
         })),
 
-      getGoalsByProjectId: (projectId) =>
-        get().goals.filter((goal) => goal.projectId === projectId),
+      getGoalsByProjectId: (projectId) => [
+        ...get().goals.filter((goal) => goal.projectId === projectId),
+        ...get().archivedGoals.filter((goal) => goal.projectId === projectId),
+      ],
 
       clearGoals: () => {
-        get().goals.forEach((goal) => {
+        const allGoals = [...get().goals, ...get().archivedGoals];
+        allGoals.forEach((goal) => {
           if (goal.projectId) {
             projectStore.getState().unlinkGoal(goal.projectId, goal.id);
           }
         });
-        set({ goals: [] });
+        set({ goals: [], archivedGoals: [] });
       },
 
       importGoals: (goals) => {
         get().clearGoals();
+        const activeGoals = goals
+          .filter((goal) => !goal.isArchived)
+          .map(parseDates);
+        const archivedGoals = goals
+          .filter((goal) => goal.isArchived)
+          .map(parseDates);
 
-        set({ goals });
+        set({ goals: activeGoals, archivedGoals });
         goals.forEach((goal) => {
           if (goal.projectId) {
             projectStore.getState().linkGoal(goal.projectId, goal.id);
           }
         });
       },
+
+      archiveGoal: (id) =>
+        set((state) => {
+          const goalToArchive = state.goals.find((g) => g.id === id);
+          if (!goalToArchive) return state;
+
+          const archivedGoal = {
+            ...goalToArchive,
+            isArchived: true,
+            archivedAt: new Date(),
+          };
+
+          return {
+            goals: state.goals.filter((g) => g.id !== id),
+            archivedGoals: [...state.archivedGoals, archivedGoal],
+          };
+        }),
+
+      unarchiveGoal: (id) =>
+        set((state) => {
+          const goalToUnarchive = state.archivedGoals.find((g) => g.id === id);
+          if (!goalToUnarchive) return state;
+
+          const unarchivedGoal = {
+            ...goalToUnarchive,
+            isArchived: false,
+            archivedAt: undefined,
+          };
+
+          return {
+            archivedGoals: state.archivedGoals.filter((g) => g.id !== id),
+            goals: [...state.goals, unarchivedGoal],
+          };
+        }),
+
+      getArchivedGoals: () => get().archivedGoals.map(parseDates),
+
+      clearArchive: () =>
+        set((state) => ({
+          ...state,
+          archivedGoals: [],
+        })),
     }),
     {
       name: "goals-storage",
+      onRehydrateStorage: () => (state) => {
+        // Ensure dates are parsed after rehydration
+        if (state) {
+          state.goals = state.goals.map(parseDates);
+          state.archivedGoals = state.archivedGoals.map(parseDates);
+        }
+      },
     }
   )
 );

@@ -100,4 +100,49 @@
 
 .settings-modal__button--danger:hover {
     background: var(--color-background-alt);
+}
+
+.settings-modal__archive-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.settings-modal__clear-archive-btn {
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    background-color: var(--color-background-alt);
+    color: var(--color-text);
+    border: none;
+    cursor: pointer;
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+}
+
+.settings-modal__clear-archive-btn:hover {
+    background-color: var(--color-background-dark);
+}
+
+.settings-modal__archives {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 1rem;
+}
+
+.settings-modal__archives::-webkit-scrollbar {
+    width: 0.375rem;
+}
+
+.settings-modal__archives::-webkit-scrollbar-track {
+    background: var(--color-background-alt);
+    border-radius: 0.375rem;
+}
+
+.settings-modal__archives::-webkit-scrollbar-thumb {
+    background: var(--color-background-dark);
+    border-radius: 0.375rem;
 } 

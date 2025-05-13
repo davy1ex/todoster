@@ -23,22 +23,33 @@ const storageAdapter: StateStorage = {
 };
 
 // Helper to get initial tasks from storage or empty array
-const getInitialTasks = async (): Promise<Task[]> => {
+const getInitialTasks = async (): Promise<{
+  tasks: Task[];
+  archivedTasks: Task[];
+}> => {
   try {
     const savedTasks = await storage.getItem("tasks");
-    if (!savedTasks) return [];
+    const savedArchivedTasks = await storage.getItem("archivedTasks");
 
-    const tasks = JSON.parse(savedTasks);
-    if (!Array.isArray(tasks)) return [];
+    const parseTasks = (tasksStr: string | null): Task[] => {
+      if (!tasksStr) return [];
+      const tasks = JSON.parse(tasksStr);
+      if (!Array.isArray(tasks)) return [];
+      return tasks.map((task: Task) => ({
+        ...task,
+        createdAt: new Date(task.createdAt),
+        updatedAt: new Date(task.updatedAt),
+        archivedAt: task.archivedAt ? new Date(task.archivedAt) : undefined,
+      }));
+    };
 
-    return tasks.map((task: Task) => ({
-      ...task,
-      createdAt: new Date(task.createdAt),
-      updatedAt: new Date(task.updatedAt),
-    }));
+    return {
+      tasks: parseTasks(savedTasks),
+      archivedTasks: parseTasks(savedArchivedTasks),
+    };
   } catch (error) {
     console.error("Error loading tasks:", error);
-    return [];
+    return { tasks: [], archivedTasks: [] };
   }
 };
 
@@ -46,6 +57,8 @@ export const taskStore = create<TaskStore>()(
   persist(
     (set, get) => ({
       tasks: [],
+      archivedTasks: [],
+
       addTask: (task: Task) =>
         set((state) => ({
           tasks: [
@@ -55,19 +68,81 @@ export const taskStore = create<TaskStore>()(
               id: state.tasks.length
                 ? Math.max(...state.tasks.map((t) => t.id)) + 1
                 : 1,
+              isArchived: false,
             },
           ],
         })),
+
       deleteTask: (id: number) =>
-        set((state) => ({
-          tasks: state.tasks.filter((task) => task.id !== id),
-        })),
+        set((state) => {
+          // Remove from either active or archived tasks
+          const newTasks = state.tasks.filter((task) => task.id !== id);
+          const newArchivedTasks = state.archivedTasks.filter(
+            (task) => task.id !== id
+          );
+
+          return {
+            tasks: newTasks,
+            archivedTasks: newArchivedTasks,
+          };
+        }),
+
+      archiveTask: (id: number) =>
+        set((state) => {
+          const taskToArchive = state.tasks.find((t) => t.id === id);
+          if (!taskToArchive) return state;
+
+          const archivedTask = {
+            ...taskToArchive,
+            isArchived: true,
+            archivedAt: new Date(),
+          };
+
+          return {
+            tasks: state.tasks.filter((t) => t.id !== id),
+            archivedTasks: [...state.archivedTasks, archivedTask],
+          };
+        }),
+
+      unarchiveTask: (id: number) =>
+        set((state) => {
+          const taskToUnarchive = state.archivedTasks.find((t) => t.id === id);
+          if (!taskToUnarchive) return state;
+
+          const unarchivedTask = {
+            ...taskToUnarchive,
+            isArchived: false,
+            archivedAt: undefined,
+          };
+
+          return {
+            archivedTasks: state.archivedTasks.filter((t) => t.id !== id),
+            tasks: [...state.tasks, unarchivedTask],
+          };
+        }),
+
       updateTask: (id: number, updates: Partial<Task>) =>
-        set((state) => ({
-          tasks: state.tasks.map((task) =>
-            task.id === id ? { ...task, ...updates } : task
-          ),
-        })),
+        set((state) => {
+          // Check both active and archived tasks
+          const isArchived = state.archivedTasks.some((t) => t.id === id);
+
+          if (isArchived) {
+            return {
+              ...state,
+              archivedTasks: state.archivedTasks.map((task) =>
+                task.id === id ? { ...task, ...updates } : task
+              ),
+            };
+          }
+
+          return {
+            ...state,
+            tasks: state.tasks.map((task) =>
+              task.id === id ? { ...task, ...updates } : task
+            ),
+          };
+        }),
+
       checkTask: (id: number) =>
         set((state) => {
           const task = state.tasks.find((t) => t.id === id);
@@ -83,16 +158,41 @@ export const taskStore = create<TaskStore>()(
           }
 
           return {
+            ...state,
             tasks: state.tasks.map((task) =>
               task.id === id ? { ...task, isDone: newIsDone } : task
             ),
           };
         }),
+
       changeReward: (id: number, amount: number) =>
+        set((state) => {
+          // Check both active and archived tasks
+          const isArchived = state.archivedTasks.some((t) => t.id === id);
+
+          if (isArchived) {
+            return {
+              ...state,
+              archivedTasks: state.archivedTasks.map((task) =>
+                task.id === id ? { ...task, reward: amount } : task
+              ),
+            };
+          }
+
+          return {
+            ...state,
+            tasks: state.tasks.map((task) =>
+              task.id === id ? { ...task, reward: amount } : task
+            ),
+          };
+        }),
+
+      getArchivedTasks: () => get().archivedTasks,
+
+      clearArchive: () =>
         set((state) => ({
-          tasks: state.tasks.map((task) =>
-            task.id === id ? { ...task, reward: amount } : task
-          ),
+          ...state,
+          archivedTasks: [],
         })),
     }),
     {
@@ -103,6 +203,6 @@ export const taskStore = create<TaskStore>()(
 );
 
 // Initialize tasks from storage
-getInitialTasks().then((tasks) => {
-  taskStore.setState({ tasks });
+getInitialTasks().then(({ tasks, archivedTasks }) => {
+  taskStore.setState({ tasks, archivedTasks });
 });

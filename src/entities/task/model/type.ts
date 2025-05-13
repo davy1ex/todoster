@@ -7,13 +7,20 @@ export type Task = {
   reward: number;
   createdAt: Date;
   updatedAt: Date;
+  isArchived: boolean;
+  archivedAt?: Date;
 };
 
 export type TaskStore = {
   tasks: Task[];
+  archivedTasks: Task[];
   addTask: (task: Task) => void;
   updateTask: (id: number, updates: Partial<Task>) => void;
   deleteTask: (id: number) => void;
+  archiveTask: (id: number) => void;
+  unarchiveTask: (id: number) => void;
   changeReward: (id: number, amount: number) => void;
   checkTask: (id: number) => void;
+  getArchivedTasks: () => Task[];
+  clearArchive: () => void;
 };

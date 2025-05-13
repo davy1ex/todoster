@@ -1,27 +1,21 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { Reward } from "./types";
+import { Reward, RewardStore } from "./types";
 
-interface RewardStore {
-  totalCoins: number;
-  rewards: Reward[];
-  addCoins: (amount: number) => void;
-  removeCoins: (amount: number) => void;
-  resetCoins: () => void;
-  addReward: (reward: Omit<Reward, "id" | "createdAt" | "updatedAt">) => void;
-  deleteReward: (id: number) => void;
-  claimReward: (id: number) => void;
-  updateReward: (
-    id: number,
-    updates: Partial<Omit<Reward, "id" | "createdAt" | "updatedAt">>
-  ) => void;
-}
+// Helper function to ensure dates are properly parsed
+const parseDates = (reward: Reward): Reward => ({
+  ...reward,
+  createdAt: new Date(reward.createdAt),
+  updatedAt: new Date(reward.updatedAt),
+  archivedAt: reward.archivedAt ? new Date(reward.archivedAt) : undefined,
+});
 
 export const rewardStore = create<RewardStore>()(
   persist(
     (set, get) => ({
       totalCoins: 0,
       rewards: [],
+      archivedRewards: [],
 
       addCoins: (amount: number) =>
         set((state) => ({
@@ -44,6 +38,7 @@ export const rewardStore = create<RewardStore>()(
               id: Date.now(),
               createdAt: new Date(),
               updatedAt: new Date(),
+              isArchived: false,
             },
           ],
         })),
@@ -51,6 +46,9 @@ export const rewardStore = create<RewardStore>()(
       deleteReward: (id) =>
         set((state) => ({
           rewards: state.rewards.filter((reward) => reward.id !== id),
+          archivedRewards: state.archivedRewards.filter(
+            (reward) => reward.id !== id
+          ),
         })),
 
       claimReward: (id) => {
@@ -76,10 +74,72 @@ export const rewardStore = create<RewardStore>()(
                 }
               : reward
           ),
+          archivedRewards: state.archivedRewards.map((reward) =>
+            reward.id === id
+              ? {
+                  ...reward,
+                  ...updates,
+                  updatedAt: new Date(),
+                }
+              : reward
+          ),
+        })),
+
+      archiveReward: (id) =>
+        set((state) => {
+          const rewardToArchive = state.rewards.find((r) => r.id === id);
+          if (!rewardToArchive) return state;
+
+          const archivedReward = {
+            ...rewardToArchive,
+            isArchived: true,
+            archivedAt: new Date(),
+          };
+
+          return {
+            ...state,
+            rewards: state.rewards.filter((r) => r.id !== id),
+            archivedRewards: [...state.archivedRewards, archivedReward],
+          };
+        }),
+
+      unarchiveReward: (id) =>
+        set((state) => {
+          const rewardToUnarchive = state.archivedRewards.find(
+            (r) => r.id === id
+          );
+          if (!rewardToUnarchive) return state;
+
+          const unarchivedReward = {
+            ...rewardToUnarchive,
+            isArchived: false,
+            archivedAt: undefined,
+          };
+
+          return {
+            ...state,
+            archivedRewards: state.archivedRewards.filter((r) => r.id !== id),
+            rewards: [...state.rewards, unarchivedReward],
+          };
+        }),
+
+      getArchivedRewards: () => get().archivedRewards.map(parseDates),
+
+      clearArchive: () =>
+        set((state) => ({
+          ...state,
+          archivedRewards: [],
         })),
     }),
     {
       name: "rewards-storage",
+      onRehydrateStorage: () => (state) => {
+        // Ensure dates are parsed after rehydration
+        if (state) {
+          state.rewards = state.rewards.map(parseDates);
+          state.archivedRewards = state.archivedRewards.map(parseDates);
+        }
+      },
     }
   )
 );

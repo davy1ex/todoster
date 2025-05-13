@@ -11,8 +11,7 @@ interface RewardCardProps {
 export const RewardCard: FC<RewardCardProps> = ({ reward }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const totalCoins = rewardStore((state) => state.totalCoins);
-    const claimReward = rewardStore((state) => state.claimReward);
-    const deleteReward = rewardStore((state) => state.deleteReward);
+    const { claimReward, archiveReward } = rewardStore();
     
     const isClaimable = totalCoins >= reward.cost;
 
@@ -21,6 +20,11 @@ export const RewardCard: FC<RewardCardProps> = ({ reward }) => {
         if (isClaimable) {
             claimReward(reward.id);
         }
+    };
+
+    const handleArchive = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        archiveReward(reward.id);
     };
 
     return (
@@ -58,6 +62,13 @@ export const RewardCard: FC<RewardCardProps> = ({ reward }) => {
                     </div>
                 </div>
                 <div className="reward-card__actions">
+                    <button 
+                        className="reward-card__archive-btn"
+                        onClick={handleArchive}
+                        title="Archive reward"
+                    >
+                        📦
+                    </button>
                     <button 
                         className="reward-card__claim-btn"
                         onClick={handleClaim}
