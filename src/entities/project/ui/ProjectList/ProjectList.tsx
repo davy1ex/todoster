@@ -3,6 +3,7 @@ import { ProjectCard } from '../ProjectCard';
 import { ProjectModal } from '../ProjectModal';
 import { projectStore } from '../../model/store';
 import type { Project, ProjectStatus } from '../../model/types';
+import { ProjectInput } from '@/features/project/ui/ProjectInput';
 import './ProjectList.css';
 
 interface ProjectListProps {
@@ -17,6 +18,7 @@ export const ProjectList: FC<ProjectListProps> = ({
     hasLinkedTasks 
 }) => {
     const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+    const [showProjectInput, setShowProjectInput] = useState(false);
     const {
         projects,
         addProject,
@@ -30,11 +32,17 @@ export const ProjectList: FC<ProjectListProps> = ({
     const filteredProjects = getFilteredProjects(status, hasLinkedTasks);
 
     const handleAddProject = useCallback(() => {
-        const title = prompt('Enter project title:');
-        if (title) {
-            addProject(title, '');
-        }
+        setShowProjectInput(true);
+    }, []);
+
+    const handleProjectSubmit = useCallback((title: string) => {
+        addProject(title);
+        setShowProjectInput(false);
     }, [addProject]);
+
+    const handleProjectInputCancel = useCallback(() => {
+        setShowProjectInput(false);
+    }, []);
 
     const handleProjectClick = useCallback((project: Project) => {
         setSelectedProject(project);
@@ -60,6 +68,13 @@ export const ProjectList: FC<ProjectListProps> = ({
                     />
                 ))}
             </div>
+
+            {showProjectInput && (
+                <ProjectInput
+                    onSubmit={handleProjectSubmit}
+                    onCancel={handleProjectInputCancel}
+                />
+            )}
 
             {selectedProject && (
                 <ProjectModal

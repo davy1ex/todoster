@@ -5,7 +5,11 @@ import { goalStore } from "../../goal/model/store";
 
 interface ProjectStore {
   projects: Project[];
-  addProject: (title: string, description: string) => void;
+  isInputOpen: boolean;
+  addProject: (name: string) => void;
+  removeProject: (id: number) => void;
+  openProjectInput: () => void;
+  closeProjectInput: () => void;
   updateProject: (id: number, updates: Partial<Project>) => void;
   linkGoal: (projectId: number, goalId: number) => void;
   unlinkGoal: (projectId: number, goalId: number) => void;
@@ -39,15 +43,16 @@ export const projectStore = create<ProjectStore>()(
   persist(
     (set, get) => ({
       projects: getInitialProjects(),
+      isInputOpen: false,
 
-      addProject: (title: string, description: string) => {
+      addProject: (name) =>
         set((state) => ({
           projects: [
             ...state.projects,
             {
-              id: Date.now(),
-              title,
-              description,
+              id: Date.now(), // Using timestamp as numeric ID
+              title: name,
+              description: "",
               status: "not_started" as ProjectStatus,
               goalIds: [],
               linkedTaskIds: [],
@@ -58,8 +63,17 @@ export const projectStore = create<ProjectStore>()(
               },
             },
           ],
-        }));
-      },
+          isInputOpen: false,
+        })),
+
+      removeProject: (id: number) =>
+        set((state) => ({
+          projects: state.projects.filter((project) => project.id !== id),
+        })),
+
+      openProjectInput: () => set({ isInputOpen: true }),
+
+      closeProjectInput: () => set({ isInputOpen: false }),
 
       updateProject: (id: number, updates: Partial<Project>) => {
         // If goalIds is being updated, ensure it's an array

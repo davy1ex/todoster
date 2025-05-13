@@ -31,7 +31,14 @@ function createWindow() {
     win.webContents.openDevTools();
   } else {
     // In production, load the built files
-    win.loadFile(path.join(__dirname, "../dist/index.html"));
+    const appPath = app.getAppPath();
+    const indexPath = path.join(appPath, "dist", "index.html");
+    console.log("App path:", appPath);
+    console.log("Loading from:", indexPath);
+    win.loadFile(indexPath).catch((err) => {
+      console.error("Failed to load index.html:", err);
+      console.log("Current directory:", __dirname);
+    });
   }
 }
 

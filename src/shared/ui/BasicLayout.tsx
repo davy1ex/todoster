@@ -16,7 +16,7 @@ export const BasicLayout = () => {
     return (
         <>
         <Header />
-        <h1 style={{textAlign: "center"}}>Человек 2.0 панель управления разъёб пиздец хаха</h1>
+        <h1 style={{textAlign: "center"}}>Человек 2.0 панель управления ну пипец хаха</h1>
 
         <div className="basicLayout" role="main">
             <div className="basicLayout__header">
