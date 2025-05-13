@@ -1,0 +1,74 @@
+/* Light theme variables */
+[data-theme='light'] {
+  --background: var(--solarized-base3);
+  --background-highlight: var(--solarized-base2);
+  --text-primary: var(--solarized-base00);
+  --text-secondary: var(--solarized-base1);
+  --text-emphasis: var(--solarized-base01);
+  --border: var(--solarized-base1);
+  --border-light: var(--solarized-base0);
+}
+
+/* Dark theme variables */
+[data-theme='dark'] {
+  --background: var(--solarized-base03);
+  --background-highlight: var(--solarized-base02);
+  --text-primary: var(--solarized-base0);
+  --text-secondary: var(--solarized-base01);
+  --text-emphasis: var(--solarized-base1);
+  --border: var(--solarized-base01);
+  --border-light: var(--solarized-base00);
+}
+
+/* Common variables for both themes */
+:root {
+  /* Solarized base colors */
+  --solarized-base03: #002b36;
+  --solarized-base02: #073642;
+  --solarized-base01: #586e75;
+  --solarized-base00: #657b83;
+  --solarized-base0: #839496;
+  --solarized-base1: #93a1a1;
+  --solarized-base2: #eee8d5;
+  --solarized-base3: #fdf6e3;
+
+  /* Accent colors */
+  --accent-yellow: #b58900;
+  --accent-orange: #cb4b16;
+  --accent-red: #dc322f;
+  --accent-magenta: #d33682;
+  --accent-violet: #6c71c4;
+  --accent-blue: #268bd2;
+  --accent-cyan: #2aa198;
+  --accent-green: #859900;
+
+  /* Interactive colors (same for both themes) */
+  --primary: var(--accent-blue);
+  --success: var(--accent-green);
+  --warning: var(--accent-yellow);
+  --error: var(--accent-red);
+  --info: var(--accent-cyan);
+  --accent1: var(--accent-violet);
+  --accent2: var(--accent-magenta);
+  --accent3: var(--accent-orange);
+}
+
+/* Base styles */
+body {
+  background-color: var(--background);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Typography */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI",
+    "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif;
+  line-height: 1.5;
+  font-size: 16px;
+}
+
+code, pre {
+  font-family: "SF Mono", "JetBrains Mono", "Fira Code", "Menlo", "Monaco",
+    "Consolas", "Liberation Mono", "Courier New", monospace;
+} 

@@ -30,13 +30,13 @@ export const GoalList = () => {
     const getPriorityColor = (priority: Goal['priority']) => {
         switch (priority) {
             case 'high':
-                return '#ef5350';
+                return 'var(--color-background)';
             case 'medium':
-                return '#ffa726';
+                return 'var(--color-background)';
             case 'low':
-                return '#66bb6a';
+                return 'var(--color-background)';
             default:
-                return '#757575';
+                return 'var(--color-background)';
         }
     };
 

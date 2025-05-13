@@ -1,33 +1,30 @@
+/* Solarized Theme Colors */
 :root {
-  /* Color Palette */
-  --color-primary: #6366f1;
-  --color-primary-hover: #4f46e5;
-  --color-primary-light: #818cf8;
-  --color-primary-dark: #4338ca;
+  /* Solarized base colors */
+  --solarized-base03: #002b36;
+  --solarized-base02: #073642;
+  --solarized-base01: #586e75;
+  --solarized-base00: #657b83;
+  --solarized-base0: #839496;
+  --solarized-base1: #93a1a1;
+  --solarized-base2: #eee8d5;
+  --solarized-base3: #fdf6e3;
 
-  --color-secondary: #10b981;
-  --color-secondary-hover: #059669;
-  --color-secondary-light: #34d399;
-  --color-secondary-dark: #047857;
-
-  --color-background: #ffffff;
-  --color-background-alt: #f3f4f6;
-  --color-background-dark: #1f2937;
-
-  --color-text: #1f2937;
-  --color-text-light: #6b7280;
-  --color-text-lighter: #9ca3af;
-  --color-text-dark: #111827;
-
-  --color-border: #e5e7eb;
-  --color-border-focus: #818cf8;
-
-  --color-error: #ef4444;
-  --color-warning: #f59e0b;
-  --color-success: #10b981;
+  /* Solarized accent colors */
+  --accent-yellow: #b58900;
+  --accent-orange: #cb4b16;
+  --accent-red: #dc322f;
+  --accent-magenta: #d33682;
+  --accent-violet: #6c71c4;
+  --accent-blue: #268bd2;
+  --accent-cyan: #2aa198;
+  --accent-green: #859900;
 
   /* Typography */
-  --font-family-base: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-family-base: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI",
+    "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif;
+  --font-family-mono: "SF Mono", "JetBrains Mono", "Fira Code", "Menlo", "Monaco",
+    "Consolas", "Liberation Mono", "Courier New", monospace;
   --font-family-heading: var(--font-family-base);
 
   --font-size-xs: 0.75rem;
@@ -69,4 +66,62 @@
   --z-index-dropdown: 1000;
   --z-index-modal: 2000;
   --z-index-tooltip: 3000;
+}
+
+/* Light theme */
+[data-theme='light'] {
+  --color-background: var(--solarized-base3);
+  --color-background-alt: var(--solarized-base2);
+  --color-background-dark: var(--solarized-base1);
+
+  --color-text: var(--solarized-base00);
+  --color-text-light: var(--solarized-base1);
+  --color-text-lighter: var(--solarized-base01);
+  --color-text-dark: var(--solarized-base02);
+
+  --color-border: var(--solarized-base1);
+  --color-border-focus: var(--accent-blue);
+
+  --color-primary: var(--accent-blue);
+  --color-primary-hover: var(--accent-violet);
+  --color-primary-light: var(--accent-cyan);
+  --color-primary-dark: var(--accent-blue);
+
+  --color-secondary: var(--accent-green);
+  --color-secondary-hover: var(--accent-cyan);
+  --color-secondary-light: var(--accent-cyan);
+  --color-secondary-dark: var(--accent-green);
+
+  --color-error: var(--accent-red);
+  --color-warning: var(--accent-yellow);
+  --color-success: var(--accent-green);
+}
+
+/* Dark theme */
+[data-theme='dark'] {
+  --color-background: var(--solarized-base03);
+  --color-background-alt: var(--solarized-base02);
+  --color-background-dark: var(--solarized-base01);
+
+  --color-text: var(--solarized-base0);
+  --color-text-light: var(--solarized-base01);
+  --color-text-lighter: var(--solarized-base1);
+  --color-text-dark: var(--solarized-base2);
+
+  --color-border: var(--solarized-base01);
+  --color-border-focus: var(--accent-blue);
+
+  --color-primary: var(--accent-blue);
+  --color-primary-hover: var(--accent-violet);
+  --color-primary-light: var(--accent-cyan);
+  --color-primary-dark: var(--accent-blue);
+
+  --color-secondary: var(--accent-green);
+  --color-secondary-hover: var(--accent-cyan);
+  --color-secondary-light: var(--accent-cyan);
+  --color-secondary-dark: var(--accent-green);
+
+  --color-error: var(--accent-red);
+  --color-warning: var(--accent-yellow);
+  --color-success: var(--accent-green);
 } 

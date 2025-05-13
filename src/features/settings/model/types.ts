@@ -5,4 +5,6 @@ export interface SettingsContextType {
   clearAccountData: () => void;
   exportAccountData: () => void;
   importAccountData: (data: string) => void;
+  toggleTheme: () => void;
+  getTheme: () => string;
 }

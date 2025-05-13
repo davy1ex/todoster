@@ -1,5 +1,5 @@
 .project-card {
-    background: white;
+    background: var(--color-background-alt);    
     border-radius: 8px;
     padding: 16px;
     margin-bottom: 12px;
@@ -34,18 +34,18 @@
 }
 
 .project-card--not_started .project-card__status {
-    background: #f0f0f0;
-    color: #666;
+    background: var(--color-background-alt);
+    color: var(--color-text);
 }
 
 .project-card--active .project-card__status {
-    background: #e3f2fd;
-    color: #1976d2;
+    background: var(--color-background-alt);
+    color: var(--color-text);
 }
 
 .project-card--archived .project-card__status {
-    background: #ffebee;
-    color: #d32f2f;
+    background: var(--color-background-alt);
+    color: var(--color-text);
 }
 
 .project-card__metadata {

@@ -3,7 +3,7 @@
     flex-direction: column;
     gap: 1rem;
     padding: 1rem;
-    background: #fff;
+    background: var(--color-background);
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -11,7 +11,9 @@
 .brainDump__textarea {
     min-height: 150px;
     padding: 1rem;
-    border: 1px solid #e0e0e0;
+    border: 1px solid var(--color-background-alt);
+    background: var(--color-background);
+    color: var(--color-text);
     border-radius: 4px;
     font-size: 1rem;
     line-height: 1.5;
@@ -21,7 +23,7 @@
 
 .brainDump__textarea:focus {
     outline: none;
-    border-color: #4a90e2;
+    border-color: var(--color-background-alt);
     box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.1);
 }
 
@@ -41,21 +43,21 @@
 }
 
 .brainDump__button--save {
-    background-color: #4a90e2;
-    color: white;
+    background-color: var(--color-background-alt);
+    color: var(--color-text);
 }
 
 .brainDump__button--save:hover {
-    background-color: #357abd;
+    background-color: var(--color-background-alt);
 }
 
 .brainDump__button--clear {
-    background-color: #f5f5f5;
-    color: #666;
+    background-color: var(--color-background-alt);
+    color: var(--color-text);
 }
 
 .brainDump__button--clear:hover {
-    background-color: #e0e0e0;
+    background-color: var(--color-background-alt);
 }
 
 .brainDump__history {
@@ -64,10 +66,10 @@
 
 .brainDump__history-item {
     padding: 1rem;
-    border: 1px solid #e0e0e0;
+    border: 1px solid var(--color-background-alt);
     border-radius: 4px;
     margin-bottom: 1rem;
-    background-color: #f9f9f9;
+    background-color: var(--color-background-alt);
 }
 
 .brainDump__history-content {
@@ -80,13 +82,13 @@
     justify-content: space-between;
     align-items: center;
     font-size: 0.75rem;
-    color: #666;
+    color: var(--color-text);
 }
 
 .brainDump__history-delete {
     background: none;
     border: none;
-    color: #ff4444;
+    color: var(--color-text);
     cursor: pointer;
     padding: 0.25rem 0.5rem;
     font-size: 0.75rem;

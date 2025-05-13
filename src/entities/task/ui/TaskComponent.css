@@ -6,7 +6,7 @@
     margin: 5px auto;
     padding: 10px;
     gap: 10px;
-    background-color: #ffffff;
+    background-color: var(--color-background-alt);
 }
 
 .taskComponent__reward {

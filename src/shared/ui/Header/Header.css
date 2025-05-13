@@ -3,7 +3,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 1rem 2rem;
-    background-color: #ffffff;
+    background-color: var(--color-background);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     position: sticky;
     top: 0;
@@ -17,13 +17,13 @@
 }
 
 .header__icon {
-    color: #6366f1;
+    color: var(--color-text);
 }
 
 .header__title {
     font-size: 1.25rem;
     font-weight: 600;
-    color: #1f2937;
+    color: var(--color-text);
 }
 
 .header__actions {
@@ -37,17 +37,17 @@
     align-items: center;
     gap: 0.5rem;
     padding: 0.5rem 1rem;
-    background-color: #f3f4f6;
+    background-color: var(--color-background-alt);
     border-radius: 9999px;
 }
 
 .header__coin-icon {
-    color: #fbbf24;
+    color: var(--color-text);
 }
 
 .header__coins {
     font-weight: 600;
-    color: #1f2937;
+    color: var(--color-text);
     min-width: 2rem;
     text-align: right;
 }
@@ -59,13 +59,13 @@
     padding: 0.5rem;
     background: none;
     border: none;
-    color: #6b7280;
+    color: var(--color-text);
     cursor: pointer;
     border-radius: 0.375rem;
     transition: all 0.2s ease;
 }
 
 .header__settings-button:hover {
-    background-color: #f3f4f6;
-    color: #1f2937;
+    background-color: var(--color-background-alt);
+    color: var(--color-text);
 } 

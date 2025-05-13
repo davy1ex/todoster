@@ -1,11 +1,10 @@
 import { useState, useCallback } from "react";
-import { taskStore } from "@/entities/task";
-import { projectStore } from "@/entities/project";
-import { getExcalidrawData, setExcalidrawData } from "@/shared/lib/excalidraw";
 import type { SettingsContextType } from "./types";
+import { useTheme } from "@/shared/theme/ThemeContext";
 
 export const useSettings = (): SettingsContextType => {
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
+  const { mode, setMode } = useTheme();
 
   const openSettingsModal = useCallback(() => {
     setIsSettingsModalOpen(true);
@@ -46,6 +45,14 @@ export const useSettings = (): SettingsContextType => {
     }
   }, []);
 
+  const toggleTheme = useCallback(() => {
+    setMode(mode === "light" ? "dark" : "light");
+  }, [mode, setMode]);
+
+  const getTheme = useCallback(() => {
+    return mode;
+  }, [mode]);
+
   return {
     isSettingsModalOpen,
     openSettingsModal,
@@ -53,5 +60,7 @@ export const useSettings = (): SettingsContextType => {
     clearAccountData,
     exportAccountData,
     importAccountData,
+    toggleTheme,
+    getTheme,
   };
 };

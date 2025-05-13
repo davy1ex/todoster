@@ -1,5 +1,8 @@
 import { FC, useRef, useEffect } from 'react';
 import './SettingsModal.css';
+import './ThemeSwitcher.css';
+import { ThemeSwitcher } from './ThemeSwitcher';
+
 
 interface SettingsModalProps {
     onClose: () => void;
@@ -76,6 +79,8 @@ export const SettingsModal: FC<SettingsModalProps> = ({
                 </div>
 
                 <div className="settings-modal__section">
+                    Theme: <ThemeSwitcher />
+                    
                     <h3>Account Data</h3>
                     <div className="settings-modal__actions">
                         <button 

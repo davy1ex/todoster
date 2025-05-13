@@ -12,7 +12,7 @@
 }
 
 .taskModal__content {
-    background-color: white;
+    background-color: var(--color-background-alt);
     padding: 20px;
     border-radius: 8px;
     width: 90%;
@@ -25,6 +25,7 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 15px;
+    background-color: var(--color-background);
 }
 
 .taskModal__titleInput {
@@ -35,30 +36,34 @@
     border-radius: 4px;
     width: 100%;
     margin-right: 10px;
+    background-color: var(--color-background);
+    color: var(--color-text);
 }
 
 .taskModal__titleInput:hover {
-    border-color: #ddd;
+    border-color: var(--color-background-alt);
 }
 
 .taskModal__titleInput:focus {
     outline: none;
-    border-color: #4CAF50;
+    border-color: var(--color-background-alt);
 }
 
 .taskModal__description {
     width: 100%;
-    border: 1px solid #ddd;
+    border: 1px solid var(--color-background-alt);
     border-radius: 4px;
     padding: 8px;
     margin-bottom: 20px;
     font-family: inherit;
     resize: vertical;
+    background-color: var(--color-background);
+    color: var(--color-text);
 }
 
 .taskModal__description:focus {
     outline: none;
-    border-color: #4CAF50;
+    border-color: var(--color-background-alt);
 }
 
 .taskModal__closeButton {
@@ -66,7 +71,7 @@
     border: none;
     font-size: 24px;
     cursor: pointer;
-    color: #666;
+    color: var(--color-text);
     padding: 0;
     width: 30px;
     height: 30px;
@@ -77,8 +82,8 @@
 }
 
 .taskModal__closeButton:hover {
-    background: #f0f0f0;
-    color: #333;
+    background: var(--color-background-alt);
+    color: var(--color-text);
 }
 
 .taskModal__reward {
@@ -97,19 +102,32 @@
 .taskModal__rewardNumber {
     width: 80px;
     padding: 6px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--color-background-alt);
     border-radius: 4px;
     font-size: 14px;
+    background-color: var(--color-background);
+    color: var(--color-text);
+    text-align: center;
+    font-weight: bold;
+    font-size: 16px;
+    font-family: var(--font-family-mono);
+    font-size: 16px;
+    font-family: var(--font-family-mono);
+    font-weight: bold;
+    text-align: center;
+    color: var(--color-text);
+    background-color: var(--color-background);
+    border: 1px solid var(--color-background-alt);
 }
 
 .taskModal__rewardNumber:focus {
     outline: none;
-    border-color: #4CAF50;
+    border-color: var(--color-background-alt);
 }
 
 .taskModal__rewardButton {
-    background: #4CAF50;
-    color: white;
+    background: var(--color-background-alt);
+    color: var(--color-text);
     border: none;
     padding: 8px 16px;
     border-radius: 4px;
@@ -117,12 +135,12 @@
 }
 
 .taskModal__rewardButton:disabled {
-    background: #cccccc;
+    background: var(--color-background-alt);
     cursor: not-allowed;
 }
 
 .taskModal__rewardButton:hover:not(:disabled) {
-    background: #45a049;
+    background: var(--color-background-alt);
 }
 
 .taskModal__controls {
@@ -131,7 +149,7 @@
     align-items: center;
     margin-top: 20px;
     padding-top: 20px;
-    border-top: 1px solid #eee;
+    border-top: 1px solid var(--color-background-alt);
 }
 
 .taskModal__status {
@@ -149,13 +167,24 @@
 
 .taskModal__listSelect {
     padding: 6px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--color-background-alt);
     border-radius: 4px;
-    background: white;
+    background: var(--color-background-alt);
     cursor: pointer;
+    color: var(--color-text);
 }
+.taskModal__listSelect input::-webkit-outer-spin-button,
+.taskModal__listSelect input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.taskModal__listSelect input[type=number] {
+  -moz-appearance: textfield;
+}
+
 
 .taskModal__listSelect:focus {
     outline: none;
-    border-color: #4CAF50;
+    border-color: var(--color-background-alt);
 } 

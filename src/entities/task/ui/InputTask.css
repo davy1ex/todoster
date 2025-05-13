@@ -11,6 +11,8 @@
     border: none;
     border-radius: 5px 0 0 5px;
     margin-bottom: 10px;
+    background-color: var(--color-background-alt);
+    color: var(--color-text);
 }
 
 .inputTask input:focus {
@@ -22,7 +24,7 @@
 
     margin: auto;
     padding: 10px;
-    background-color: #ffffff;
+    background-color: var(--color-background-alt);
     box-shadow: none;
     border: none;
     border-radius: 0 5px 5px 0;
