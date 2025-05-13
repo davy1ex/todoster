@@ -11,13 +11,31 @@
 
 .basicLayout__content {
     display: flex;
-    flex-direction: row
+    flex-direction: row;
+    gap: 20px;
 }
 
 .basicLayout__content__taskList {
     display: flex;
     flex-direction: row;
     gap: 10px;
+    flex: 1;
+}
+
+.basicLayout__content__projects {
+    width: 400px;
+    min-width: 300px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.basicLayout__content__sheet {
+    width: 600px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 16px;
 }
 
 .basicLayout__content__brainDump, .brainDump {

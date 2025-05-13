@@ -1,12 +1,15 @@
 import { TaskListComponent } from "@/entities/taskList"
 import { taskStore } from "@/entities/task"
 import { useTaskManagementContext } from "@/features/taskManagement/model/TaskManagementProvider"
-import { BrainDump } from "@/entities/brainDump/ui/BrainDump"
+import { ProjectList } from "@/entities/project"
 import "./BasicLayout.css"
 
 export const BasicLayout = () => {
     const { tasks } = taskStore((state) => state)
     const { handleTaskCheck, openTaskModal } = useTaskManagementContext()
+
+    // Replace this with your Google Sheet URL
+    
 
     return (
         <div className="basicLayout" role="main">
@@ -15,9 +18,8 @@ export const BasicLayout = () => {
             </div>
             
             <div className="basicLayout__content">
-                <div className="basicLayout__content__brainDump">
-                    <BrainDump />
-                </div>
+                
+                
                 <div className="basicLayout__content__taskList" data-testid="task-list">
                     <TaskListComponent 
                         id={1}
@@ -37,9 +39,11 @@ export const BasicLayout = () => {
                         isArchived={false} 
                         createdAt={new Date()} 
                         updatedAt={new Date()} />   
+
+                    <div className="basicLayout__content__projects">
+                        <ProjectList />
+                    </div>
                 </div>
-                
-                
             </div>
         </div>
     )

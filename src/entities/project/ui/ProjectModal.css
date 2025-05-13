@@ -1,0 +1,252 @@
+.project-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.project-modal__content {
+    background: white;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 24px;
+}
+
+.project-modal__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.project-modal__header h2 {
+    margin: 0;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.project-modal__header h2:hover {
+    background: #f5f5f5;
+}
+
+.project-modal__header input {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin: 0;
+    padding: 4px 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 70%;
+}
+
+.project-modal__header button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 4px 8px;
+}
+
+.project-modal__section {
+    margin-bottom: 24px;
+}
+
+.project-modal__section h3 {
+    margin-bottom: 12px;
+    color: #333;
+}
+
+.project-modal__section select,
+.project-modal__section textarea,
+.project-modal__section input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 8px;
+}
+
+.project-modal__section textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.project-modal__editable-text {
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 4px;
+}
+
+.project-modal__editable-text:hover {
+    background: #f5f5f5;
+}
+
+.project-modal__editable-text p {
+    margin: 0;
+}
+
+.project-modal__goals-list,
+.project-modal__tasks-list {
+    margin-bottom: 16px;
+}
+
+.project-modal__goal,
+.project-modal__task {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 12px;
+    background: #f5f5f5;
+    border-radius: 4px;
+    margin-bottom: 8px;
+}
+
+.project-modal__goal h4,
+.project-modal__task span {
+    margin: 0 0 4px 0;
+    font-weight: 500;
+}
+
+.project-modal__goal p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.project-modal__goal-remove,
+.project-modal__task-unlink {
+    background: #ffebee;
+    color: #d32f2f;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.project-modal__add-goal,
+.project-modal__add-task {
+    background: #f5f5f5;
+    padding: 16px;
+    border-radius: 4px;
+}
+
+.project-modal__add-goal button,
+.project-modal__add-task button {
+    background: #1976d2;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.project-modal__metadata {
+    background: #f5f5f5;
+    padding: 12px;
+    border-radius: 4px;
+}
+
+.project-modal__metadata p {
+    margin: 4px 0;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.project-modal__add-task h4 {
+    margin: 0 0 8px 0;
+    color: #333;
+}
+
+.project-modal__task {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background: #f5f5f5;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    gap: 12px;
+}
+
+.project-modal__task .taskComponent {
+    flex: 1;
+    background: transparent;
+    padding: 0;
+}
+
+.project-modal__task-title-input {
+    flex: 1;
+    font-size: 1em;
+    padding: 4px 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin: 0;
+}
+
+.project-modal__task-unlink {
+    background: #ffebee;
+    color: #d32f2f;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.project-modal__add-task {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background: #f5f5f5;
+    padding: 16px;
+    border-radius: 4px;
+}
+
+.project-modal__task-select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-top: 8px;
+}
+
+.project-modal__new-task {
+    margin-top: 12px;
+}
+
+.project-modal__new-task-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.project-modal__new-task-actions button {
+    width: auto;
+    flex: 1;
+}
+
+.project-modal__cancel-btn {
+    background: #f5f5f5 !important;
+    color: #666 !important;
+    border: 1px solid #ddd !important;
+}
+
+.project-modal__new-task-btn {
+    margin-top: 8px;
+    background: #4caf50 !important;
+}
+
+.project-modal__new-task-btn:hover {
+    background: #43a047 !important;
+} 

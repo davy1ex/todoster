@@ -5,7 +5,14 @@ import type { Task, TaskStore } from "./type";
 // Helper to get initial tasks from localStorage or empty array
 const getInitialTasks = (): Task[] => {
   const savedTasks = localStorage.getItem("tasks");
-  return savedTasks ? JSON.parse(savedTasks) : [];
+  if (!savedTasks) return [];
+  
+  const tasks = JSON.parse(savedTasks);
+  return tasks.map((task: Task) => ({
+    ...task,
+    createdAt: new Date(task.createdAt),
+    updatedAt: new Date(task.updatedAt),
+  }));
 };
 
 export const taskStore = create<TaskStore>()(

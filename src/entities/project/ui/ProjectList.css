@@ -1,0 +1,38 @@
+.project-list {
+    padding: 16px;
+    background: #f5f5f5;
+    border-radius: 8px;
+    min-width: 300px;
+}
+
+.project-list__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.project-list__header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.project-list__header button {
+    background: #1976d2;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.project-list__header button:hover {
+    background: #1565c0;
+}
+
+.project-list__content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+} 

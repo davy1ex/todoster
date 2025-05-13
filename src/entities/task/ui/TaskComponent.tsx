@@ -21,7 +21,7 @@ export const TaskComponent = (props: TaskComponentProps) => {
             <div className="taskComponent__completed" onClick={handleCheckboxClick}>
                 <input 
                     type="checkbox" 
-                    checked={props.task.completed} 
+                    checked={props.task.isDone} 
                     onChange={handleCheckboxChange}
                 />
             </div>
