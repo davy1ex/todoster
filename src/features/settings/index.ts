@@ -1,2 +1,3 @@
-export { SettingsProvider, useSettingsContext } from "./model/SettingsProvider";
+export { SettingsProvider } from "./model/SettingsProvider";
+export { useSettingsContext } from "./model/hooks";
 export type { SettingsContextType } from "./model/types";

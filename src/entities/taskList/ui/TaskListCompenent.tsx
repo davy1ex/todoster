@@ -25,17 +25,19 @@ export const TaskListComponent = (props: TaskListComponentProps) => {
 
     return (
         <div className="taskListComponent">
-            <div className="taskListComponent__header">
-                <InputTask listName={props.title} onAdd={handleAddTask} />
-            </div>
             <div className="taskListComponent__title">
                 {props.title}
             </div>
+            <div className="taskListComponent__header">
+                <InputTask listName={props.title} onAdd={handleAddTask} />
+            </div>
+            
             <div className="taskListComponent__tasks">
                 {props.tasks.map((task) => (
                     <TaskComponent 
                         key={task.id} 
                         task={task} 
+                        listName={props.title}
                         onCheckTask={props.onCheckTask} 
                         handleClick={() => props.handleClick(task)}
                     />

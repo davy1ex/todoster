@@ -1,17 +1,8 @@
-import { createContext, useContext, FC, ReactNode } from 'react';
+import { FC, ReactNode, useEffect } from 'react';
 import { useSettings } from './useSettings';
 import { SettingsModal } from '../ui/SettingsModal';
-import type { SettingsContextType } from './types';
-
-const SettingsContext = createContext<SettingsContextType | null>(null);
-
-export const useSettingsContext = () => {
-    const context = useContext(SettingsContext);
-    if (!context) {
-        throw new Error('useSettingsContext must be used within a SettingsProvider');
-    }
-    return context;
-};
+import { SettingsContext } from './SettingsContext';
+import { appEvents, APP_EVENTS } from '@/shared/lib/events';
 
 interface SettingsProviderProps {
     children: ReactNode;
@@ -19,6 +10,16 @@ interface SettingsProviderProps {
 
 export const SettingsProvider: FC<SettingsProviderProps> = ({ children }) => {
     const settings = useSettings();
+
+    useEffect(() => {
+        // Subscribe to settings open event
+        const unsubscribe = appEvents.on(APP_EVENTS.OPEN_SETTINGS, settings.openSettingsModal);
+        
+        // Cleanup subscription on unmount
+        return () => {
+            unsubscribe();
+        };
+    }, [settings.openSettingsModal]);
 
     return (
         <SettingsContext.Provider value={settings}>

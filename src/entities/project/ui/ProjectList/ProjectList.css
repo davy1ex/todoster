@@ -3,6 +3,7 @@
     background: #f5f5f5;
     border-radius: 8px;
     min-width: 300px;
+    height: 100%;
 }
 
 .project-list__header {

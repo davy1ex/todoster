@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import type { Task, TaskStore } from "./type";
+import { rewardStore } from "../../reward/model/store";
 
 // Helper to get initial tasks from localStorage or empty array
 const getInitialTasks = (): Task[] => {
@@ -17,7 +18,7 @@ const getInitialTasks = (): Task[] => {
 
 export const taskStore = create<TaskStore>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       tasks: getInitialTasks(),
       addTask: (task: Task) =>
         set((state: TaskStore) => ({
@@ -58,7 +59,17 @@ export const taskStore = create<TaskStore>()(
               : task
           ),
         })),
-      checkTask: (id: number) =>
+      checkTask: (id: number) => {
+        const task = get().tasks.find((t) => t.id === id);
+        if (!task) return;
+
+        // If task is being completed, add coins. If being unchecked, remove coins
+        if (!task.isDone) {
+          rewardStore.getState().addCoins(task.reward);
+        } else {
+          rewardStore.getState().removeCoins(task.reward);
+        }
+
         set((state: TaskStore) => ({
           tasks: state.tasks.map((task: Task) =>
             task.id === id
@@ -69,14 +80,15 @@ export const taskStore = create<TaskStore>()(
                 }
               : task
           ),
-        })),
+        }));
+      },
       clearTasks: () => set({ tasks: [] }),
       importTasks: (tasks: Task[]) => set({ tasks }),
     }),
     {
-      name: "task-storage", // unique name for localStorage key
+      name: "task-storage",
       storage: createJSONStorage(() => localStorage),
-      partialize: (state) => ({ tasks: state.tasks }), // only persist tasks array
+      partialize: (state) => ({ tasks: state.tasks }),
     }
   )
 );

@@ -2,6 +2,7 @@
     padding: 2rem;
     max-width: 1200px;
     margin: 0 auto;
+    overflow-x:scroll;
 }
 
 .basicLayout__header {
@@ -30,6 +31,22 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.basicLayout__content__goals {
+    width: 400px;
+    min-width: 300px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.basicLayout__content__rewards {
+    width: 400px;
+    min-width: 300px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
 .basicLayout__content__sheet {
     width: 600px;
     background: white;
@@ -40,6 +57,20 @@
 
 .basicLayout__content__brainDump, .brainDump {
     width: fit-content;
-    margin-right: 10px;;
+    margin-right: 10px;
     height: fit-content;
+}
+
+.basicLayout__settings-button {
+    padding: 0.5rem 1rem;
+    background-color: #6366f1;
+    color: white;
+    border: none;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.basicLayout__settings-button:hover {
+    background-color: #4f46e5;
 }

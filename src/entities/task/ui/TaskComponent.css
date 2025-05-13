@@ -9,6 +9,11 @@
     background-color: #ffffff;
 }
 
+.taskComponent__reward {
+    margin-left: auto;
+    color: #fbbf24
+}
+
 .taskComponent__completed {
     display: flex;
     width: 20px;

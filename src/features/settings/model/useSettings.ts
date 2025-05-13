@@ -16,38 +16,13 @@ export const useSettings = (): SettingsContextType => {
   }, []);
 
   const clearAccountData = useCallback(() => {
-    // Clear all stores
-    taskStore.getState().clearTasks();
-    projectStore.getState().clearProjects();
-
-    // Clear Excalidraw data
-    Object.keys(localStorage).forEach((key) => {
-      if (key.startsWith("excalidraw")) {
-        localStorage.removeItem(key);
-      }
-    });
-
-    document.cookie.split(";").forEach((cookie) => {
-      const key = cookie.split("=")[0].trim();
-      if (key.startsWith("excalidraw")) {
-        document.cookie = `${key}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
-      }
-    });
-
-    // Clear remaining localStorage
     localStorage.clear();
+    window.location.reload();
   }, []);
 
   const exportAccountData = useCallback(() => {
-    const data = {
-      tasks: taskStore.getState().tasks,
-      projects: projectStore.getState().projects,
-      excalidraw: getExcalidrawData(),
-    };
-
-    const blob = new Blob([JSON.stringify(data, null, 2)], {
-      type: "application/json",
-    });
+    const data = JSON.stringify(localStorage);
+    const blob = new Blob([data], { type: "application/json" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
@@ -58,27 +33,16 @@ export const useSettings = (): SettingsContextType => {
     URL.revokeObjectURL(url);
   }, []);
 
-  const importAccountData = useCallback((jsonData: string) => {
+  const importAccountData = useCallback((data: string) => {
     try {
-      const data = JSON.parse(jsonData);
-
-      if (data.tasks) {
-        taskStore.getState().importTasks(data.tasks);
-      }
-
-      if (data.projects) {
-        projectStore.getState().importProjects(data.projects);
-      }
-
-      if (data.excalidraw) {
-        setExcalidrawData(data.excalidraw);
-      }
-
-      // Reload the page to refresh Excalidraw iframe
+      const parsedData = JSON.parse(data);
+      Object.entries(parsedData).forEach(([key, value]) => {
+        localStorage.setItem(key, value as string);
+      });
       window.location.reload();
     } catch (error) {
       console.error("Failed to import data:", error);
-      throw new Error("Invalid backup file format");
+      alert("Failed to import data. Please check the file format.");
     }
   }, []);
 
