@@ -1,5 +1,6 @@
-.rewards-list {
+.basicLayout__content__rewards {
     background-color: var(--color-background);
+    border: 1px solid var(--color-border);
     border-radius: 0.5rem;
     padding: 1.5rem;
     height: 100%;

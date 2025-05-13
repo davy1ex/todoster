@@ -119,6 +119,7 @@ export const ProjectModal: FC<ProjectModalProps> = ({
                     <div className="project-modal__section">
                         <h3>Status</h3>
                         <select 
+                            className="project-modal__status-select"
                             value={project.status}
                             onChange={(e) => onUpdateStatus(project.id, e.target.value as ProjectStatus)}
                         >
@@ -171,40 +172,7 @@ export const ProjectModal: FC<ProjectModalProps> = ({
                         </div>
                     </div>
 
-                    <div className="project-modal__section">
-                        <h3>Goals</h3>
-                        <div className="project-modal__goals-list">
-                            {goals.map((goal) => (
-                                <div key={goal.id} className="project-modal__goal">
-                                    <div>
-                                        <h4>{goal.title}</h4>
-                                        <p>{goal.description}</p>
-                                    </div>
-                                    <button 
-                                        onClick={() => goalActions.deleteGoal(goal.id)}
-                                        className="project-modal__goal-remove"
-                                    >
-                                        Remove
-                                    </button>
-                                </div>
-                            ))}
-                        </div>
-
-                        <div className="project-modal__add-goal">
-                            <input
-                                type="text"
-                                placeholder="New goal title"
-                                value={newGoalTitle}
-                                onChange={(e) => setNewGoalTitle(e.target.value)}
-                            />
-                            <textarea
-                                placeholder="Goal description (optional)"
-                                value={newGoalDescription}
-                                onChange={(e) => setNewGoalDescription(e.target.value)}
-                            />
-                            <button onClick={() => handleAddGoal(goalActions.addGoalToProject)}>Add Goal</button>
-                        </div>
-                    </div>
+                    {/*  */}
 
                     <div className="project-modal__section">
                         <h3>Metadata</h3>

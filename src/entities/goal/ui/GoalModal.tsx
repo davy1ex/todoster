@@ -56,6 +56,7 @@ export const GoalModal: FC<GoalModalProps> = ({ goal, onClose, onSave }) => {
                         <label htmlFor="title">Title</label>
                         <input
                             id="title"
+                            className="goal-modal__field-input"
                             type="text"
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
@@ -66,6 +67,7 @@ export const GoalModal: FC<GoalModalProps> = ({ goal, onClose, onSave }) => {
                     <div className="goal-modal__field">
                         <label htmlFor="description">Description</label>
                         <textarea
+                            className="goal-modal__field-input"
                             id="description"
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
@@ -76,6 +78,7 @@ export const GoalModal: FC<GoalModalProps> = ({ goal, onClose, onSave }) => {
                     <div className="goal-modal__field">
                         <label htmlFor="priority">Priority</label>
                         <select
+                            className="goal-modal__field-input"
                             id="priority"
                             value={priority}
                             onChange={(e) => setPriority(e.target.value as Goal['priority'])}
@@ -89,6 +92,7 @@ export const GoalModal: FC<GoalModalProps> = ({ goal, onClose, onSave }) => {
                     <div className="goal-modal__field">
                         <label htmlFor="project">Project (Optional)</label>
                         <select
+                            className="goal-modal__field-input"
                             id="project"
                             value={projectId || ''}
                             onChange={(e) => setProjectId(e.target.value ? Number(e.target.value) : undefined)}
@@ -105,6 +109,7 @@ export const GoalModal: FC<GoalModalProps> = ({ goal, onClose, onSave }) => {
                     <div className="goal-modal__field">
                         <label htmlFor="deadline">Deadline (Optional)</label>
                         <input
+                            className="goal-modal__field-input"
                             id="deadline"
                             type="date"
                             value={deadline}

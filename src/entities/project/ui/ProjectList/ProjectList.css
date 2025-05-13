@@ -1,3 +1,7 @@
+.basicLayout__content__projects {
+    border: 1px solid var(--color-border);
+}
+
 .project-list {
     padding: 16px;
     background: var(--color-background);
