@@ -1,6 +1,6 @@
-import { FC, useState } from 'react';
-import { Reward } from '../../model/types';
-import { rewardStore } from '../../model/store';
+import { FC, useEffect } from 'react';
+import { Reward } from '@/entities/reward/model/types';
+import { useRewardModal } from '../../model/useRewardModal';
 import './RewardModal.css';
 
 interface RewardModalProps {
@@ -9,31 +9,42 @@ interface RewardModalProps {
 }
 
 export const RewardModal: FC<RewardModalProps> = ({ reward, onClose }) => {
-    const [title, setTitle] = useState(reward.title);
-    const [cost, setCost] = useState(reward.cost.toString());
-    const deleteReward = rewardStore((state) => state.deleteReward);
-    const updateReward = rewardStore((state) => state.updateReward);
+    const {
+        modalRef,
+        title,
+        cost,
+        setTitle,
+        setCost,
+        handleSave,
+        handleDelete,
+        isValid
+    } = useRewardModal(reward);
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        
-        if (title.trim() && Number(cost) > 0) {
-            updateReward(reward.id, {
-                title: title.trim(),
-                cost: Number(cost),
-            });
-            onClose();
-        }
-    };
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+                onClose();
+            }
+        };
 
-    const handleDelete = () => {
-        deleteReward(reward.id);
-        onClose();
-    };
+        const handleEscKey = (event: KeyboardEvent) => {
+            if (event.key === 'Escape') {
+                onClose();
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        document.addEventListener('keydown', handleEscKey);
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+            document.removeEventListener('keydown', handleEscKey);
+        };
+    }, [onClose]);
 
     return (
         <div className="reward-modal">
-            <div className="reward-modal__content">
+            <div ref={modalRef} className="reward-modal__content">
                 <div className="reward-modal__header">
                     <h2>Edit Reward</h2>
                     <button 
@@ -44,7 +55,10 @@ export const RewardModal: FC<RewardModalProps> = ({ reward, onClose }) => {
                     </button>
                 </div>
 
-                <form onSubmit={handleSubmit} className="reward-modal__form">
+                <form onSubmit={(e) => {
+                    e.preventDefault();
+                    handleSave(onClose);
+                }} className="reward-modal__form">
                     <div className="reward-modal__field">
                         <label htmlFor="title">Title</label>
                         <input
@@ -72,14 +86,14 @@ export const RewardModal: FC<RewardModalProps> = ({ reward, onClose }) => {
                         <button 
                             type="submit" 
                             className="reward-modal__save-btn"
-                            disabled={!title.trim() || !cost || Number(cost) <= 0}
+                            disabled={!isValid}
                         >
                             Save Changes
                         </button>
                         <button 
                             type="button"
                             className="reward-modal__delete-btn"
-                            onClick={handleDelete}
+                            onClick={() => handleDelete(onClose)}
                         >
                             Delete Reward
                         </button>

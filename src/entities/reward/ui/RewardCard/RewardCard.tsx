@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
 import { Reward } from '../../model/types';
 import { rewardStore } from '../../model/store';
-import { RewardModal } from '../RewardModal/RewardModal';
+import { RewardModal } from '@/features/rewardManagement';
 import { CoinIcon } from '@/shared/ui/icons';
 import './RewardCard.css';
 
