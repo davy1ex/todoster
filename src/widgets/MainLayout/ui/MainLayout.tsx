@@ -3,10 +3,10 @@ import { ProjectList } from "@/entities/project"
 import { GoalList } from "@/entities/goal"
 import { BrainDump } from "@/entities/brainDump/ui/BrainDump"
 import { Header } from "@/shared/ui/Header"
-import { RewardsList } from "@/entities/reward/ui/RewardsList"
+import { RewardsList } from "@/features/rewardManagement"
 import { useState, useEffect } from "react"
-import { InboxList } from "@/widgets/InboxList"
-import { BacklogList } from "@/widgets/BacklogList"
+import { InboxList } from "@/features/taskManagement"
+import { BacklogList } from "@/features/taskManagement"
 import type { Task } from "@/entities/task"
 import { TaskEditModal } from "@/features/taskManagement/ui/TaskEditModal"
 import { BaseLayout } from "@/shared/ui/BaseLayout"
@@ -112,6 +112,7 @@ export const MainLayout = () => {
                     onClose={handleCloseModal}
                     onUpdateTask={updateTask}
                     onChangeReward={(amount) => changeReward(selectedTask.id, amount)}
+                    onCheckTask={checkTask}
                 />
             )}
         </>

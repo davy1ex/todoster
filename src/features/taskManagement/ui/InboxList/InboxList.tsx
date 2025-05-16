@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import { Task } from '@/entities/task';
-import { useTaskFiltering } from '@/features/taskFiltering';
+import { useTaskFiltering } from '@/features/taskManagement/taskFiltering';
 import { TaskComponent } from '@/entities/task';
-import { TaskInput } from '@/features/taskCreation';
+import { TaskInput } from '@/features/taskManagement/taskCreation';
 import './InboxList.css';
 
 interface InboxListProps {

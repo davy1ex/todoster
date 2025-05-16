@@ -9,15 +9,28 @@ interface TaskEditModalProps {
     onClose: () => void;
     onUpdateTask: (id: number, updates: Partial<Task>) => void;
     onChangeReward: (amount: number) => void;
+    onCheckTask: (id: number) => void;
 }
 
-export const TaskEditModal = ({ isOpen, task, onClose, onUpdateTask, onChangeReward }: TaskEditModalProps) => {
+export const TaskEditModal = ({ 
+    isOpen, 
+    task, 
+    onClose, 
+    onUpdateTask, 
+    onChangeReward,
+    onCheckTask 
+}: TaskEditModalProps) => {
     const [rewardAmount, setRewardAmount] = useState(0);
 
     if (!isOpen || !task) return null;
 
     const handleUpdate = (field: keyof Task, value: any) => {
-        onUpdateTask(task.id, { [field]: value });
+        if (field === 'isDone') {
+            // Use onCheckTask for task completion to properly handle rewards
+            onCheckTask(task.id);
+        } else {
+            onUpdateTask(task.id, { [field]: value });
+        }
     };
 
     const handleRewardChange = () => {

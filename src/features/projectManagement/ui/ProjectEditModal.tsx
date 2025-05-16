@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Project, ProjectStatus } from '@/entities/project';
 import { Modal } from '@/shared/ui/Modal/Modal';
-import { TaskInput } from '@/features/taskCreation';
+import { TaskInput } from '@/features/taskManagement/taskCreation';
 import { TaskLinkSelect } from '@/entities/project/ui/TaskLinkSelect';
 import { LinkedTasksList } from '@/entities/project/ui/LinkedTasksList';
 import { useProjectEdit } from '../hooks/useProjectEdit';
