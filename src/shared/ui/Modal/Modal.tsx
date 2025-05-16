@@ -8,7 +8,7 @@ interface ModalProps {
     title?: string;
 }
 
-export const Modal = ({ isOpen, onClose, children, title }: ModalProps) => {
+export const Modal = ({ isOpen, onClose, children, title="Edit" }: ModalProps) => {
     if (!isOpen) return null;
 
     const handleBackdropClick = (e: React.MouseEvent) => {

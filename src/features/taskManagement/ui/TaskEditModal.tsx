@@ -29,7 +29,7 @@ export const TaskEditModal = ({ isOpen, task, onClose, onUpdateTask, onChangeRew
     };
 
     return (
-        <Modal isOpen={isOpen} onClose={onClose} title={""}>
+        <Modal isOpen={isOpen} onClose={onClose} title={"Edit task"}>
             <div className="taskEdit">
                 <input
                     type="text"
