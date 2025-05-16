@@ -2,8 +2,8 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { App } from './App'
 import { getPlatform } from './lib/platform';
-import type { Platform } from './lib/platform';
 import '@/shared/styles/index.css';
+import "./main.css";
 
 const platform = getPlatform();
 

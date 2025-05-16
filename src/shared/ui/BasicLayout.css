@@ -5,6 +5,26 @@
     margin: 0 auto;
     overflow-x:scroll;
 }
+.basicLayout__content, .basicLayout__content__taskList {
+    min-height: 90%;
+}
+@media (max-width: 768px) {
+    .basicLayout {
+        padding: 0;
+    }
+
+    .sidebar-collapsed {
+        min-width: 0px !important;
+        width: 0px !important;
+    }
+
+    .sidebar  {
+        min-width: 0px !important;
+    }
+    .basicLayout__content__lists {
+        margin-left: 0px !important;
+    }
+}
 
 .basicLayout__header {
     margin-bottom: 2rem;
