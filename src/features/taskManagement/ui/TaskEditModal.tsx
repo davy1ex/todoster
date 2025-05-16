@@ -1,104 +1,99 @@
-import type { Task } from '@/entities/task'
-import { useTaskEditModal } from '../model/useTaskEditModal'
-import './TaskEditModal.css'
+import { useState } from 'react';
+import type { Task } from '@/entities/task';
+import { Modal } from '@/shared/ui/Modal/Modal';
+import './TaskEditModal.css';
 
 interface TaskEditModalProps {
-    task: Task
-    onClose: () => void
-    onUpdateTask: (id: number, updates: Partial<Task>) => void
-    onChangeReward: (amount: number) => void
+    isOpen: boolean;
+    task: Task;
+    onClose: () => void;
+    onUpdateTask: (id: number, updates: Partial<Task>) => void;
+    onChangeReward: (amount: number) => void;
 }
 
-export const TaskEditModal = (props: TaskEditModalProps) => {
-    const {
-        editedTask,
-        rewardAmount,
-        setRewardAmount,
-        handleInputChange,
-        handleRewardChange,
-        handleBackdropClick
-    } = useTaskEditModal(props)
+export const TaskEditModal = ({ isOpen, task, onClose, onUpdateTask, onChangeReward }: TaskEditModalProps) => {
+    const [rewardAmount, setRewardAmount] = useState(0);
+
+    if (!isOpen || !task) return null;
+
+    const handleUpdate = (field: keyof Task, value: any) => {
+        onUpdateTask(task.id, { [field]: value });
+    };
+
+    const handleRewardChange = () => {
+        if (rewardAmount > 0) {
+            onChangeReward(rewardAmount);
+            onUpdateTask(task.id, { reward: rewardAmount });
+            setRewardAmount(0);
+        }
+    };
 
     return (
-        <div className="taskModal" onClick={handleBackdropClick}>
-            <div className="taskModal__content">
-                <div className="taskModal__header">
-                    <input
-                        type="text"
-                        value={editedTask.title}
-                        onChange={(e) => handleInputChange('title', e.target.value)}
-                        className="taskModal__titleInput"
-                        aria-label="task title"
-                    />
-                    <button 
-                        onClick={props.onClose}
-                        className="taskModal__closeButton"
-                    >
-                        ×
-                    </button>
-                </div>
+        <Modal isOpen={isOpen} onClose={onClose} title={""}>
+            <div className="taskEdit">
+                <input
+                    type="text"
+                    value={task.title}
+                    onChange={(e) => handleUpdate('title', e.target.value)}
+                    className="taskEdit__title"
+                    placeholder="Task title"
+                />
 
                 <textarea
-                    value={editedTask.description}
-                    onChange={(e) => handleInputChange('description', e.target.value)}
+                    value={task.description}
+                    onChange={(e) => handleUpdate('description', e.target.value)}
                     placeholder="Task description..."
-                    className="taskModal__description"
+                    className="taskEdit__description"
                     rows={3}
                 />
                 
-                <div className="taskModal__reward">
-                    <span>Current reward: {editedTask.reward} coins</span>
-                    <div className="taskModal__rewardInput">
+                <div className="taskEdit__reward">
+                    <span>Current reward: {task.reward} coins</span>
+                    <div className="taskEdit__rewardInput">
                         <input
                             type="number"
-                            value={rewardAmount}
-                            onChange={(e) => setRewardAmount(Number(e.target.value))}
+                            value={rewardAmount || ''}
+                            onChange={(e) => setRewardAmount(Math.max(0, Number(e.target.value)))}
                             min="0"
                             placeholder="Enter coins"
-                            className="taskModal__rewardNumber"
                         />
                         <button 
                             onClick={handleRewardChange}
-                            className="taskModal__rewardButton"
-                            disabled={!rewardAmount}
+                            disabled={rewardAmount <= 0}
                         >
                             Add coins
                         </button>
                     </div>
                 </div>
 
-                <div className="taskModal__controls">
-                    <div className="taskModal__status">
-                        <label>
+                <div className="taskEdit__controls">
+                    <div className="taskEdit__status">
+                        <label className="checkbox-label">
                             <input
                                 type="checkbox"
-                                checked={editedTask.isDone}
-                                onChange={(e) => handleInputChange('isDone', e.target.checked)}
+                                checked={task.isDone}
+                                onChange={(e) => handleUpdate('isDone', e.target.checked)}
                             />
-                            Completed
+                            <span>Completed</span>
                         </label>
                     </div>
 
-                    <div className="taskModal__list">
+                    <div className="taskEdit__list">
                         <select
-                            value={editedTask.list}
-                            onChange={(e) => handleInputChange('list', e.target.value)}
-                            className="taskModal__listSelect"
+                            value={task.list}
+                            onChange={(e) => handleUpdate('list', e.target.value)}
                         >
                             <option value="Inbox">Inbox</option>
                             <option value="Backlog">Backlog</option>
                         </select>
                     </div>
 
-                    {editedTask.list === "Backlog" && (
-                        <div className="taskModal__dateBox">
+                    {task.list === "Backlog" && (
+                        <div className="taskEdit__dateBox">
                             <select
-                            
-
-                                value={editedTask.date_box}
-                                onChange={(e) => handleInputChange('date_box', e.target.value)}
-                                className="taskModal__listSelect"
-                                >
+                                value={task.date_box}
+                                onChange={(e) => handleUpdate('date_box', e.target.value)}
+                            >
                                 <option value="today">Today</option>
                                 <option value="week">This Week</option>
                                 <option value="later">Later</option>
@@ -107,6 +102,6 @@ export const TaskEditModal = (props: TaskEditModalProps) => {
                     )}
                 </div>
             </div>
-        </div>
-    )
-} 
+        </Modal>
+    );
+}; 

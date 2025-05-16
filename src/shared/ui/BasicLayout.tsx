@@ -5,7 +5,7 @@ import { BrainDump } from "@/entities/brainDump/ui/BrainDump"
 import { ExcalidrawCanvas } from "@/entities/brainDump/ui/ExcalidrawCanvas"
 import { Header } from "@/shared/ui/Header"
 import { RewardsList } from"@/entities/reward/ui/RewardsList"
-import { useRef, useState, MouseEvent } from "react"
+import { useRef, useState, MouseEvent, useEffect } from "react"
 import "./BasicLayout.css"
 import { InboxList } from "@/widgets/InboxList"
 import { BacklogList } from "@/widgets/BacklogList"
@@ -20,7 +20,11 @@ export const BasicLayout = () => {
     const [startX, setStartX] = useState(0)
     const [scrollLeft, setScrollLeft] = useState(0)
     const [isSidebarOpen, setIsSidebarOpen] = useState(false)
-    const [selectedTask, setSelectedTask] = useState<Task | null>(null)
+    const [selectedTaskId, setSelectedTaskId] = useState<number | null>(null)
+    const [isModalOpen, setIsModalOpen] = useState(false)
+
+    // Get the current task from the store using the selectedTaskId
+    const selectedTask = selectedTaskId ? tasks.find(task => task.id === selectedTaskId) : null;
 
     const handleMouseDown = (e: MouseEvent<HTMLDivElement>) => {
         setIsDragging(true)
@@ -51,12 +55,21 @@ export const BasicLayout = () => {
     }
 
     const handleTaskClick = (task: Task) => {
-        setSelectedTask(task)
+        setSelectedTaskId(task.id);
+        setIsModalOpen(true);
     }
 
     const handleCloseModal = () => {
-        setSelectedTask(null)
+        setIsModalOpen(false);
+        setSelectedTaskId(null);
     }
+
+    // If the selected task is deleted or no longer exists in the store, close the modal
+    useEffect(() => {
+        if (selectedTaskId && !tasks.some(task => task.id === selectedTaskId)) {
+            handleCloseModal();
+        }
+    }, [tasks, selectedTaskId]);
 
     return (
         <>
@@ -127,6 +140,7 @@ export const BasicLayout = () => {
         </div>
         {selectedTask && (
             <TaskEditModal
+                isOpen={isModalOpen}
                 task={selectedTask}
                 onClose={handleCloseModal}
                 onUpdateTask={updateTask}

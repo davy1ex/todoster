@@ -187,4 +187,100 @@
 .taskModal__listSelect:focus {
     outline: none;
     border-color: var(--color-background-alt);
+}
+
+.taskEdit {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.taskEdit__title {
+    width: 100%;
+    padding: 8px;
+    font-size: 18px;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    background-color: var(--color-background);
+    color: var(--color-text);
+}
+
+.taskEdit__description {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    resize: vertical;
+    background-color: var(--color-background);
+    color: var(--color-text);
+}
+
+.taskEdit__reward {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    color: var(--color-text);
+}
+
+.taskEdit__rewardInput {
+    display: flex;
+    gap: 10px;
+}
+
+.taskEdit__rewardInput input {
+    width: 100px;
+    padding: 8px;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    background-color: var(--color-background);
+    color: var(--color-text);
+}
+
+.taskEdit__rewardInput button {
+    padding: 8px 16px;
+    background-color: var(--color-primary);
+    color: var(--color-text-inverse);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.taskEdit__rewardInput button:disabled {
+    background-color: var(--color-disabled);
+    color: var(--color-text-disabled);
+    cursor: not-allowed;
+}
+
+.taskEdit__controls {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.taskEdit__status .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    color: var(--color-text);
+}
+
+.taskEdit__list select,
+.taskEdit__dateBox select {
+    padding: 8px;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    background-color: var(--color-background);
+    color: var(--color-text);
+    cursor: pointer;
+}
+
+.taskEdit__list select:hover,
+.taskEdit__dateBox select:hover {
+    border-color: var(--color-border-hover);
+}
+
+.taskEdit input[type="checkbox"] {
+    accent-color: var(--color-primary);
 } 

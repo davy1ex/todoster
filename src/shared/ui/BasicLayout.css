@@ -4,6 +4,8 @@
     height: 100%;
     margin: 0 auto;
     overflow-x:scroll;
+    overflow-y: hidden;
+    z-index: 0;
 }
 .basicLayout__content, .basicLayout__content__taskList {
     min-height: 90%;

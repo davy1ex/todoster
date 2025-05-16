@@ -2,6 +2,7 @@
 
 # Refactor
 - [ ] Rewrite tasks, backlog, projects, goals to feature based arch
+- [ ] Rewrite modals to separete shared/ui for reuse
 
 
 ## 1. Core Foundation
