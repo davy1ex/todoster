@@ -28,6 +28,7 @@ export const TaskEditModal = (props: TaskEditModalProps) => {
                         value={editedTask.title}
                         onChange={(e) => handleInputChange('title', e.target.value)}
                         className="taskModal__titleInput"
+                        aria-label="task title"
                     />
                     <button 
                         onClick={props.onClose}
@@ -71,8 +72,8 @@ export const TaskEditModal = (props: TaskEditModalProps) => {
                         <label>
                             <input
                                 type="checkbox"
-                                checked={editedTask.completed}
-                                onChange={(e) => handleInputChange('completed', e.target.checked)}
+                                checked={editedTask.isDone}
+                                onChange={(e) => handleInputChange('isDone', e.target.checked)}
                             />
                             Completed
                         </label>
@@ -88,6 +89,22 @@ export const TaskEditModal = (props: TaskEditModalProps) => {
                             <option value="Backlog">Backlog</option>
                         </select>
                     </div>
+
+                    {editedTask.list === "Backlog" && (
+                        <div className="taskModal__dateBox">
+                            <select
+                            
+
+                                value={editedTask.date_box}
+                                onChange={(e) => handleInputChange('date_box', e.target.value)}
+                                className="taskModal__listSelect"
+                                >
+                                <option value="today">Today</option>
+                                <option value="week">This Week</option>
+                                <option value="later">Later</option>
+                            </select>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

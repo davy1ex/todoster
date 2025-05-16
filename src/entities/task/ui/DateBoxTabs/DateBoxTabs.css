@@ -1,0 +1,42 @@
+.date-box-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  overflow: auto;
+}
+
+.date-box-tab {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  background: var(--color-background-alt);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.date-box-tab:hover {
+  background: var(--color-background-dark);
+  border-color: var(--color-border-hover);
+}
+
+.date-box-tab--active {
+  background: var(--color-background-dark);
+  border-color: var(--color-border-hover);
+  font-weight: 600;
+}
+
+.date-box-tab__count {
+  background: var(--color-background);
+  color: var(--color-text-light);
+  padding: 0.125rem 0.375rem;
+  border-radius: 1rem;
+  font-size: 0.75rem;
+  min-width: 1.5rem;
+  text-align: center;
+} 

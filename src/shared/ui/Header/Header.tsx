@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { rewardStore } from '@/entities/reward/model/store';
 import { appEvents, APP_EVENTS } from '@/shared/lib/events';
+import { CoinIcon } from '@/shared/ui/icons';
 import './Header.css';
 
 export const Header: FC = () => {
@@ -33,28 +34,7 @@ export const Header: FC = () => {
             
             <div className="header__actions">
                 <div className="header__rewards">
-                    <svg 
-                        className="header__coin-icon"
-                        width="24" 
-                        height="24" 
-                        viewBox="0 0 24 24" 
-                        fill="none" 
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <circle 
-                            cx="12" 
-                            cy="12" 
-                            r="8" 
-                            stroke="currentColor" 
-                            strokeWidth="2"
-                        />
-                        <path 
-                            d="M12 7V17M9 10L12 7L15 10" 
-                            stroke="currentColor" 
-                            strokeWidth="2" 
-                            strokeLinecap="round"
-                        />
-                    </svg>
+                    <CoinIcon className="header__coin-icon" width={24} height={24} />
                     <span className="header__coins">{totalCoins}</span>
                 </div>
 

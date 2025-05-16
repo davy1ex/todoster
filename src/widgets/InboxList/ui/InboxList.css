@@ -1,0 +1,42 @@
+.inbox-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: var(--color-background);
+  border-radius: 8px;
+  box-shadow: var(--shadow-sm);
+}
+
+.inbox-list__title {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.inbox-list__title h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.inbox-list__header {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.inbox-list__tasks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.inbox-list__empty {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-secondary);
+  font-style: italic;
+} 
