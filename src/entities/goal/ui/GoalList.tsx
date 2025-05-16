@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { goalStore } from '../model/store';
-import { GoalModal } from './GoalModal';
+import { GoalModal } from '@/features/goalManagement';
 import type { Goal } from '../model/types';
 import './GoalList.css';
 

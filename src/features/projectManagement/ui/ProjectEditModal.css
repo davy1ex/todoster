@@ -1,0 +1,109 @@
+.project-edit-modal {
+    width: 100%;
+}
+
+.project-edit-modal__content {
+    display: flex;
+    flex-direction: column;
+    min-width: fit-content;
+    max-width: 100%;
+    width: 600px;
+    gap: 1.5rem;
+}
+
+.project-edit-modal__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.project-edit-modal__header h2 {
+    margin: 0;
+    cursor: pointer;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+}
+
+.project-edit-modal__header h2:hover {
+    background: var(--color-background-alt);
+}
+
+.project-edit-modal__title-input {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin: 0;
+    padding: 0.25rem 0.5rem;
+    border: 1px solid var(--color-background-alt);
+    border-radius: 0.25rem;
+    width: 100%;
+    background: var(--color-background);
+    color: var(--color-text);
+}
+
+.project-edit-modal__section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.project-edit-modal__section h3 {
+    margin: 0;
+    color: var(--color-text);
+}
+
+.project-edit-modal__status-select,
+.project-edit-modal__description-input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid var(--color-background-alt);
+    border-radius: 0.25rem;
+    background: var(--color-background);
+    color: var(--color-text);
+}
+
+.project-edit-modal__description-input {
+    min-height: 100px;
+    resize: vertical;
+    font-family: inherit;
+}
+
+.project-edit-modal__editable-text {
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+}
+
+.project-edit-modal__editable-text:hover {
+    background: var(--color-background-alt);
+}
+
+.project-edit-modal__editable-text p {
+    margin: 0;
+    color: var(--color-text);
+}
+
+.project-edit-modal__add-task {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    background: var(--color-background-alt);
+    padding: 1rem;
+    border-radius: 0.25rem;
+}
+
+.project-edit-modal__add-task h4 {
+    margin: 0;
+    color: var(--color-text);
+}
+
+.project-edit-modal__metadata {
+    background: var(--color-background-alt);
+    padding: 0.75rem;
+    border-radius: 0.25rem;
+}
+
+.project-edit-modal__metadata p {
+    margin: 0.25rem 0;
+    font-size: 0.875rem;
+    color: var(--color-text);
+} 

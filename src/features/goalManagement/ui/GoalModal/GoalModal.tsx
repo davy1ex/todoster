@@ -1,6 +1,6 @@
-import { FC, useEffect, useState } from 'react';
-import type { Goal } from '../model/types';
-import { projectStore } from '@/entities/project';
+import { FC } from 'react';
+import type { Goal } from '@/entities/goal/model/types';
+import { useGoalModal } from '../../model/useGoalModal';
 import './GoalModal.css';
 
 interface GoalModalProps {
@@ -10,39 +10,20 @@ interface GoalModalProps {
 }
 
 export const GoalModal: FC<GoalModalProps> = ({ goal, onClose, onSave }) => {
-    const [title, setTitle] = useState(goal?.title || '');
-    const [description, setDescription] = useState(goal?.description || '');
-    const [priority, setPriority] = useState<Goal['priority']>(goal?.priority || 'medium');
-    const [projectId, setProjectId] = useState<number | undefined>(goal?.projectId);
-    const [deadline, setDeadline] = useState<string>(
-        goal?.deadline ? new Date(goal.deadline).toISOString().split('T')[0] : ''
-    );
-
-    const { projects } = projectStore();
-
-    useEffect(() => {
-        const handleEscKey = (event: KeyboardEvent) => {
-            if (event.key === 'Escape') {
-                onClose();
-            }
-        };
-
-        document.addEventListener('keydown', handleEscKey);
-        return () => document.removeEventListener('keydown', handleEscKey);
-    }, [onClose]);
-
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        onSave({
-            title,
-            description,
-            priority,
-            projectId,
-            isCompleted: goal?.isCompleted || false,
-            deadline: deadline ? new Date(deadline) : undefined,
-        });
-        onClose();
-    };
+    const {
+        title,
+        description,
+        priority,
+        projectId,
+        deadline,
+        projects,
+        setTitle,
+        setDescription,
+        setPriority,
+        setProjectId,
+        setDeadline,
+        handleSave
+    } = useGoalModal(goal);
 
     return (
         <div className="goal-modal">
@@ -51,7 +32,10 @@ export const GoalModal: FC<GoalModalProps> = ({ goal, onClose, onSave }) => {
                     <h2>{goal ? 'Edit Goal' : 'New Goal'}</h2>
                     <button onClick={onClose}>&times;</button>
                 </div>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={(e) => {
+                    e.preventDefault();
+                    handleSave(onSave, onClose);
+                }}>
                     <div className="goal-modal__field">
                         <label htmlFor="title">Title</label>
                         <input

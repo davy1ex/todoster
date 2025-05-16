@@ -30,6 +30,10 @@ export const MainLayout = () => {
         setSelectedTaskId(null);
     }
 
+    const toggleSidebar = () => {
+        setIsSidebarOpen(!isSidebarOpen);
+    }
+
     // If the selected task is deleted or no longer exists in the store, close the modal
     useEffect(() => {
         if (selectedTaskId && !tasks.some(task => task.id === selectedTaskId)) {
@@ -37,18 +41,32 @@ export const MainLayout = () => {
         }
     }, [tasks, selectedTaskId]);
 
-    const sidebarContent = isSidebarOpen ? (
-        <div className="smallWidget">
-            <BrainDump />
-            <iframe 
-                width="500" 
-                height="700" 
-                src="https://excalidraw.com/" 
-                frameBorder="0" 
-                allowFullScreen
-            />    
+    const sidebarContent =  (
+        <div className={`sidebar ${!isSidebarOpen ? 'sidebar-collapsed' : ''}`}>
+            <button 
+                className="sidebar-toggle"
+                onClick={toggleSidebar}
+                aria-label={isSidebarOpen ? 'Hide sidebar' : 'Show sidebar'}
+                >
+                {isSidebarOpen ? '←' : '→'}
+            </button>
+            {
+                isSidebarOpen && (
+                    <div className="smallWidget">
+                        <BrainDump />
+                        <iframe 
+                            width="500" 
+                            height="700" 
+                            src="https://excalidraw.com/" 
+                            frameBorder="0" 
+                            allowFullScreen
+                        />    
+                    </div>
+                )
+            }
         </div>
-    ) : null;
+        
+    )
 
     const mainContent = (
         <>
@@ -79,6 +97,8 @@ export const MainLayout = () => {
             <Header onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)} />
             <h1 style={{textAlign: "center"}}>Человек 2.0 панель управления ну пипец хаха</h1>
             
+
+
             <BaseLayout
                 sidebarContent={sidebarContent}
                 mainContent={mainContent}

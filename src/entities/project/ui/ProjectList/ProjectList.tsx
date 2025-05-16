@@ -1,9 +1,9 @@
 import { FC, useState, useCallback } from 'react';
 import { ProjectCard } from '../ProjectCard';
-import { ProjectModal } from '../ProjectModal';
 import { projectStore } from '../../model/store';
 import type { Project, ProjectStatus } from '../../model/types';
 import { ProjectInput } from '@/features/project/ui/ProjectInput';
+import { ProjectEditModal } from '@/features/projectManagement';
 import './ProjectList.css';
 
 interface ProjectListProps {
@@ -77,8 +77,9 @@ export const ProjectList: FC<ProjectListProps> = ({
             )}
 
             {selectedProject && (
-                <ProjectModal
+                <ProjectEditModal
                     project={selectedProject}
+                    isOpen={true}
                     onClose={handleCloseModal}
                     onUpdateProject={updateProject}
                     onUpdateStatus={updateProjectStatus}
