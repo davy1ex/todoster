@@ -1,10 +1,10 @@
-.inputTask {
+.taskInput {
     width: 100%;
     display: flex;
     justify-content: space-between;
 }
 
-.inputTask input {
+.taskInput input {
     width: 90%;
     margin: auto;
     padding: 10px;
@@ -15,11 +15,11 @@
     color: var(--color-text);
 }
 
-.inputTask input:focus {
+.taskInput input:focus {
     outline: none;
 }
 
-.inputTask button {
+.taskInput button {
     width: 10%;
 
     margin: auto;

@@ -2,9 +2,8 @@ import { FC } from 'react';
 import { Task } from '@/entities/task';
 import { useTaskFiltering } from '@/features/taskFiltering';
 import { TaskComponent } from '@/entities/task';
-import { InputTask } from '@/entities/task';
+import { TaskInput } from '@/features/taskCreation';
 import { DateBoxTabs } from '@/entities/task';
-import { useTaskCreation } from '@/features/taskCreation';
 import './BacklogList.css';
 
 interface BacklogListProps {
@@ -25,17 +24,8 @@ export const BacklogList: FC<BacklogListProps> = ({
     getTaskCounts 
   } = useTaskFiltering();
   
-  const { createTask } = useTaskCreation();
   const filteredTasks = getFilteredTasks(tasks, "Backlog");
   const taskCounts = getTaskCounts(tasks);
-
-  const handleAddTask = (title: string) => {
-    createTask({
-      title,
-      list: "Backlog",
-      date_box: selectedDateBox,
-    });
-  };
 
   return (
     <div className="backlog-list">
@@ -49,7 +39,7 @@ export const BacklogList: FC<BacklogListProps> = ({
       </div>
       
       <div className="backlog-list__header">
-        <InputTask listName="Backlog" onAdd={handleAddTask} />
+        <TaskInput listName="Backlog" dateBox={selectedDateBox} />
       </div>
       
       <div className="backlog-list__tasks">

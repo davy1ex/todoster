@@ -1,5 +1,4 @@
 import { taskStore } from "@/entities/task"
-import { useTaskManagementContext } from "@/features/taskManagement/model/TaskManagementProvider"
 import { ProjectList } from "@/entities/project"
 import { GoalList } from "@/entities/goal"
 import { BrainDump } from "@/entities/brainDump/ui/BrainDump"
@@ -11,16 +10,17 @@ import "./BasicLayout.css"
 import { InboxList } from "@/widgets/InboxList"
 import { BacklogList } from "@/widgets/BacklogList"
 import type { Task } from "@/entities/task"
+import { TaskEditModal } from "@/features/taskManagement/ui/TaskEditModal"
 
 export const BasicLayout = () => {
-    const { tasks } = taskStore((state) => state)
-    const { handleTaskCheck, openTaskModal } = useTaskManagementContext()
+    const { tasks, updateTask, changeReward, checkTask } = taskStore((state) => state)
     
     const scrollContainerRef = useRef<HTMLDivElement>(null)
     const [isDragging, setIsDragging] = useState(false)
     const [startX, setStartX] = useState(0)
     const [scrollLeft, setScrollLeft] = useState(0)
     const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+    const [selectedTask, setSelectedTask] = useState<Task | null>(null)
 
     const handleMouseDown = (e: MouseEvent<HTMLDivElement>) => {
         setIsDragging(true)
@@ -50,13 +50,17 @@ export const BasicLayout = () => {
         setIsSidebarOpen(!isSidebarOpen)
     }
 
-    const handleTaskModal = (task: Task) => {
-        openTaskModal(task);
+    const handleTaskClick = (task: Task) => {
+        setSelectedTask(task)
+    }
+
+    const handleCloseModal = () => {
+        setSelectedTask(null)
     }
 
     return (
         <>
-        <Header />
+        <Header onToggleSidebar={toggleSidebar} />
         <h1 style={{textAlign: "center"}}>Человек 2.0 панель управления ну пипец хаха</h1>
 
         <div className="basicLayout" role="main">
@@ -72,6 +76,7 @@ export const BasicLayout = () => {
                     >
                         {isSidebarOpen ? '←' : '→'}
                     </button>
+                    
                     {isSidebarOpen && (
                         <div className="smallWidget">
                             <BrainDump />
@@ -97,13 +102,13 @@ export const BasicLayout = () => {
                     <div className="basicLayout__content__taskList" data-testid="task-list">
                         <InboxList
                             tasks={tasks}
-                            onCheckTask={handleTaskCheck}
-                            onTaskClick={handleTaskModal}
+                            onCheckTask={checkTask}
+                            onTaskClick={handleTaskClick}
                         />
                         <BacklogList
                             tasks={tasks}
-                            onCheckTask={handleTaskCheck}
-                            onTaskClick={handleTaskModal}
+                            onCheckTask={checkTask}
+                            onTaskClick={handleTaskClick}
                         />
                         <div className="basicLayout__content__projects">
                             <ProjectList />
@@ -120,6 +125,14 @@ export const BasicLayout = () => {
                 </div>
             </div>
         </div>
+        {selectedTask && (
+            <TaskEditModal
+                task={selectedTask}
+                onClose={handleCloseModal}
+                onUpdateTask={updateTask}
+                onChangeReward={(amount) => changeReward(selectedTask.id, amount)}
+            />
+        )}
         </>
     )
 }

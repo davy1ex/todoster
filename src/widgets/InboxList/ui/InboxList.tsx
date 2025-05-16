@@ -2,8 +2,7 @@ import { FC } from 'react';
 import { Task } from '@/entities/task';
 import { useTaskFiltering } from '@/features/taskFiltering';
 import { TaskComponent } from '@/entities/task';
-import { InputTask } from '@/entities/task/ui/InputTask/InputTask';
-import { useTaskCreation } from '@/features/taskCreation';
+import { TaskInput } from '@/features/taskCreation';
 import './InboxList.css';
 
 interface InboxListProps {
@@ -18,15 +17,7 @@ export const InboxList: FC<InboxListProps> = ({
   onTaskClick,
 }) => {
   const { getFilteredTasks } = useTaskFiltering();
-  const { createTask } = useTaskCreation();
   const filteredTasks = getFilteredTasks(tasks, "Inbox");
-
-  const handleAddTask = (title: string) => {
-    createTask({
-      title,
-      list: "Inbox",
-    });
-  };
 
   return (
     <div className="inbox-list">
@@ -35,7 +26,7 @@ export const InboxList: FC<InboxListProps> = ({
       </div>
       
       <div className="inbox-list__header">
-        <InputTask listName="Inbox" onAdd={handleAddTask} />
+        <TaskInput listName="Inbox" dateBox="later" />
       </div>
       
       <div className="inbox-list__tasks">

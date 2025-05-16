@@ -1,6 +1,6 @@
 import { FC, useRef, useEffect, useMemo, useCallback } from 'react';
 import { Project, ProjectStatus } from '../../model/types';
-import { InputTask } from '@/entities/task';
+import { TaskInput } from '@/features/taskCreation';
 import { TaskLinkSelect } from '../TaskLinkSelect';
 import { LinkedTasksList } from '../LinkedTasksList';
 import { useProjectModal } from '../../hooks/useProjectModal';
@@ -159,10 +159,8 @@ export const ProjectModal: FC<ProjectModalProps> = ({
 
                         <div className="project-modal__add-task">
                             <h4>Add Task</h4>
-                            <InputTask
-                                onAdd={(taskTitle) => handleAddNewTask(taskTitle, onLinkTask)}
-                                listName={title}
-                            />
+                            <TaskInput listName="Backlog"/>
+
                             <TaskLinkSelect
                                 tasks={tasks}
                                 linkedTaskIds={project.linkedTaskIds}

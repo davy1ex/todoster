@@ -4,7 +4,11 @@ import { appEvents, APP_EVENTS } from '@/shared/lib/events';
 import { CoinIcon } from '@/shared/ui/icons';
 import './Header.css';
 
-export const Header: FC = () => {
+interface HeaderProps {
+    onToggleSidebar: () => void;
+}
+
+export const Header: FC<HeaderProps> = ({ onToggleSidebar }) => {
     const totalCoins = rewardStore((state) => state.totalCoins);
 
     const handleSettingsClick = () => {
@@ -14,6 +18,13 @@ export const Header: FC = () => {
     return (
         <header className="header">
             <div className="header__logo">
+                <button 
+                    className="header__sidebar-toggle"
+                    onClick={onToggleSidebar}
+                    aria-label="Toggle sidebar"
+                >
+                    ☰
+                </button>
                 <svg 
                     className="header__icon"
                     width="24" 

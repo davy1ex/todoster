@@ -1,7 +1,6 @@
 import { useEffect, FC } from 'react';
 import { migrateGoalProjectLinks } from '../entities/goal/model/migrateGoals';
 import { BasicLayout } from "@/shared/ui/BasicLayout"
-import { TaskManagementProvider } from "@/features/taskManagement/model/TaskManagementProvider"
 import { SettingsProvider } from "@/features/settings"
 import type { Platform } from './lib/platform';
 import { ThemeProvider } from '@/shared/theme/ThemeContext';
@@ -19,9 +18,7 @@ export const App: FC<AppProps> = ({ platform }) => {
     return (
         <ThemeProvider>
             <SettingsProvider>
-                <TaskManagementProvider>
-                    <BasicLayout />
-                </TaskManagementProvider>
+                <BasicLayout />
             </SettingsProvider>
         </ThemeProvider>
     )

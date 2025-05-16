@@ -16,6 +16,23 @@
     gap: 0.5rem;
 }
 
+.header__sidebar-toggle {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--color-text);
+    cursor: pointer;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header__sidebar-toggle:hover {
+    background: var(--color-background-alt);
+}
+
 .header__icon {
     color: var(--color-text);
 }

@@ -1,5 +1,9 @@
 # Gamified Todo App - MVP Speedrun Plan
 
+# Refactor
+- [ ] Rewrite tasks, backlog, projects, goals to feature based arch
+
+
 ## 1. Core Foundation
 ### 1.1 Project Setup
 - [ ] Init React project with Vite

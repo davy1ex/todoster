@@ -18,8 +18,7 @@ export const useTaskCreation = create<TaskCreationStore>((set, get) => ({
       createdAt: new Date(),
       updatedAt: new Date(),
       isArchived: false,
-      date_box:
-        taskData.list === "Backlog" ? taskData.date_box || "today" : "later",
+      date_box: taskData.date_box ?? "later",
     };
 
     taskStore.getState().addTask(task);
