@@ -1,8 +1,9 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import type { Goal } from '@/entities/goal/model/types';
 import { projectStore } from '@/entities/project';
 
 export const useGoalModal = (initialGoal?: Goal) => {
+    const modalRef = useRef<HTMLDivElement>(null);
     const [title, setTitle] = useState(initialGoal?.title || '');
     const [description, setDescription] = useState(initialGoal?.description || '');
     const [priority, setPriority] = useState<Goal['priority']>(initialGoal?.priority || 'medium');
@@ -32,6 +33,9 @@ export const useGoalModal = (initialGoal?: Goal) => {
     }, [title, description, priority, projectId, deadline, initialGoal?.isCompleted]);
 
     return {
+        // Refs
+        modalRef,
+
         // State
         title,
         description,

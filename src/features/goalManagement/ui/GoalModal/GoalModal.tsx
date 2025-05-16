@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import type { Goal } from '@/entities/goal/model/types';
 import { useGoalModal } from '../../model/useGoalModal';
 import './GoalModal.css';
@@ -11,6 +11,7 @@ interface GoalModalProps {
 
 export const GoalModal: FC<GoalModalProps> = ({ goal, onClose, onSave }) => {
     const {
+        modalRef,
         title,
         description,
         priority,
@@ -25,9 +26,31 @@ export const GoalModal: FC<GoalModalProps> = ({ goal, onClose, onSave }) => {
         handleSave
     } = useGoalModal(goal);
 
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+                onClose();
+            }
+        };
+
+        const handleEscKey = (event: KeyboardEvent) => {
+            if (event.key === 'Escape') {
+                onClose();
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        document.addEventListener('keydown', handleEscKey);
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+            document.removeEventListener('keydown', handleEscKey);
+        };
+    }, [onClose]);
+
     return (
         <div className="goal-modal">
-            <div className="goal-modal__content">
+            <div ref={modalRef} className="goal-modal__content">
                 <div className="goal-modal__header">
                     <h2>{goal ? 'Edit Goal' : 'New Goal'}</h2>
                     <button onClick={onClose}>&times;</button>
