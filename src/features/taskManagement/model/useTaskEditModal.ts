@@ -46,7 +46,10 @@ export const useTaskEditModal = ({
   const handleRewardChange = useCallback(() => {
     if (rewardAmount) {
       onChangeReward(rewardAmount);
-      setRewardAmount(0);
+      setEditedTask(prev => ({
+        ...prev,
+        reward: rewardAmount
+      }));
     }
   }, [rewardAmount, onChangeReward]);
 

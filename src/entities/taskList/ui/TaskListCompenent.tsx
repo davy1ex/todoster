@@ -28,7 +28,7 @@ export const TaskListComponent = (props: TaskListComponentProps) => {
             description: "",
             isDone: false,
             list: props.title,
-            reward: 0,
+            reward: 10,
             createdAt: new Date(),
             updatedAt: new Date(),
             isArchived: false,

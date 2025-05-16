@@ -23,6 +23,7 @@ export const taskStore = create<TaskStore>()(
             ...state.tasks,
             {
               ...task,
+              reward: task.reward || 10,
               id: Date.now(),
               createdAt: new Date(),
               updatedAt: new Date(),
