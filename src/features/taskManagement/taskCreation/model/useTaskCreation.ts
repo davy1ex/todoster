@@ -9,7 +9,7 @@ interface CreateTaskDTO {
 }
 
 export const useTaskCreation = () => {
-    const { addTask } = taskStore();
+    const addTask = taskStore((state) => state.addTask);
 
     const createTask = (taskData: CreateTaskDTO) => {
         // Here we can add any additional logic like:
