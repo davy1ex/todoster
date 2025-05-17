@@ -238,7 +238,7 @@
 
 .taskEdit__rewardInput button {
     padding: 8px 16px;
-    background-color: var(--color-primary);
+    background-color: var(--color-background-alt);
     color: var(--color-text-inverse);
     border: none;
     border-radius: 4px;

@@ -5,6 +5,7 @@ interface CreateTaskDTO {
     title: string;
     list: string;
     date_box: DateBox;
+    reward?: number;
 }
 
 export const useTaskCreation = () => {
@@ -22,7 +23,7 @@ export const useTaskCreation = () => {
             description: "",
             isDone: false,
             list: taskData.list,
-            reward: 10,
+            reward: taskData.reward ?? 10, // Use provided reward or default to 10
             createdAt: new Date(),
             updatedAt: new Date(),
             isArchived: false,

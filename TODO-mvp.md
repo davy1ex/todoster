@@ -3,6 +3,7 @@
 # Refactor
 - [ ] Rewrite tasks, backlog, projects, goals to feature based arch
 - [ ] Rewrite modals to separete shared/ui for reuse
+- [ ] Rewrite archive way for tasks, rewards, goals by feature way
 
 
 ## 1. Core Foundation
@@ -113,3 +114,116 @@ Only after MVP is working:
 - Skip optimizations until polish phase
 - Use basic CSS layouts first
 - Focus on core user flows 
+
+# Testing Tasks for GamifiedTodo
+
+## Core Application Tests
+1. [x] Application renders successfully
+   - [x] Header is present
+   - [x] All main sections are visible (Inbox, Backlog, Projects, Goals, Rewards)
+   - [x] Points display in header
+   - [x] Theme toggle works
+
+## Task Management Tests
+1. [ ] Task Creation
+   - [ ] Can add task to Inbox
+   - [ ] Can add task to Backlog
+   - [ ] Tasks have correct default values
+   - [ ] Cannot add empty tasks
+   - [ ] Enter key works for task creation
+   - [ ] Clear input after task creation
+
+2. [ ] Task Lists
+   - [ ] Inbox List
+     - [ ] Shows inbox tasks correctly
+     - [ ] Shows empty state when no tasks
+     - [ ] Can check/uncheck tasks
+     - [ ] Can click task to open edit modal
+   - [ ] Backlog List
+     - [ ] Shows backlog tasks correctly
+     - [ ] Shows empty state when no tasks
+     - [ ] Filters tasks by date box (Today/Week/Later)
+     - [ ] Shows correct task counts in tabs
+     - [ ] Can switch between date box views
+
+3. [ ] Task Editing
+   - [ ] Can open task edit modal
+   - [ ] Can edit task title
+   - [ ] Can edit task description
+   - [ ] Can change task reward points
+   - [ ] Can toggle task completion
+   - [ ] Can change task list (Inbox/Backlog)
+   - [ ] Can change date box for backlog tasks
+   - [ ] Modal closes correctly
+
+4. [ ] Points System
+   - [ ] Points increase when completing task
+   - [ ] Points decrease when unchecking task
+   - [ ] Points update correctly when changing task reward
+   - [ ] Points persist between sessions
+
+## Project Management Tests
+1. [ ] Project List
+   - [X] Can create new projects
+   - [X] Can edit project details
+   - [ ] Can delete projects
+   - [ ] Can archive projects
+   - [X] Can filter projects by status (not_started, active, archived)
+   - [ ] Shows empty state correctly
+
+## Goals Management Tests
+1. [ ] Goal List
+   - [ ] Can create new goals
+   - [ ] Can edit goal details
+   - [ ] Can mark goals as complete
+   - [ ] Shows progress correctly
+   - [ ] Shows empty state correctly
+
+## Rewards Management Tests
+1. [ ] Rewards List
+   - [ ] Can create new rewards
+   - [ ] Can edit reward details
+   - [ ] Can purchase rewards with points
+   - [ ] Shows empty state correctly
+   - [ ] Validates point balance for purchases
+
+## Storage Tests
+1. [ ] Data Persistence
+   - [ ] Tasks persist between sessions
+   - [ ] Points persist between sessions
+   - [ ] Projects persist between sessions
+   - [ ] Goals persist between sessions
+   - [ ] Rewards persist between sessions
+
+## UI/UX Tests
+1. [ ] Responsive Design
+   - [ ] Works on mobile screens
+   - [ ] Works on tablet screens
+   - [ ] Works on desktop screens
+
+2. [ ] Accessibility
+   - [ ] All interactive elements are keyboard accessible
+   - [ ] Proper ARIA labels are present
+   - [ ] Color contrast meets WCAG standards
+
+## Error Handling Tests
+1. [ ] Form Validation
+   - [ ] Shows appropriate error messages
+   - [ ] Prevents invalid data submission
+
+2. [ ] State Recovery
+   - [ ] Handles network errors gracefully
+   - [ ] Recovers from invalid states
+
+## Integration Tests
+1. [ ] Task-Project Integration
+   - [ ] Tasks can be assigned to projects
+   - [ ] Project progress updates with task completion
+
+2. [ ] Task-Goal Integration
+   - [ ] Tasks contribute to goal progress
+   - [ ] Goal completion updates correctly
+
+3. [ ] Points-Rewards Integration
+   - [ ] Point balance updates correctly
+   - [ ] Reward purchases affect point balance 

@@ -75,6 +75,7 @@ export const ProjectList: FC<ProjectListProps> = ({
             <ProjectStatusFilter
                 currentStatus={currentStatus}
                 onStatusChange={handleStatusChange}
+                statusCounts={statusCounts}
             />
 
             <div className="project-list__content">

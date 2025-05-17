@@ -9,7 +9,7 @@ body {
     margin: 0;
 }
 
-body, root, .basicLayout {
-    height: 100svh;
+body, #root, .app {
+    height: 100vh;
 }
 

@@ -5,11 +5,15 @@ import './ProjectStatusFilter.css';
 interface ProjectStatusFilterProps {
     currentStatus?: ProjectStatus;
     onStatusChange: (status?: ProjectStatus) => void;
+    statusCounts: {
+        [key: string]: number;
+    }
 }
 
 export const ProjectStatusFilter: FC<ProjectStatusFilterProps> = ({
     currentStatus,
-    onStatusChange
+    onStatusChange,
+    statusCounts
 }) => {
     const statuses: { label: string; value?: ProjectStatus }[] = [
         { label: 'All', value: undefined },
@@ -29,7 +33,7 @@ export const ProjectStatusFilter: FC<ProjectStatusFilterProps> = ({
                 >
                     {label}
                     <span className="project-status-filter__count" data-testid={`project-status-${value || 'all'}-count`}>
-                        {/* Count will be added later */}
+                        {statusCounts[value || 'all']}
                     </span>
                 </button>
             ))}

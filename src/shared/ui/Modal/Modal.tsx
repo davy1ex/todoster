@@ -18,14 +18,21 @@ export const Modal = ({ isOpen, onClose, children, title="Edit" }: ModalProps) =
     };
 
     return (
-        <div className="modal" onClick={handleBackdropClick}>
+        <div 
+            className="modal" 
+            onClick={handleBackdropClick} 
+            role="dialog" 
+            aria-modal="true"
+            aria-labelledby="modal-title"
+        >
             <div className="modal__content">
                 {title && (
                     <div className="modal__header">
-                        <h2>{title}</h2>
+                        <h2 id="modal-title">{title}</h2>
                         <button 
                             onClick={onClose}
                             className="modal__closeButton"
+                            aria-label="Close modal"
                         >
                             ×
                         </button>
@@ -35,4 +42,4 @@ export const Modal = ({ isOpen, onClose, children, title="Edit" }: ModalProps) =
             </div>
         </div>
     );
-}; 
+};

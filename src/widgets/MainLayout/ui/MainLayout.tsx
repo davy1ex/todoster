@@ -10,7 +10,7 @@ import { BacklogList } from "@/features/taskManagement"
 import type { Task } from "@/entities/task"
 import { TaskEditModal } from "@/features/taskManagement/ui/TaskEditModal"
 import { BaseLayout } from "@/shared/ui/BaseLayout"
-
+import "./MainLayout.css"
 export const MainLayout = () => {
     const { tasks, updateTask, changeReward, checkTask } = taskStore((state) => state)
     const [selectedTaskId, setSelectedTaskId] = useState<number | null>(null)
@@ -69,37 +69,40 @@ export const MainLayout = () => {
     )
 
     const mainContent = (
-        <>
-            <InboxList
-                tasks={tasks}
-                onCheckTask={checkTask}
-                onTaskClick={handleTaskClick}
-            />
-            <BacklogList
-                tasks={tasks}
-                onCheckTask={checkTask}
-                onTaskClick={handleTaskClick}
-            />
-            <div className="mainLayout__content__projects">
+        <div data-testid="main-content" className="mainLayout__content" >
+            <div data-testid="inbox-list">
+                <InboxList
+                    tasks={tasks}
+                    onCheckTask={checkTask}
+                    onTaskClick={handleTaskClick}
+                />
+            </div>
+            <div data-testid="backlog-list">
+                <BacklogList
+                    tasks={tasks}
+                    onCheckTask={checkTask}
+                    onTaskClick={handleTaskClick}
+                />
+            </div>
+            <div data-testid="projects-section" className="mainLayout__content__projects">
                 <ProjectList />
             </div>
-            <div className="mainLayout__content__goals">
+            <div data-testid="goals-section" className="mainLayout__content__goals">
                 <GoalList />
             </div>
-            <div className="mainLayout__content__rewards">
+            <div data-testid="rewards-section" className="mainLayout__content__rewards">
                 <RewardsList />
             </div>
-        </>
+        </div>
     );
 
     return (
-        <>
+        <div className="main-layout" data-testid="main-layout">
             <Header onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)} />
-            <h1 style={{textAlign: "center"}}>Человек 2.0 панель управления ну пипец хаха</h1>
+            <h1 data-testid="app-title" style={{textAlign: "center"}}>Человек 2.0 панель управления ну пипец хаха</h1>
             
-
-
             <BaseLayout
+                data-testid="base-layout"
                 sidebarContent={sidebarContent}
                 mainContent={mainContent}
                 isSidebarOpen={isSidebarOpen}
@@ -107,6 +110,7 @@ export const MainLayout = () => {
 
             {selectedTask && (
                 <TaskEditModal
+                    data-testid="task-edit-modal"
                     isOpen={isModalOpen}
                     task={selectedTask}
                     onClose={handleCloseModal}
@@ -115,6 +119,6 @@ export const MainLayout = () => {
                     onCheckTask={checkTask}
                 />
             )}
-        </>
+        </div>
     );
 }; 

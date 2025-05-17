@@ -1,3 +1,10 @@
+
+.mainLayout__content {
+    display: flex !important;
+    flex-direction: row;
+    width: 100%;
+    gap: 20px;
+}
 .mainLayout__content__taskList {
     display: flex;
     flex-direction: row;
@@ -14,7 +21,7 @@
 .mainLayout__content__projects,
 .mainLayout__content__goals,
 .mainLayout__content__rewards {
-    width: 400px;
+    min-width: 400px;
     min-width: 300px;
     background: var(--color-background);
     border-radius: 8px;
@@ -93,7 +100,7 @@
 button.sidebar-toggle {
     background: var(--color-background);
    
-    width: 10px;
+    width: 40px;
     height: 40px;
 }
 

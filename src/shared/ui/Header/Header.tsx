@@ -44,7 +44,7 @@ export const Header: FC<HeaderProps> = ({ onToggleSidebar }) => {
             </div>
             
             <div className="header__actions">
-                <div className="header__rewards">
+                <div className="header__rewards" data-testid="points-display">
                     <CoinIcon className="header__coin-icon" width={24} height={24} />
                     <span className="header__coins">{totalCoins}</span>
                 </div>
@@ -52,6 +52,7 @@ export const Header: FC<HeaderProps> = ({ onToggleSidebar }) => {
                 <button 
                     onClick={handleSettingsClick}
                     className="header__settings-button"
+                    data-testid="theme-toggle"
                 >
                     <svg
                         width="20"

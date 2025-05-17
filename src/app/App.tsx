@@ -1,25 +1,22 @@
-import { useEffect, FC } from 'react';
-import { migrateGoalProjectLinks } from '../entities/goal/model/migrateGoals';
-import { MainLayout } from "@/widgets/MainLayout"
-import { SettingsProvider } from "@/features/settings"
-import type { Platform } from './lib/platform';
+import { FC } from 'react';
+import { MainLayout } from '@/widgets/MainLayout';
 import { ThemeProvider } from '@/shared/theme/ThemeContext';
+import { SettingsProvider } from '@/features/settings';
+import type { Platform } from './lib/platform';
+import './main.css';
 
 interface AppProps {
-  platform: Platform;
+    platform: Platform;
 }
 
 export const App: FC<AppProps> = ({ platform }) => {
-    useEffect(() => {
-        // Run migration when app starts
-        migrateGoalProjectLinks();
-    }, []);
-
     return (
         <ThemeProvider>
             <SettingsProvider>
-                <MainLayout />
+                <div data-testid="app-root" className="app">
+                    <MainLayout />
+                </div>
             </SettingsProvider>
         </ThemeProvider>
-    )
-}
+    );
+};

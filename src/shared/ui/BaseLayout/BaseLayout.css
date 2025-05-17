@@ -3,14 +3,14 @@
     height: 100%;
     margin: 0 auto;
     overflow-x: scroll;
-    overflow-y: hidden;
+    overflow-y: scroll;
 }
 
 .baseLayout__content {
     display: flex;
     flex-direction: row;
     gap: 20px;
-    overflow: hidden;
+    overflow: scroll;
     position: relative;
     transition: all 0.3s ease;
 }
@@ -38,7 +38,6 @@
     display: flex;
     flex-direction: row;
     overflow-x: auto;
-    overflow-y: hidden;
     cursor: grab;
     user-select: none;
     -webkit-user-select: none;
