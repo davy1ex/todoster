@@ -8,46 +8,47 @@
 
 ## 1. Core Foundation
 ### 1.1 Project Setup
-- [ ] Init React project with Vite
-- [ ] Setup TypeScript
-- [ ] Install core dependencies
+- [X] Init React project with Vite
+- [X] Setup TypeScript
+- [X] Install core dependencies
   - Zustand
   - React Router
   - Tailwind CSS
 
 ### 1.2 Basic Architecture
-- [ ] Create FSD folders
+- [X] Create FSD folders
   - /features
   - /entities
   - /shared
   - /widgets
 - [ ] Setup basic routing
-- [ ] Create layout template
+- [X] Create layout template
 
 ## 2. State Management
 ### 2.1 Zustand Store
-- [ ] Create base store
-- [ ] Setup local storage persistence
-- [ ] Define core types
+- [X] Create base store
+- [X] Setup local storage persistence
+- [X] Define core types
 
 ### 2.2 Core State Slices
-- [ ] Tasks slice
+- [X] Tasks slice
   - Task structure
   - CRUD actions
-- [ ] Lists slice
+- [X] Lists slice
   - List structure
   - Default lists (Inbox, Today, Projects)
-- [ ] Rewards slice
+- [X] Rewards slice
   - Reward structure
   - Currency system
 
 ## 3. Features Implementation
 ### 3.1 Tasks Feature
-- [ ] Task creation form
-- [ ] Task list view
-- [ ] Task completion toggle
-- [ ] Task deletion
-- [ ] Basic task editing
+- [X] Task creation form
+- [X] Task list view
+- [X] Task completion toggle
+- [X] Task deletion
+- [X] Basic task editing
+- [ ] Funny animation on claim reward from checked task
 
 ### 3.2 Lists Feature
 - [ ] Default lists implementation
@@ -125,13 +126,14 @@ Only after MVP is working:
    - [x] Theme toggle works
 
 ## Task Management Tests
-1. [ ] Task Creation
-   - [ ] Can add task to Inbox
-   - [ ] Can add task to Backlog
-   - [ ] Tasks have correct default values
-   - [ ] Cannot add empty tasks
-   - [ ] Enter key works for task creation
-   - [ ] Clear input after task creation
+1. [x] Task Creation
+   - [x] Can add task to Inbox
+   - [x] Can add task to Backlog
+   - [x] Tasks have correct default values
+   - [x] Cannot add empty tasks
+   - [x] Enter key works for task creation
+   - [x] Clear input after task creation
+   - [ ] Task on create can setuped custom count of points reward by input field behind of taskname
 
 2. [ ] Task Lists
    - [ ] Inbox List
@@ -139,22 +141,33 @@ Only after MVP is working:
      - [ ] Shows empty state when no tasks
      - [ ] Can check/uncheck tasks
      - [ ] Can click task to open edit modal
+     - [ ] Task added from inbox with date_box as 'later'
    - [ ] Backlog List
      - [ ] Shows backlog tasks correctly
      - [ ] Shows empty state when no tasks
      - [ ] Filters tasks by date box (Today/Week/Later)
      - [ ] Shows correct task counts in tabs
      - [ ] Can switch between date box views
+     - [ ] Input task in taskinput.tsx added it to same selected date_box
 
-3. [ ] Task Editing
-   - [ ] Can open task edit modal
-   - [ ] Can edit task title
-   - [ ] Can edit task description
-   - [ ] Can change task reward points
-   - [ ] Can toggle task completion
-   - [ ] Can change task list (Inbox/Backlog)
-   - [ ] Can change date box for backlog tasks
-   - [ ] Modal closes correctly
+3. [x] Task Editing
+   - [x] Can open task edit modal
+   - [x] Modal does not render when closed
+   - [x] Can edit task title
+   - [x] Can edit task description
+   - [x] Can change task reward points
+   - [x] Cannot set negative reward points
+   - [x] Can toggle task completion
+   - [x] Can change task list (Inbox/Backlog)
+   - [x] Can change date box for backlog tasks
+   - [x] Date box selector only appears for Backlog tasks
+   - [x] Modal closes correctly by outside
+   - [x] Modal closes correctly by ESC
+   - [x] Modal does not close when clicking inside
+   - [x] Can increment reward using spinbutton up arrow
+   - [ ] Can input reward using input field
+   - [x] Can decrement reward using spinbutton down arrow
+   - [x] Cannot decrement reward below zero using spinbutton
 
 4. [ ] Points System
    - [ ] Points increase when completing task
@@ -167,7 +180,7 @@ Only after MVP is working:
    - [X] Can create new projects
    - [X] Can edit project details
    - [ ] Can delete projects
-   - [ ] Can archive projects
+   - [X] Can archive projects
    - [X] Can filter projects by status (not_started, active, archived)
    - [ ] Shows empty state correctly
 

@@ -20,7 +20,7 @@ export const TaskEditModal = ({
     onChangeReward,
     onCheckTask 
 }: TaskEditModalProps) => {
-    const [rewardAmount, setRewardAmount] = useState(0);
+    const [rewardAmount, setRewardAmount] = useState(task?.reward || 0);
 
     if (!isOpen || !task) return null;
 
@@ -64,8 +64,15 @@ export const TaskEditModal = ({
                     <div className="taskEdit__rewardInput">
                         <input
                             type="number"
-                            value={task.reward || ''}
+                            value={rewardAmount}
                             onChange={(e) => setRewardAmount(Math.max(0, Number(e.target.value)))}
+                            onKeyDown={(e) => {
+                                if (e.key === 'ArrowUp') {
+                                    setRewardAmount(prev => prev + 1);
+                                } else if (e.key === 'ArrowDown') {
+                                    setRewardAmount(prev => Math.max(0, prev - 1));
+                                }
+                            }}
                             min="0"
                             placeholder="Enter coins"
                         />

@@ -1,6 +1,6 @@
 .inbox-list {
   display: flex;
-  min-width: 300px;
+  width: 450px;
   flex-direction: column;
   gap: 1rem;
   padding: 1rem;

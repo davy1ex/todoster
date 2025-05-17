@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 import './Modal.css';
 
 interface ModalProps {
@@ -9,6 +9,21 @@ interface ModalProps {
 }
 
 export const Modal = ({ isOpen, onClose, children, title="Edit" }: ModalProps) => {
+    useEffect(() => {
+        const handleEscape = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') {
+                onClose();
+            }
+        };
+
+        if (isOpen) {
+            document.addEventListener('keydown', handleEscape);
+            return () => {
+                document.removeEventListener('keydown', handleEscape);
+            };
+        }
+    }, [isOpen, onClose]);
+
     if (!isOpen) return null;
 
     const handleBackdropClick = (e: React.MouseEvent) => {
