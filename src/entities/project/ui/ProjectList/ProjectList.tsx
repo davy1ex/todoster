@@ -4,6 +4,7 @@ import { projectStore } from '../../model/store';
 import type { Project, ProjectStatus } from '../../model/types';
 import { ProjectInput } from '@/features/project/ui/ProjectInput';
 import { ProjectEditModal } from '@/features/projectManagement';
+import { ProjectStatusFilter } from '@/features/projectManagement/ui/ProjectStatusFilter/ProjectStatusFilter';
 import './ProjectList.css';
 
 interface ProjectListProps {
@@ -14,11 +15,13 @@ interface ProjectListProps {
 
 export const ProjectList: FC<ProjectListProps> = ({ 
     title = "Projects",
-    status,
+    status: initialStatus,
     hasLinkedTasks 
 }) => {
     const [selectedProject, setSelectedProject] = useState<Project | null>(null);
     const [showProjectInput, setShowProjectInput] = useState(false);
+    const [currentStatus, setCurrentStatus] = useState<ProjectStatus | undefined>(initialStatus);
+
     const {
         projects,
         addProject,
@@ -29,7 +32,13 @@ export const ProjectList: FC<ProjectListProps> = ({
         unlinkTask
     } = projectStore((state) => state);
 
-    const filteredProjects = getFilteredProjects(status, hasLinkedTasks);
+    const filteredProjects = getFilteredProjects(currentStatus, hasLinkedTasks);
+    const statusCounts = {
+        all: projects.length,
+        not_started: projects.filter(p => p.status === 'not_started').length,
+        active: projects.filter(p => p.status === 'active').length,
+        archived: projects.filter(p => p.status === 'archived').length
+    };
 
     const handleAddProject = useCallback(() => {
         setShowProjectInput(true);
@@ -52,6 +61,10 @@ export const ProjectList: FC<ProjectListProps> = ({
         setSelectedProject(null);
     }, []);
 
+    const handleStatusChange = useCallback((status?: ProjectStatus) => {
+        setCurrentStatus(status);
+    }, []);
+
     return (
         <div className="project-list">
             <div className="project-list__header">
@@ -59,14 +72,25 @@ export const ProjectList: FC<ProjectListProps> = ({
                 <button onClick={handleAddProject}>Add Project</button>
             </div>
 
+            <ProjectStatusFilter
+                currentStatus={currentStatus}
+                onStatusChange={handleStatusChange}
+            />
+
             <div className="project-list__content">
-                {filteredProjects.map((project) => (
-                    <ProjectCard
-                        key={project.id}
-                        project={project}
-                        onClick={handleProjectClick}
-                    />
-                ))}
+                {filteredProjects.length > 0 ? (
+                    filteredProjects.map((project) => (
+                        <ProjectCard
+                            key={project.id}
+                            project={project}
+                            onClick={handleProjectClick}
+                        />
+                    ))
+                ) : (
+                    <div className="project-list__empty" data-testid="project-list-empty">
+                        {currentStatus ? `No ${currentStatus} projects` : 'No projects'}
+                    </div>
+                )}
             </div>
 
             {showProjectInput && (
