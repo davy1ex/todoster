@@ -1,5 +1,6 @@
 .task-list {
   padding: 1rem;
+  position: relative;
 }
 
 .task-list__header {
@@ -13,10 +14,17 @@
   color: var(--color-text);
 }
 
-.task-list__content {
+/* Hide the title in the sortable list since we have our own header */
+.task-list__sortable-content .sortable-list__header {
+  display: none;
+}
+
+/* Target the sortable list content to apply our styling */
+.task-list__sortable-content .sortable-list__content {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  padding-left: 16px; /* Make room for the drag handles */
 }
 
 .task-list__empty {

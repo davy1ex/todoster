@@ -7,6 +7,8 @@
     border-radius: 0.5rem;
     border: 1px solid var(--color-border);
     transition: all 0.2s ease;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .taskComponent:hover {
@@ -52,6 +54,14 @@
     display: flex;
     gap: 0.5rem;
     align-items: center;
+}
+
+.taskComponent__reward {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.875rem;
+    color: var(--color-text-light);
 }
 
 .taskComponent__archive-btn,
@@ -144,6 +154,35 @@
 .taskComponent__cancel-btn:hover {
     background: var(--color-background-alt);
     border-color: var(--color-border-hover);
+}
+
+/* Make the TaskComponent play well with the SortableItem */
+.sortable-item .taskComponent {
+    margin: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.sortable-item-wrapper {
+    width: 100%;
+}
+
+/* Style for when being dragged */
+.sortable-item.dragging .taskComponent,
+.dragging .taskComponent,
+[data-dnd-draggable] .taskComponent {
+    background: var(--color-background-hover);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border-color: var(--color-border-hover);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Fix for task component in drag preview */
+[data-dnd-draggable-context-id] .taskComponent {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box;
 }
 
 .reward-card__coin-icon {

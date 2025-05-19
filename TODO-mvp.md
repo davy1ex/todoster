@@ -228,6 +228,39 @@ Only after MVP is working:
    - [ ] Handles network errors gracefully
    - [ ] Recovers from invalid states
 
+## Sortable Lists Implementation
+1. [ ] Create SortableList Component
+   - [ ] Extend GenericList with sorting capabilities
+   - [ ] Implement dnd-kit for drag-and-drop
+   - [ ] Support different entity types
+
+2. [ ] Create SortableItem Wrapper
+   - [ ] Generic wrapper for TaskComponent, ProjectCard, etc.
+   - [ ] Handle drag-and-drop interactions
+   - [ ] Provide visual feedback during dragging
+
+3. [ ] Update Entity Models
+   - [ ] Add order field to Task type
+   - [ ] Add order field to Project type
+   - [ ] Add order field to Goal type
+   - [ ] Add reordering functions to respective stores
+
+4. [ ] Implement Sorting Utilities
+   - [ ] Create reusable array reordering utility
+   - [ ] Make compatible with different entity types
+   - [ ] Handle edge cases (null values, etc.)
+
+5. [ ] Update Specific Components
+   - [ ] Enhance TaskList with sorting
+   - [ ] Update ProjectList with sorting
+   - [ ] Apply to other entity lists as needed
+
+6. [ ] Testing
+   - [ ] Test SortableList component
+   - [ ] Test store reordering functions
+   - [ ] Test drag and drop behavior
+   - [ ] Test persistence of order
+
 ## Integration Tests
 1. [ ] Task-Project Integration
    - [ ] Tasks can be assigned to projects

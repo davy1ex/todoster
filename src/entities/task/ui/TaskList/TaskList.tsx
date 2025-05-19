@@ -4,6 +4,23 @@ import { TaskComponent } from '../TaskComponent/TaskComponent';
 import { DateBoxTabs } from '../DateBoxTabs/DateBoxTabs';
 // import { TaskModal } from '../TaskModal/TaskModal';
 import type { DateBox, Task } from '../../model/type';
+import { SortableList } from '@/shared/ui/SortableList';
+import { SortableTaskItem } from '../SortableTaskItem';
+import {
+  DndContext, 
+  closestCenter, 
+  KeyboardSensor, 
+  PointerSensor, 
+  useSensor, 
+  useSensors,
+  DragEndEvent
+} from '@dnd-kit/core';
+import { 
+  arrayMove, 
+  SortableContext, 
+  sortableKeyboardCoordinates, 
+  verticalListSortingStrategy 
+} from '@dnd-kit/sortable';
 import './TaskList.css';
 
 interface TaskListProps {
@@ -17,6 +34,7 @@ export const TaskList: FC<TaskListProps> = ({ title = "Tasks", listType = 'inbox
   const tasks = taskStore((state) => state.tasks);
   const getTasksByDateBox = taskStore((state) => state.getTasksByDateBox);
   const checkTask = taskStore((state) => state.checkTask);
+  const reorderTasks = taskStore((state) => state.reorderTasks);
 
   const taskCounts = {
     today: tasks.filter(task => task.date_box === "today").length,
@@ -29,11 +47,35 @@ export const TaskList: FC<TaskListProps> = ({ title = "Tasks", listType = 'inbox
     if (listType === 'backlog') {
       return getTasksByDateBox(selectedDateBox);
     }
-    // For inbox or other lists, return all tasks
-    return tasks;
+    // For inbox or other lists, return all tasks sorted by order
+    return tasks.filter(task => task.list.toLowerCase() === listType)
+      .sort((a, b) => (a.order || 0) - (b.order || 0));
   };
 
   const filteredTasks = getFilteredTasks();
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 5,
+      },
+    }),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    
+    if (over && active.id !== over.id) {
+      const oldIndex = filteredTasks.findIndex(task => task.id === active.id);
+      const newIndex = filteredTasks.findIndex(task => task.id === over.id);
+      
+      const newItems = arrayMove(filteredTasks, oldIndex, newIndex);
+      reorderTasks(newItems);
+    }
+  };
 
   return (
     <div className="task-list">
@@ -48,16 +90,28 @@ export const TaskList: FC<TaskListProps> = ({ title = "Tasks", listType = 'inbox
         )}
       </div>
       <div className="task-list__content">
-        {filteredTasks.map((task) => (
-          <TaskComponent
-            key={task.id}
-            task={task}
-            listName={listType}
-            onCheckTask={checkTask}
-            handleClick={() => setSelectedTask(task)}
-          />
-        ))}
-        {filteredTasks.length === 0 && (
+        {filteredTasks.length > 0 ? (
+          <DndContext 
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragEnd={handleDragEnd}
+          >
+            <SortableContext 
+              items={filteredTasks.map(task => ({ id: task.id }))}
+              strategy={verticalListSortingStrategy}
+            >
+              {filteredTasks.map(task => (
+                <SortableTaskItem
+                  key={task.id}
+                  task={task}
+                  listName={listType}
+                  onCheckTask={checkTask}
+                  handleClick={() => setSelectedTask(task)}
+                />
+              ))}
+            </SortableContext>
+          </DndContext>
+        ) : (
           <div className="task-list__empty">
             {listType === 'backlog' 
               ? `No tasks in ${selectedDateBox === "today" ? "today's" : selectedDateBox === "week" ? "this week's" : "later"} list`

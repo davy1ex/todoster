@@ -33,6 +33,8 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  padding-left: 15px;
+  position: relative;
 }
 
 .inbox-list__empty {

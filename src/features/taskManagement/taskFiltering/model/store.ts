@@ -1,5 +1,7 @@
 import { create } from "zustand";
-import type { Task, DateBox } from "@/entities/task";
+import type { Task } from "@/entities/task";
+import type { DateBox } from "@/entities/task/model/type";
+import { sortByOrder } from "@/shared/lib/sortable";
 
 interface TaskFilteringStore {
   selectedDateBox: DateBox;
@@ -18,22 +20,27 @@ export const useTaskFiltering = create<TaskFilteringStore>((set, get) => ({
   setSelectedDateBox: (dateBox) => set({ selectedDateBox: dateBox }),
 
   getFilteredTasks: (tasks, listType) => {
+    let filtered: Task[];
+    
     // For Inbox, show only Inbox tasks without date_box filtering
     if (listType === "Inbox") {
-      return tasks.filter((task) => task.list === "Inbox");
+      filtered = tasks.filter((task) => task.list === "Inbox");
     }
-
     // For Backlog, filter by both list and date_box
-    if (listType.toLowerCase() === "backlog") {
-      return tasks.filter(
+    else if (listType.toLowerCase() === "backlog") {
+      filtered = tasks.filter(
         (task) =>
           task.list.toLowerCase() === "backlog" &&
           task.date_box === get().selectedDateBox
       );
     }
-
     // For any other list, just filter by list name
-    return tasks.filter((task) => task.list === listType);
+    else {
+      filtered = tasks.filter((task) => task.list === listType);
+    }
+    
+    // Sort by order property
+    return sortByOrder(filtered);
   },
 
   getTaskCounts: (tasks) => ({

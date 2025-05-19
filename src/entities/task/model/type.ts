@@ -12,6 +12,7 @@ export type Task = {
   isArchived: boolean;
   archivedAt?: Date;
   date_box: DateBox;
+  order?: number;
 };
 
 export type TaskStore = {
@@ -27,4 +28,5 @@ export type TaskStore = {
   getArchivedTasks: () => Task[];
   clearArchive: () => void;
   getTasksByDateBox: (dateBox: DateBox) => Task[];
+  reorderTasks: (tasks: Task[]) => void;
 };

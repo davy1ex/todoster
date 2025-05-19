@@ -33,7 +33,9 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  overflow: scroll;
+  overflow: auto;
+  padding-left: 15px; /* Make space for drag handles */
+  position: relative; /* For positioned drag handles */
 }
 
 .backlog-list__empty {

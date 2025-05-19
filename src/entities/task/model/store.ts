@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import type { Task, TaskStore, DateBox } from "./type";
 import { rewardStore } from "../../reward/model/store";
+import { assignOrder, sortByOrder } from "@/shared/lib/sortable";
 
 // Helper function to ensure dates are properly parsed
 const parseDates = (task: Task): Task => ({
@@ -18,20 +19,29 @@ export const taskStore = create<TaskStore>()(
       archivedTasks: [],
 
       addTask: (task) =>
-        set((state) => ({
-          tasks: [
-            ...state.tasks,
-            {
-              ...task,
-              reward: task.reward || 10,
-              id: Date.now(),
-              createdAt: new Date(),
-              updatedAt: new Date(),
-              isArchived: false,
-              date_box: task.date_box || "later",
-            },
-          ],
-        })),
+        set((state) => {
+          // Find max order value and assign new task order + 1
+          const maxOrder = state.tasks.reduce(
+            (max, t) => Math.max(max, t.order ?? -1),
+            -1
+          );
+          
+          return {
+            tasks: [
+              ...state.tasks,
+              {
+                ...task,
+                reward: task.reward || 10,
+                id: Date.now(),
+                createdAt: new Date(),
+                updatedAt: new Date(),
+                isArchived: false,
+                date_box: task.date_box || "later",
+                order: maxOrder + 1,
+              },
+            ],
+          };
+        }),
 
       updateTask: (id, updates) =>
         set((state) => ({
@@ -128,7 +138,40 @@ export const taskStore = create<TaskStore>()(
         })),
 
       getTasksByDateBox: (dateBox) =>
-        get().tasks.filter((task) => task.date_box === dateBox),
+        sortByOrder(get().tasks.filter((task) => task.date_box === dateBox)),
+
+      reorderTasks: (tasks) =>
+        set((state) => {
+          // Validate input
+          if (!tasks || !Array.isArray(tasks) || tasks.length === 0) {
+            return state;
+          }
+          
+          // Ensure all tasks have an id property
+          const validTasks = tasks.filter(task => task && typeof task.id !== 'undefined');
+          if (validTasks.length === 0) {
+            return state;
+          }
+          
+          // Create a map for quick lookups
+          const taskMap = new Map(
+            validTasks.map((task, index) => [task.id, index])
+          );
+          
+          // Apply the new order to state tasks
+          const updatedTasks = state.tasks.map(task => {
+            if (taskMap.has(task.id)) {
+              return {
+                ...task,
+                order: taskMap.get(task.id),
+                updatedAt: new Date(),
+              };
+            }
+            return task;
+          });
+          
+          return { tasks: updatedTasks };
+        }),
     }),
     {
       name: "tasks-storage",
