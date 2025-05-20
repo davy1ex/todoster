@@ -27,19 +27,19 @@ export const taskStore = create<TaskStore>()(
           );
           
           return {
-            tasks: [
-              ...state.tasks,
-              {
-                ...task,
-                reward: task.reward || 10,
-                id: Date.now(),
-                createdAt: new Date(),
-                updatedAt: new Date(),
-                isArchived: false,
-                date_box: task.date_box || "later",
+          tasks: [
+            ...state.tasks,
+            {
+              ...task,
+              reward: task.reward || 10,
+              id: Date.now(),
+              createdAt: new Date(),
+              updatedAt: new Date(),
+              isArchived: false,
+              date_box: task.date_box || "later",
                 order: maxOrder + 1,
-              },
-            ],
+            },
+          ],
           };
         }),
 

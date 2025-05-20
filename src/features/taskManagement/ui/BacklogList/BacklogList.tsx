@@ -106,13 +106,13 @@ export const BacklogList: FC<BacklogListProps> = ({
             >
               {filteredTasks.map(task => (
                 <SortableTaskItem
-                  key={task.id}
-                  task={task}
-                  listName="Backlog"
-                  onCheckTask={onCheckTask}
-                  handleClick={() => onTaskClick(task)}
-                />
-              ))}
+            key={task.id}
+            task={task}
+            listName="Backlog"
+            onCheckTask={onCheckTask}
+            handleClick={() => onTaskClick(task)}
+          />
+        ))}
             </SortableContext>
           </DndContext>
         ) : (

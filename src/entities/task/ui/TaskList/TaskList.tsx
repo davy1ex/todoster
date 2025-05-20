@@ -102,13 +102,13 @@ export const TaskList: FC<TaskListProps> = ({ title = "Tasks", listType = 'inbox
             >
               {filteredTasks.map(task => (
                 <SortableTaskItem
-                  key={task.id}
-                  task={task}
-                  listName={listType}
-                  onCheckTask={checkTask}
-                  handleClick={() => setSelectedTask(task)}
-                />
-              ))}
+            key={task.id}
+            task={task}
+            listName={listType}
+            onCheckTask={checkTask}
+            handleClick={() => setSelectedTask(task)}
+          />
+        ))}
             </SortableContext>
           </DndContext>
         ) : (
