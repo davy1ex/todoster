@@ -31,7 +31,7 @@ export const AutoBackupProvider: FC<AutoBackupProviderProps> = ({ children }) =>
     return () => {
       window.removeEventListener('storage', handleStorageChange);
     };
-  }, [autoBackup]);
+  }, []); // Empty dependency array - only run once on mount
   
   return <>{children}</>;
 }; 

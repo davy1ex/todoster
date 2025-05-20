@@ -644,7 +644,7 @@ export const useAutoBackup = () => {
         }
       }
     };
-  }, [settings.enabled, settings.interval, startBackupInterval, instanceId]);
+  }, [settings.enabled, settings.interval, instanceId]);
 
   // For debugging: log when the component mounts
   useEffect(() => {
