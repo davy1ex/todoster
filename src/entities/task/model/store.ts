@@ -37,7 +37,9 @@ export const taskStore = create<TaskStore>()(
               updatedAt: new Date(),
               isArchived: false,
               date_box: task.date_box || "later",
-                order: maxOrder + 1,
+              order: maxOrder + 1,
+              urgent: task.urgent || null,
+              important: task.important || null,
             },
           ],
           };
@@ -144,31 +146,38 @@ export const taskStore = create<TaskStore>()(
         set((state) => {
           // Validate input
           if (!tasks || !Array.isArray(tasks) || tasks.length === 0) {
+            console.warn('reorderTasks called with invalid tasks', tasks);
             return state;
           }
           
           // Ensure all tasks have an id property
           const validTasks = tasks.filter(task => task && typeof task.id !== 'undefined');
           if (validTasks.length === 0) {
+            console.warn('reorderTasks: No valid tasks with IDs found');
             return state;
           }
           
-          // Create a map for quick lookups
-          const taskMap = new Map(
-            validTasks.map((task, index) => [task.id, index])
-          );
+          console.log('reorderTasks called with tasks:', validTasks.map(t => ({ id: t.id, order: t.order })));
+          
+          // Create a map of task id to its new order
+          const orderMap = new Map();
+          validTasks.forEach(task => {
+            orderMap.set(task.id, task.order);
+          });
           
           // Apply the new order to state tasks
           const updatedTasks = state.tasks.map(task => {
-            if (taskMap.has(task.id)) {
+            if (orderMap.has(task.id)) {
               return {
                 ...task,
-                order: taskMap.get(task.id),
+                order: orderMap.get(task.id),
                 updatedAt: new Date(),
               };
             }
             return task;
           });
+          
+          console.log('Task store updated with new orders');
           
           return { tasks: updatedTasks };
         }),

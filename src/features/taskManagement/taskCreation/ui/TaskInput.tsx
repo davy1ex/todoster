@@ -1,14 +1,16 @@
 import { useState } from "react";
 import { useTaskCreation } from "../model/useTaskCreation";
-import type { DateBox } from "@/entities/task/model/type";
+import type { DateBox, ImportanceLevel, UrgencyLevel } from "@/entities/task/model/type";
 import "./TaskInput.css";
 
 interface TaskInputProps {
     listName: string;
     dateBox?: DateBox;
+    urgent?: UrgencyLevel;
+    important?: ImportanceLevel;
 }
 
-export const TaskInput = ({ listName, dateBox = "later" }: TaskInputProps) => {
+export const TaskInput = ({ listName, dateBox = "later", urgent, important }: TaskInputProps) => {
     const [task, setTask] = useState("");
     const [points, setPoints] = useState<number>(10); // Default points value
     const { createTask } = useTaskCreation();
@@ -20,6 +22,8 @@ export const TaskInput = ({ listName, dateBox = "later" }: TaskInputProps) => {
             list: listName,
             date_box: dateBox,
             reward: points,
+            urgent: urgent,
+            important: important,
         });
         setTask("");
         setPoints(10); // Reset to default

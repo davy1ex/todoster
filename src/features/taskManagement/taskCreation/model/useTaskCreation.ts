@@ -1,11 +1,13 @@
 import { taskStore } from "@/entities/task";
-import type { DateBox } from "@/entities/task/model/type";
+import type { DateBox, ImportanceLevel, UrgencyLevel } from "@/entities/task/model/type";
 
 interface CreateTaskDTO {
     title: string;
     list: string;
     date_box: DateBox;
     reward?: number;
+    urgent?: UrgencyLevel;
+    important?: ImportanceLevel;
 }
 
 export const useTaskCreation = () => {
@@ -28,6 +30,8 @@ export const useTaskCreation = () => {
             updatedAt: new Date(),
             isArchived: false,
             date_box: taskData.date_box,
+            urgent: taskData.urgent ?? null,
+            important: taskData.important ?? null,
         });
     };
 

@@ -1,5 +1,6 @@
 .mainLayout__content__projects {
-    width: fit-content
+    width: fit-content;
+    border: 1px solid var(--color-border);
 }
 .basicLayout__content__projects {
     border: 1px solid var(--color-border);
@@ -25,12 +26,11 @@
     font-size: 1.5em;
     color: var(--text-primary);
 }
-
-.project-list__header button {
+.project-list__add-project-button {
     padding: 8px 16px;
-    background: var(--primary-color);
-    color: var(--text-on-primary);
-    border: none;
+    background: var(--color-background-alt);
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
     border-radius: 4px;
     cursor: pointer;
     transition: background 0.2s ease;

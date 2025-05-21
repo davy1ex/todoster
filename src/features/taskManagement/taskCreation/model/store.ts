@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { Task } from "@/entities/task";
+import type { Task, UrgencyLevel, ImportanceLevel } from "@/entities/task";
 import { taskStore } from "@/entities/task";
 
 interface TaskCreationStore {
@@ -19,6 +19,8 @@ export const useTaskCreation = create<TaskCreationStore>((set, get) => ({
       updatedAt: new Date(),
       isArchived: false,
       date_box: taskData.date_box ?? "later",
+      urgent: taskData.urgent ?? null,
+      important: taskData.important ?? null,
     };
 
     taskStore.getState().addTask(task);

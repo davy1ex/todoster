@@ -1,10 +1,10 @@
-
 .mainLayout__content {
     display: flex !important;
     flex-direction: row;
     width: 100%;
     gap: 20px;
 }
+
 .mainLayout__content__taskList {
     display: flex;
     flex-direction: row;

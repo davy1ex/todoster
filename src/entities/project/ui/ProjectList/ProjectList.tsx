@@ -69,7 +69,7 @@ export const ProjectList: FC<ProjectListProps> = ({
         <div className="project-list">
             <div className="project-list__header">
                 <h2>{title}</h2>
-                <button onClick={handleAddProject}>Add Project</button>
+                <button className="project-list__add-project-button" onClick={handleAddProject}>Add Project</button>
             </div>
 
             <ProjectStatusFilter

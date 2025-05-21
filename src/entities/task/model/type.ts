@@ -1,4 +1,6 @@
 export type DateBox = "today" | "week" | "later";
+export type UrgencyLevel = "urgent" | "not urgent" | null;
+export type ImportanceLevel = "important" | "not important" | null;
 
 export type Task = {
   id: number;
@@ -13,6 +15,8 @@ export type Task = {
   archivedAt?: Date;
   date_box: DateBox;
   order?: number;
+  urgent: UrgencyLevel;
+  important: ImportanceLevel;
 };
 
 export type TaskStore = {

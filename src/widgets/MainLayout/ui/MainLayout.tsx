@@ -11,11 +11,13 @@ import type { Task } from "@/entities/task"
 import { TaskEditModal } from "@/features/taskManagement/ui/TaskEditModal"
 import { BaseLayout } from "@/shared/ui/BaseLayout"
 import "./MainLayout.css"
+import { EisenhowerMatrix } from "@/features/eisenhowerMatrix"
 export const MainLayout = () => {
     const { tasks, updateTask, changeReward, checkTask } = taskStore((state) => state)
     const [selectedTaskId, setSelectedTaskId] = useState<number | null>(null)
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+    const [isTaskPriorityEditorOpen, setIsTaskPriorityEditorOpen] = useState(false)
 
     // Get the current task from the store using the selectedTaskId
     const selectedTask = selectedTaskId ? tasks.find(task => task.id === selectedTaskId) : null;
@@ -23,6 +25,11 @@ export const MainLayout = () => {
     const handleTaskClick = (task: Task) => {
         setSelectedTaskId(task.id);
         setIsModalOpen(true);
+    }
+
+    const handleEisenhowerMatrixTaskClick = (task: Task) => {
+        setSelectedTaskId(task.id);
+        setIsTaskPriorityEditorOpen(!isTaskPriorityEditorOpen);
     }
 
     const handleCloseModal = () => {
@@ -75,6 +82,16 @@ export const MainLayout = () => {
                     tasks={tasks}
                     onCheckTask={checkTask}
                     onTaskClick={handleTaskClick}
+                />
+            </div>
+            <div className="eisenhower-matrix-container">
+                
+                <EisenhowerMatrix 
+                    tasks={tasks}
+                    onCheckTask={checkTask}
+                    onTaskEisenhowerMatrixClick={handleEisenhowerMatrixTaskClick}
+                    onTaskClick={handleTaskClick}
+                    isTaskPriorityEditorOpen={isTaskPriorityEditorOpen}
                 />
             </div>
             <div data-testid="backlog-list">
