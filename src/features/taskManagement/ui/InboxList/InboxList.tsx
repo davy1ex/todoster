@@ -56,11 +56,16 @@ export const InboxList: FC<InboxListProps> = ({
       if (oldIndex !== -1 && newIndex !== -1) {
         const newItems = arrayMove(filteredTasks, oldIndex, newIndex);
         
+        // Update the order property for each task
+        const updatedTasks = newItems.map((task, index) => ({
+          ...task,
+          order: index
+        }));
+        
         // Only reorder tasks that belong to the Inbox list
-        const inboxTasks = newItems.filter(task => task.list === "Inbox");
+        const inboxTasks = updatedTasks.filter(task => task.list === "Inbox");
         
         if (inboxTasks.length > 0) {
-          console.log('Reordering Inbox tasks', inboxTasks);
           reorderTasks(inboxTasks);
         }
       }
@@ -85,18 +90,18 @@ export const InboxList: FC<InboxListProps> = ({
             onDragEnd={handleDragEnd}
           >
             <SortableContext 
-              items={filteredTasks.map(task => ({ id: task.id }))}
+              items={filteredTasks}
               strategy={verticalListSortingStrategy}
             >
               {filteredTasks.map(task => (
                 <SortableTaskItem
-            key={task.id}
-            task={task}
-            listName="Inbox"
-            onCheckTask={onCheckTask}
-            handleClick={() => onTaskClick(task)}
-          />
-        ))}
+                  key={task.id}
+                  task={task}
+                  listName="Inbox"
+                  onCheckTask={onCheckTask}
+                  handleClick={() => onTaskClick(task)}
+                />
+              ))}
             </SortableContext>
           </DndContext>
         ) : (

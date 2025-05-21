@@ -64,14 +64,19 @@ export const BacklogList: FC<BacklogListProps> = ({
       if (oldIndex !== -1 && newIndex !== -1) {
         const newItems = arrayMove(filteredTasks, oldIndex, newIndex);
         
+        // Update the order property for each task
+        const updatedTasks = newItems.map((task, index) => ({
+          ...task,
+          order: index
+        }));
+        
         // Only reorder tasks that belong to the Backlog list and current date box
-        const backlogTasks = newItems.filter(
-          task => task.list.toLowerCase() === "backlog" && 
+        const backlogTasks = updatedTasks.filter(
+          task => task.list === "Backlog" && 
                  task.date_box === selectedDateBox
         );
         
         if (backlogTasks.length > 0) {
-          console.log('Reordering Backlog tasks', backlogTasks);
           reorderTasks(backlogTasks);
         }
       }
@@ -101,18 +106,18 @@ export const BacklogList: FC<BacklogListProps> = ({
             onDragEnd={handleDragEnd}
           >
             <SortableContext 
-              items={filteredTasks.map(task => ({ id: task.id }))}
+              items={filteredTasks}
               strategy={verticalListSortingStrategy}
             >
               {filteredTasks.map(task => (
                 <SortableTaskItem
-            key={task.id}
-            task={task}
-            listName="Backlog"
-            onCheckTask={onCheckTask}
-            handleClick={() => onTaskClick(task)}
-          />
-        ))}
+                  key={task.id}
+                  task={task}
+                  listName="Backlog"
+                  onCheckTask={onCheckTask}
+                  handleClick={() => onTaskClick(task)}
+                />
+              ))}
             </SortableContext>
           </DndContext>
         ) : (
