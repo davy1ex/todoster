@@ -1,5 +1,4 @@
-export { ProjectList } from "./ProjectList";
-export { ProjectCard } from "./ProjectCard";
-export { ProjectModal } from "./ProjectModal";
-export { LinkedTasksList } from "./LinkedTasksList";
-export { TaskLinkSelect } from "./TaskLinkSelect";
+export { ProjectCard } from './ProjectCard';
+export { ProjectList } from './ProjectList';
+export { TaskLinkSelect } from './TaskLinkSelect';
+export { LinkedTasksList } from './LinkedTasksList';

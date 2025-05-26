@@ -1,0 +1,60 @@
+.rewards-list {
+    background: var(--color-background);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: 100%;
+    position: relative;
+    width: 100%;
+}
+
+.rewards-list__form-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 20vh;
+    z-index: 1000;
+}
+
+.rewards-list__form {
+    background-color: var(--color-background);
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    max-width: 500px;
+}
+
+.rewards-list__input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.rewards-list__input:focus {
+    border-color: var(--color-primary);
+}
+
+.rewards-list__items {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+}
+
+.rewards-list__empty {
+    text-align: center;
+    color: var(--color-text);
+    font-style: italic;
+    margin: 2rem 0;
+} 

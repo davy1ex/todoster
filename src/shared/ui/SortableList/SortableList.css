@@ -1,0 +1,94 @@
+.sortable-list {
+  margin-bottom: 2rem;
+}
+
+.sortable-list__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.sortable-list__title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.sortable-list__add-button {
+  padding: 0.5rem 1rem;
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.sortable-list__add-button:hover {
+  background-color: var(--color-primary-dark);
+}
+
+.sortable-list__content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.sortable-list__empty {
+  text-align: center;
+  padding: 2rem;
+  color: var(--color-text-light);
+  border: 1px dashed var(--color-border);
+  border-radius: 0.5rem;
+  background-color: var(--color-background-alt);
+}
+
+/* Drag and drop styles */
+.sortable-item {
+  touch-action: none;
+  position: relative;
+}
+
+.sortable-item.dragging {
+  z-index: 1;
+  opacity: 0.8;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+.sortable-item-wrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  position: relative;
+}
+
+.sortable-item-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 100%;
+  cursor: grab;
+  padding: 0 8px;
+  position: absolute;
+  left: -16px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+}
+
+.drag-handle {
+  font-size: 22px;
+  color: var(--color-text-light);
+  opacity: 0.5;
+  transition: opacity 0.2s ease, color 0.2s ease;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.sortable-item:hover .drag-handle {
+  opacity: 1;
+  color: var(--color-text);
+} 

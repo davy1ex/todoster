@@ -5,6 +5,7 @@
     padding: 16px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     height: 100%;
+    min-width: 300px;
 }
 
 .goal-list__header {
@@ -20,7 +21,7 @@
     color: var(--color-text);
 }
 
-.goal-list__header button {
+.generic-list__add-button {
     padding: 8px 16px;
     background: var(--color-background-alt);
     color: var(--color-text);

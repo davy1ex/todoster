@@ -1,0 +1,277 @@
+.eisenhower-matrix-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.eisenhower-controls {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 8px;
+}
+
+.toggle-editor-button {
+    background-color: var(--color-background);
+    color: var(--color-text);
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
+}
+
+.toggle-editor-button:hover {
+    background-color: var(--color-background-alt);
+}
+
+.toggle-editor-button:active {
+    background-color: var(--color-background-alt);
+}
+
+/* Eisenhower Matrix Layout */
+.eisenhower-matrix {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 1rem;
+    background-color: var(--color-background);
+    color: var(--color-text);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+}
+
+.eisenhower-matrix__title {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+/* Use CSS Grid for flexible layout that adapts to content */
+.eisenhower-matrix__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto; /* Allow rows to size based on content */
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.eisenhower-matrix__uncategorized {
+    margin-top: 1rem;
+}
+
+/* Quadrants */
+.matrix-quadrant {
+    padding: 1rem;
+    border-radius: 8px;
+    background-color: var(--color-background);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease-in-out;
+    height: fit-content; /* Make height fit the content */
+}
+
+.matrix-quadrant--over {
+    box-shadow: 0 0 0 2px var(--color-background-alt), 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: scale(1.02);
+}
+
+/* Quadrant header and collapse/expand functionality */
+.matrix-quadrant__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    margin-bottom: 0.75rem;
+    user-select: none;
+}
+
+.matrix-quadrant__header:hover {
+    opacity: 0.85;
+}
+
+.matrix-quadrant__title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0;
+    font-size: 1rem;
+    color: var(--color-text);
+}
+
+.matrix-quadrant__toggle-icon {
+    font-size: 0.7rem;
+    color: var(--color-text-light);
+    margin-left: 0.5rem;
+}
+
+.matrix-quadrant__task-count {
+    font-size: 0.8rem;
+    color: var(--color-text);
+    padding: 0.2rem 0.5rem;
+    border-radius: 10px;
+    background-color: var(--color-background-alt);
+}
+
+.matrix-quadrant__content {
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.matrix-quadrant__tasks {
+    /* Remove min-height to let content determine height */
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.matrix-quadrant__empty {
+    color: var(--color-text-light);
+    text-align: center;
+    padding: 0.5rem;
+    font-style: italic;
+}
+
+/* Quadrant colors */
+.matrix-quadrant--urgent-important {
+    border-left: 4px solid #ff6b6b;
+    background-color: var(--color-background);
+    color: var(--color-text);
+}
+
+.matrix-quadrant--urgent-not-important {
+    border-left: 4px solid #ffd43b;
+    /* background-color: #fffbee; */
+}
+
+.matrix-quadrant--not-urgent-important {
+    border-left: 4px solid #4dabf7;
+    /* background-color: #f3f9ff; */
+}
+
+.matrix-quadrant--not-urgent-not-important {
+    border-left: 4px solid #69db7c;
+    /* background-color: #f4fcf6; */
+}
+
+.matrix-quadrant--uncategorized {
+    border-left: 4px solid #adb5bd;
+    /* background-color: #f8f9fa; */
+}
+
+/* Task items */
+.matrix-draggable-item {
+    margin-bottom: 0.5rem;
+    cursor: grab;
+    user-select: none;
+    position: relative;
+}
+
+.matrix-draggable-item.dragging {
+    opacity: 0.5;
+    cursor: grabbing;
+}
+
+.matrix-task-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    border-radius: 4px;
+    margin-bottom: 4px;
+    background-color: var(--color-background-alt);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.matrix-task-item:hover {
+    background-color: var(--color-background-dark);
+}
+
+.matrix-task-item input[type="checkbox"] {
+    margin-right: 0.5rem;
+}
+
+.matrix-task-item__title--done {
+    text-decoration: line-through;
+    color: var(--color-text-light);
+}
+
+.taskComponent__reward {
+    margin-left: auto;
+    margin-right: 0;
+}
+
+.matrix-task-item__edit-btn {
+    margin-left: 0.5rem;
+    background-color: var(--color-background);
+    border: none;
+    color: var(--color-text-light);
+    font-size: 0.8rem;
+    padding: 2px 8px;
+    border-radius: 3px;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: opacity 0.2s, background-color 0.2s;
+}
+
+.matrix-task-item:hover .matrix-task-item__edit-btn {
+    opacity: 1;
+}
+
+.matrix-task-item__edit-btn:hover {
+    background-color: var(--color-background-dark);
+    color: var(--color-text-dark);
+}
+
+/* Drag overlay */
+.task-drag-overlay {
+    cursor: grabbing;
+    background-color: var(--color-background-alt);
+    border-radius: 4px;
+    padding: 0.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 250px;
+    z-index: 1000;
+}
+
+/* Task Input */
+.eisenhower-controls {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1rem;
+}
+
+.toggle-editor-button {
+    padding: 0.5rem 1rem;
+    background-color: var(--color-background-alt);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.875rem;
+    transition: background-color 0.2s;
+}
+
+.toggle-editor-button:hover {
+    background-color: #3b95db;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .eisenhower-matrix__grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto auto;
+    }
+}

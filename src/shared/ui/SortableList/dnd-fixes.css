@@ -1,0 +1,37 @@
+/* Fixes for DND-kit sizing issues */
+[data-dnd-draggable] {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box;
+}
+
+.sortable-list__content > div {
+  width: 100%;
+}
+
+/* Fix for the drag preview size */
+[data-dnd-draggable-context-id] {
+  width: 100% !important;
+  transform-origin: 0 0;
+}
+
+/* Ensure task maintains size when dragging */
+[data-dnd-draggable-context-id] .taskComponent {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+/* Fix for dragged task size */
+[data-dnd-placeholder] {
+  opacity: 0.4;
+  transform: none !important;
+  pointer-events: none;
+}
+
+/* Dragging overlay */
+[data-dnd-dragging] {
+  z-index: 999 !important;
+  width: 100% !important;
+  transform-origin: 0 0;
+  box-sizing: border-box;
+} 

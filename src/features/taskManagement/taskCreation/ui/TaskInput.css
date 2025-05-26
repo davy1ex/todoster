@@ -1,0 +1,78 @@
+.taskInput {
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+.taskInput__main {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    padding: 8px;
+    background: var(--color-background-alt);
+    border-radius: 8px;
+    border: 1px solid var(--color-border);
+}
+
+.taskInput__title {
+    flex: 1;
+    padding: 8px;
+    background-color: var(--color-background-alt);
+    border: none;
+    color: var(--text-primary);
+    font-size: 1em;
+}
+
+.taskInput__title::placeholder {
+    color: var(--text-secondary);
+}
+
+.taskInput__points {
+    display: flex;
+    align-items: center;
+    background-color: var(--color-background-alt);
+    gap: 4px;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.taskInput__points-input {
+    width: 60px;
+    padding: 4px;
+    border: none;
+    background: transparent;
+    color: var(--text-primary);
+    font-size: 0.9em;
+    text-align: right;
+    -moz-appearance: textfield;
+}
+
+.taskInput__points-input::-webkit-outer-spin-button,
+.taskInput__points-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.taskInput__points-label {
+    color: var(--text-secondary);
+    font-size: 0.9em;
+}
+
+.taskInput__add-button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    background: var(--primary-color);
+    color: var(--text-on-primary);
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.taskInput__add-button:hover {
+    background: var(--primary-color-dark);
+}
+
+.taskInput input:focus,
+.taskInput button:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--focus-color);
+}

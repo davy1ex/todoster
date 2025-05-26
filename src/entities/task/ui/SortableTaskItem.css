@@ -1,0 +1,63 @@
+.sortable-task-item {
+  position: relative;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.sortable-task-item.dragging {
+  z-index: 10;
+  opacity: 0.9;
+  transform-origin: 0 0;
+  width: 100% !important;
+  pointer-events: none;
+}
+
+.sortable-task-item-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+}
+
+.sortable-task-item-handle {
+  width: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;
+  padding: 5px;
+  background-color: transparent;
+  border-radius: 4px 0 0 4px;
+  color: var(--color-text-light);
+  opacity: 0.3;
+  transition: all 0.2s ease;
+}
+
+.sortable-task-item:hover .sortable-task-item-handle {
+  opacity: 1;
+}
+
+.drag-handle {
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.sortable-task-item.dragging .taskComponent {
+  background-color: var(--color-background-hover);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  border-color: var(--color-border-hover);
+  width: 100% !important;
+}
+
+/* Fix for the drag preview size */
+[data-dnd-draggable-context-id] {
+  width: 100% !important;
+  transform-origin: 0 0;
+}
+
+/* Ensure task maintains size when dragging */
+:root [data-dnd-draggable-context-id] .taskComponent {
+  width: 100% !important;
+  max-width: 100% !important;
+} 

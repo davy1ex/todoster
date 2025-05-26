@@ -1,28 +1,26 @@
-import { useEffect, FC } from 'react';
-import { migrateGoalProjectLinks } from '../entities/goal/model/migrateGoals';
-import { BasicLayout } from "@/shared/ui/BasicLayout"
-import { TaskManagementProvider } from "@/features/taskManagement/model/TaskManagementProvider"
-import { SettingsProvider } from "@/features/settings"
-import type { Platform } from './lib/platform';
+import { FC } from 'react';
+import { MainLayout } from '@/widgets/MainLayout';
 import { ThemeProvider } from '@/shared/theme/ThemeContext';
+import { SettingsProvider } from '@/features/settings';
+import { AutoBackupProvider, AutoBackupIndicator } from '@/features/autoBackup';
+import type { Platform } from './lib/platform';
+import './main.css';
 
 interface AppProps {
-  platform: Platform;
+    platform: Platform;
 }
 
 export const App: FC<AppProps> = ({ platform }) => {
-    useEffect(() => {
-        // Run migration when app starts
-        migrateGoalProjectLinks();
-    }, []);
-
     return (
         <ThemeProvider>
             <SettingsProvider>
-                <TaskManagementProvider>
-                    <BasicLayout />
-                </TaskManagementProvider>
+                <AutoBackupProvider>
+                    <div data-testid="app-root" className="app">
+                        <MainLayout />
+                        <AutoBackupIndicator />
+                    </div>
+                </AutoBackupProvider>
             </SettingsProvider>
         </ThemeProvider>
-    )
-}
+    );
+};

@@ -1,0 +1,75 @@
+.task-priority-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  color: var(--color-text);
+}
+
+.task-priority-editor__section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.task-priority-editor__label {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.task-priority-editor__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.task-priority-editor__button {
+  background-color: var(--color-background);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+  outline: none;
+}
+
+.task-priority-editor__button:hover {
+  background-color: var(--color-background-alt);
+}
+
+.task-priority-editor__button--active {
+  background-color: var(--color-background-alt);
+  color: var(--color-text);
+  border-color: var(--color-background);
+}
+
+.task-priority-editor__button--active:hover {
+  background-color: var(--color-background);
+}
+
+/* Specific colors for buttons */
+.task-priority-editor__button[data-value="urgent"].task-priority-editor__button--active {
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+.task-priority-editor__button[data-value="not urgent"].task-priority-editor__button--active {
+  background-color: #20c997;
+  border-color: #20c997;
+}
+
+.task-priority-editor__button[data-value="important"].task-priority-editor__button--active {
+  background-color: #fd7e14;
+  border-color: #fd7e14;
+}
+
+.task-priority-editor__button[data-value="not important"].task-priority-editor__button--active {
+  background-color: #6c757d;
+  border-color: #6c757d;
+} 

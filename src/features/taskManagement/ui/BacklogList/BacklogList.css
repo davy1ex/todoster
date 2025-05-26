@@ -1,0 +1,46 @@
+.backlog-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 450px;
+  padding: 1rem;
+  background-color: var(--color-background);
+  border-radius: 8px;
+  box-shadow: var(--shadow-sm);
+}
+
+.backlog-list__title {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.backlog-list__title h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.backlog-list__header {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.backlog-list__tasks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  overflow: auto;
+  padding-left: 15px; /* Make space for drag handles */
+  position: relative; /* For positioned drag handles */
+}
+
+.backlog-list__empty {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-secondary);
+  font-style: italic;
+} 

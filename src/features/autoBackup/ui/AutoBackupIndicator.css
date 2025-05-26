@@ -1,0 +1,58 @@
+.auto-backup-indicator {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  background-color: var(--color-background-alt);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 12px 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  animation: fadeInOut 5s ease;
+  transition: all 0.3s ease;
+}
+
+.auto-backup-indicator:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.auto-backup-indicator__icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 12px;
+  color: var(--color-primary);
+  animation: pulse 1.5s infinite;
+}
+
+.auto-backup-indicator__content {
+  display: flex;
+  flex-direction: column;
+}
+
+.auto-backup-indicator__text {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.auto-backup-indicator__time {
+  font-size: 12px;
+  color: var(--color-text-light);
+  margin-top: 2px;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translateY(10px); }
+  10% { opacity: 1; transform: translateY(0); }
+  90% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(10px); }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+} 

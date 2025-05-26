@@ -8,6 +8,7 @@ import { ArchivedRewards } from '@/entities/reward/ui/ArchivedRewards/ArchivedRe
 import { taskStore } from '@/entities/task/model/store';
 import { goalStore } from '@/entities/goal/model/store';
 import { rewardStore } from '@/entities/reward/model/store';
+import { AutoBackupSettings } from '@/features/autoBackup';
 
 interface SettingsModalProps {
     onClose: () => void;
@@ -120,6 +121,8 @@ export const SettingsModal: FC<SettingsModalProps> = ({
                             Clear Account Data
                         </button>
                     </div>
+                    
+                    <AutoBackupSettings />
                 </div>
 
                 <div className="settings-modal__section">

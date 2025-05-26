@@ -1,3 +1,7 @@
+export type DateBox = "today" | "week" | "later";
+export type UrgencyLevel = "urgent" | "not urgent" | null;
+export type ImportanceLevel = "important" | "not important" | null;
+
 export type Task = {
   id: number;
   title: string;
@@ -9,6 +13,10 @@ export type Task = {
   updatedAt: Date;
   isArchived: boolean;
   archivedAt?: Date;
+  date_box: DateBox;
+  order?: number;
+  urgent: UrgencyLevel;
+  important: ImportanceLevel;
 };
 
 export type TaskStore = {
@@ -23,4 +31,6 @@ export type TaskStore = {
   checkTask: (id: number) => void;
   getArchivedTasks: () => Task[];
   clearArchive: () => void;
+  getTasksByDateBox: (dateBox: DateBox) => Task[];
+  reorderTasks: (tasks: Task[]) => void;
 };
